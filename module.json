@@ -1,0 +1,51 @@
+{
+  "id": "dnd-combat-ai",
+  "title": "D&D Combat AI",
+  "description": "AI-powered combat assistance for NPCs in D&D 5e. Provides intelligent action recommendations based on combat situation and difficulty settings.",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Mitchell Lemons",
+      "discord": "TheNightAngel17"
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "13",
+    "maximum": "13"
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/combat-ai.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "3.0.0",
+          "verified": "5.0.4"
+        }
+      }
+    ]
+  },
+  "socket": false,
+  "manifest": "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai/releases/latest/download/module.json",
+  "download": "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai/releases/latest/download/module.zip",
+  "protected": false,
+  "coreTranslation": false,
+  "bugs": "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai/issues",
+  "changelog": "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai/releases",
+  "readme": "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai/blob/main/README.md",
+  "url": "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai"
+}

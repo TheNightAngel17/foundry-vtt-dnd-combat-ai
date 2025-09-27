@@ -1,0 +1,301 @@
+/* Combat AI Module Styles */
+
+.combat-ai-recommendations {
+    font-family: var(--font-primary);
+    max-width: 500px;
+}
+
+.combat-ai-recommendations h3 {
+    color: var(--color-text-dark-primary);
+    border-bottom: 2px solid var(--color-border-dark-primary);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.difficulty-level {
+    background: var(--color-bg-option);
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.recommendations-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recommendations-list li {
+    background: var(--color-bg-btn);
+    border: 1px solid var(--color-border-dark-primary);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.2s;
+}
+
+.recommendations-list li:hover {
+    background: var(--color-bg-option);
+}
+
+.recommendations-list strong {
+    color: var(--color-text-hyperlink);
+    font-size: 1.1em;
+}
+
+.recommendations-list p {
+    margin: 5px 0 0 0;
+    color: var(--color-text-dark-secondary);
+    font-style: italic;
+}
+
+/* Combat Controls */
+.combat-ai-controls {
+    background: var(--color-bg-option);
+    padding: 8px;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
+.combat-ai-controls label {
+    font-weight: bold;
+    color: var(--color-text-dark-primary);
+}
+
+.combat-ai-controls select {
+    background: var(--color-bg-btn);
+    color: var(--color-text-dark-primary);
+    border: 1px solid var(--color-border-dark-primary);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.combat-ai-manual {
+    background: var(--color-bg-btn);
+    color: var(--color-text-dark-primary);
+    border: 1px solid var(--color-border-dark-primary);
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.combat-ai-manual:hover {
+    background: var(--color-bg-option);
+}
+
+.combat-ai-manual i {
+    margin-right: 5px;
+}
+
+/* Settings Dialog */
+.combat-ai-settings {
+    font-family: var(--font-primary);
+}
+
+.combat-ai-settings .form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.combat-ai-settings .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.combat-ai-settings label {
+    min-width: 150px;
+    font-weight: bold;
+    color: var(--color-text-dark-primary);
+}
+
+.combat-ai-settings input,
+.combat-ai-settings select {
+    flex: 1;
+    background: var(--color-bg-btn);
+    color: var(--color-text-dark-primary);
+    border: 1px solid var(--color-border-dark-primary);
+    padding: 5px 8px;
+    border-radius: 3px;
+}
+
+.combat-ai-settings input[type="checkbox"] {
+    flex: none;
+    width: auto;
+}
+
+.difficulty-buttons {
+    margin-top: 20px;
+    text-align: center;
+    border-top: 1px solid var(--color-border-dark-primary);
+    padding-top: 20px;
+}
+
+.difficulty-buttons h3 {
+    color: var(--color-text-dark-primary);
+    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.difficulty-btn {
+    padding: 8px 15px;
+    border: 1px solid var(--color-border-dark-primary);
+    background: var(--color-bg-btn);
+    color: var(--color-text-dark-primary);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s;
+    font-size: 0.9em;
+    min-width: 70px;
+}
+
+.difficulty-btn:hover {
+    background: var(--color-bg-option);
+}
+
+.difficulty-btn.active {
+    background: var(--color-text-hyperlink);
+    color: white;
+    border-color: var(--color-text-hyperlink);
+}
+
+.difficulty-btn.active:hover {
+    background: #0056b3;
+}
+
+/* Test Connection */
+#test-connection {
+    padding: 8px 15px;
+    background: var(--color-text-hyperlink);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: bold;
+}
+
+#test-connection:hover {
+    background: #0056b3;
+}
+
+#test-connection:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+#connection-status {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+/* Scene Control Button */
+.control-tool[data-tool="combat-ai"] {
+    background: var(--color-bg-btn);
+    border: 1px solid var(--color-border-dark-primary);
+}
+
+.control-tool[data-tool="combat-ai"]:hover {
+    background: var(--color-bg-option);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Loading Indicators */
+.combat-ai-loading {
+    text-align: center;
+    padding: 20px;
+    color: var(--color-text-dark-secondary);
+}
+
+.combat-ai-loading i {
+    font-size: 2em;
+    margin-bottom: 10px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error States */
+.combat-ai-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.combat-ai-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .combat-ai-recommendations {
+        max-width: 100%;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .difficulty-btn {
+        width: 100px;
+    }
+    
+    .combat-ai-settings .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .combat-ai-settings label {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .combat-ai-settings input,
+    .combat-ai-settings select {
+        width: 100%;
+    }
+}
+
+/* Dark Mode Compatibility */
+.window-app.dark .combat-ai-recommendations,
+.window-app.dark .combat-ai-settings {
+    background: var(--color-bg-dark);
+    color: var(--color-text-light-primary);
+}
+
+.window-app.dark .difficulty-level {
+    background: var(--color-bg-dark-secondary);
+}
+
+.window-app.dark .recommendations-list li {
+    background: var(--color-bg-dark-secondary);
+    border-color: var(--color-border-light-primary);
+}
+
+.window-app.dark .recommendations-list li:hover {
+    background: var(--color-bg-dark-tertiary);
+}

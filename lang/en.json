@@ -1,0 +1,130 @@
+{
+  "COMBAT_AI": {
+    "Title": "D&D Combat AI",
+    "Description": "AI-powered combat assistance for NPCs",
+    
+    "Settings": {
+      "EnableAI": {
+        "Name": "Enable AI Assistance",
+        "Hint": "Enable AI-powered combat recommendations for NPCs"
+      },
+      "AIDifficulty": {
+        "Name": "AI Difficulty Level",
+        "Hint": "Controls how tactically the AI plays NPCs"
+      },
+      "LLMProvider": {
+        "Name": "LLM Provider",
+        "Hint": "Choose your preferred Large Language Model provider"
+      },
+      "APIKey": {
+        "Name": "API Key",
+        "Hint": "Your API key for the selected LLM provider (stored securely)"
+      },
+      "AutoDisplay": {
+        "Name": "Auto-display Recommendations",
+        "Hint": "Automatically show AI recommendations when NPC turn starts"
+      },
+      "IncludePlayerNames": {
+        "Name": "Include Player Names",
+        "Hint": "Include player character names in AI prompts (may improve roleplay)"
+      },
+      "ContextTurns": {
+        "Name": "Context Memory (Turns)",
+        "Hint": "How many previous turns to include in AI context"
+      },
+      "RequestTimeout": {
+        "Name": "Request Timeout (seconds)",
+        "Hint": "How long to wait for AI response before timing out"
+      },
+      "DebugMode": {
+        "Name": "Debug Mode",
+        "Hint": "Enable detailed logging for troubleshooting"
+      }
+    },
+    
+    "Difficulty": {
+      "Easy": "Easy (Defensive, suboptimal)",
+      "Normal": "Normal (Tactical but imperfect)",
+      "Hard": "Hard (Optimal play)",
+      "Deadly": "Deadly (Ruthless efficiency)",
+      "TPK": "TPK Mode (Perfect tactics)"
+    },
+    
+    "UI": {
+      "GetAIAdvice": "Get AI Advice",
+      "AIRecommendations": "AI Recommendations for {name}",
+      "DifficultyLevel": "Difficulty: {level}",
+      "TestConnection": "Test Connection",
+      "ConnectionSuccessful": "✓ Connected",
+      "ConnectionFailed": "✗ Failed: {error}",
+      "Acknowledged": "Acknowledged",
+      "Save": "Save",
+      "Cancel": "Cancel",
+      "SettingsTitle": "Combat AI Settings"
+    },
+    
+    "Messages": {
+      "ModuleInitialized": "Module initialized",
+      "GameReady": "Game ready, setting up combat hooks",
+      "ModuleReady": "Module ready",
+      "CombatTurnChanged": "Combat turn changed",
+      "NPCTurnDetected": "NPC turn detected: {name}",
+      "CombatStarted": "Combat started",
+      "CombatEnded": "Combat ended",
+      "ProcessingAITurn": "Processing AI turn for: {name}",
+      "GeneratingRecommendations": "Generating AI recommendations...",
+      "SettingsSaved": "Settings saved",
+      "AIDifficultyChanged": "AI difficulty set to {difficulty}",
+      "NoActiveCombatant": "No active combatant",
+      "CurrentCombatantIsPC": "Current combatant is a player character",
+      "CombatAIManagerNotInitialized": "Combat AI manager not initialized",
+      "FailedToGenerateRecommendations": "Failed to generate recommendations",
+      "NoAPIKeyConfigured": "No API key configured. Please configure your LLM API key in module settings.",
+      "UnsupportedProvider": "Unsupported LLM provider: {provider}",
+      "OpenAIAPIError": "OpenAI API error: {status} - {error}",
+      "AnthropicAPIError": "Anthropic API error: {status} - {error}",
+      "LocalLLMEndpointNotConfigured": "Local LLM endpoint not configured",
+      "FailedToConnectLocalLLM": "Failed to connect to local LLM endpoint",
+      "LLMGenerationFailed": "LLM generation failed",
+      "ErrorProcessingNPCTurn": "Error processing NPC turn"
+    },
+    
+    "Providers": {
+      "OpenAI": "OpenAI (ChatGPT)",
+      "Anthropic": "Anthropic (Claude)",
+      "Local": "Local LLM (Ollama, LM Studio, etc.)"
+    },
+    
+    "Models": {
+      "OpenAI": {
+        "GPT35Turbo": "GPT-3.5 Turbo (Fast, economical)",
+        "GPT35Turbo16K": "GPT-3.5 Turbo 16K (Longer context)",
+        "GPT4": "GPT-4 (Most capable, slower)",
+        "GPT4Turbo": "GPT-4 Turbo (Fast GPT-4)"
+      },
+      "Anthropic": {
+        "Claude3Haiku": "Claude 3 Haiku (Fast, economical)",
+        "Claude3Sonnet": "Claude 3 Sonnet (Balanced)",
+        "Claude3Opus": "Claude 3 Opus (Most capable)"
+      }
+    },
+    
+    "Actions": {
+      "Attack": "Attack",
+      "Dash": "Dash",
+      "Dodge": "Dodge", 
+      "Help": "Help",
+      "Hide": "Hide",
+      "Ready": "Ready",
+      "Search": "Search",
+      "AttackWith": "Attack with {weapon}",
+      "MoveAndAttack": "Move and Attack",
+      "TacticalMovement": "Tactical Movement",
+      "UseClassFeature": "Use class feature",
+      "UsePowerfulAbility": "Use powerful ability",
+      "ControlBattlefield": "Control battlefield",
+      "FocusFire": "Focus fire",
+      "CoordinateWithAllies": "Coordinate with allies"
+    }
+  }
+}
