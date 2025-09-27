@@ -1,0 +1,57 @@
+{
+  "name": "foundry-vtt-dnd-combat-ai",
+  "version": "1.0.0",
+  "description": "AI-powered combat assistance for NPCs in FoundryVTT D&D 5e",
+  "main": "scripts/main.js",
+  "scripts": {
+    "lint": "eslint scripts/**/*.js",
+    "test": "echo \"No tests specified\" && exit 0",
+    "build": "echo \"No build process specified\" && exit 0",
+    "validate": "node -e \"console.log('Validating JSON files...'); require('./module.json'); require('./lang/en.json'); console.log('✓ All JSON files are valid');\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai.git"
+  },
+  "keywords": [
+    "foundry",
+    "foundryvtt",
+    "dnd",
+    "d&d",
+    "5e",
+    "combat",
+    "ai",
+    "llm",
+    "npc",
+    "tactical",
+    "assistant",
+    "openai",
+    "anthropic",
+    "claude",
+    "gpt"
+  ],
+  "author": {
+    "name": "Mitchell Lemons",
+    "url": "https://github.com/TheNightAngel17"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai/issues"
+  },
+  "homepage": "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  },
+  "foundry": {
+    "id": "dnd-combat-ai",
+    "compatibility": {
+      "minimum": "11",
+      "verified": "13",
+      "maximum": "13"
+    },
+    "systems": ["dnd5e"]
+  }
+}
