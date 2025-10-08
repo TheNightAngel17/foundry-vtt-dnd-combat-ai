@@ -123,9 +123,8 @@ export class CombatAISettings {
             label: 'Configure Action Cache LLM',
             hint: 'Configure the LLM used for generating cached action descriptions',
             icon: 'fas fa-database',
-            type: LLMConfigMenu,
-            restricted: true,
-            configType: 'actionCache'
+            type: ActionCacheLLMConfigMenu,
+            restricted: true
         });
 
         // Action Cache LLM - Simplified settings
@@ -190,9 +189,8 @@ export class CombatAISettings {
             label: 'Configure Combat LLM',
             hint: 'Configure the LLM used for generating combat recommendations',
             icon: 'fas fa-brain',
-            type: LLMConfigMenu,
-            restricted: true,
-            configType: 'combatRecommendation'
+            type: CombatLLMConfigMenu,
+            restricted: true
         });
 
         // Combat LLM - Simplified settings
@@ -318,12 +316,12 @@ export class CombatAISettings {
 }
 
 /**
- * LLM Configuration Menu
+ * Base LLM Configuration Menu
  */
 class LLMConfigMenu extends FormApplication {
-    constructor(object, options) {
+    constructor(object, options = {}) {
         super(object, options);
-        this.configType = options.configType || 'combatRecommendation';
+        // Subclasses will set this.configType
     }
 
     static get defaultOptions() {
@@ -402,5 +400,25 @@ class LLMConfigMenu extends FormApplication {
         await game.settings.set(MODULE_ID, `${prefix}LocalEndpoint`, formData.localEndpoint || 'http://localhost:11434');
 
         ui.notifications.info(`${this.title} saved successfully`);
+    }
+}
+
+/**
+ * Action Cache LLM Configuration Menu
+ */
+class ActionCacheLLMConfigMenu extends LLMConfigMenu {
+    constructor(object, options) {
+        super(object, options);
+        this.configType = 'actionCache';
+    }
+}
+
+/**
+ * Combat Recommendation LLM Configuration Menu
+ */
+class CombatLLMConfigMenu extends LLMConfigMenu {
+    constructor(object, options) {
+        super(object, options);
+        this.configType = 'combatRecommendation';
     }
 }
