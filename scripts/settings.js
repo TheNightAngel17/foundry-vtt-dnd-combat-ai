@@ -97,6 +97,20 @@ export class CombatAISettings {
             default: 'medium'
         });
 
+        game.settings.register(MODULE_ID, 'openaiMaxCompletionTokens', {
+            name: 'OpenAI Max Completion Tokens',
+            hint: 'Maximum number of tokens to generate in the response (includes reasoning tokens for GPT-5)',
+            scope: 'world',
+            config: true,
+            type: Number,
+            default: 2000,
+            range: {
+                min: 500,
+                max: 8000,
+                step: 500
+            }
+        });
+
         // Anthropic specific settings
         game.settings.register(MODULE_ID, 'anthropicModel', {
             name: 'Anthropic Model',
@@ -212,6 +226,7 @@ export class CombatAISettings {
             apiKey: game.settings.get(MODULE_ID, 'apiKey'),
             openaiModel: game.settings.get(MODULE_ID, 'openaiModel'),
             openaiReasoningEffort: game.settings.get(MODULE_ID, 'openaiReasoningEffort'),
+            openaiMaxCompletionTokens: game.settings.get(MODULE_ID, 'openaiMaxCompletionTokens'),
             anthropicModel: game.settings.get(MODULE_ID, 'anthropicModel'),
             localLLMEndpoint: game.settings.get(MODULE_ID, 'localLLMEndpoint'),
             localLLMModel: game.settings.get(MODULE_ID, 'localLLMModel'),
