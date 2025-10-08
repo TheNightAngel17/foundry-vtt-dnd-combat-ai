@@ -80,6 +80,11 @@ export class LLMConnector {
         }
 
         const data = await response.json();
+        
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | OpenAI response data`, data);
+        }
+        
         return data.choices[0].message.content;
     }
 
