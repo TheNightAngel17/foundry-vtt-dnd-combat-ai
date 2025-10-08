@@ -96,6 +96,8 @@ export class CombatAIManager {
      * Build the prompt for the LLM
      */
     buildPrompt(situation, difficulty) {
+        const numRecommendations = game.settings.get(MODULE_ID, 'numRecommendations') || 3;
+        
         const difficultyDescriptions = {
             'easy': 'Play defensively and make suboptimal choices. Focus on simple attacks and avoid complex tactics.',
             'normal': 'Play tactically but not optimally. Make reasonable choices with occasional mistakes.',
@@ -103,6 +105,13 @@ export class CombatAIManager {
             'deadly': 'Play with ruthless efficiency. Use every advantage and tactical option available.',
             'tpk': 'Play to win at all costs. Use meta-knowledge and perfect tactics to maximize lethality.'
         };
+
+        // Build example recommendations dynamically based on numRecommendations
+        const exampleRecommendations = Array.from({ length: numRecommendations }, (_, i) => ({
+            action: "Action Name",
+            reasoning: "Brief tactical reasoning",
+            priority: i + 1
+        }));
 
         return `You are controlling an NPC in a D&D 5e combat encounter. Your goal is to play at a "${difficulty}" difficulty level.
 
@@ -130,37 +139,69 @@ ${situation.enemies.map(enemy => `- ${enemy.name}: ${enemy.hp} HP, AC ${enemy.ac
 Ally Analysis:
 ${situation.allies.map(ally => `- ${ally.name}: ${ally.hp} HP, AC ${ally.ac}, Distance: ${ally.distance}`).join('\n')}
 
-Please recommend the top 3 actions for this NPC to take, considering:
+Please recommend the top ${numRecommendations} action${numRecommendations > 1 ? 's' : ''} for this NPC to take, considering:
 1. The difficulty level specified
 2. Current tactical situation
 3. Available resources and abilities
 4. Positioning and battlefield control
 
-Format your response as:
-1. [Action Name] - [Brief reasoning]
-2. [Action Name] - [Brief reasoning]
-3. [Action Name] - [Brief reasoning]`;
+Respond with a JSON array of exactly ${numRecommendations} recommendation${numRecommendations > 1 ? 's' : ''} in this format:
+${JSON.stringify(exampleRecommendations, null, 2)}
+
+Respond ONLY with the JSON array, no additional text.`;
     }
 
     /**
      * Parse the AI response into structured recommendations
      */
     parseAIResponse(response) {
-        // Simple parsing - could be enhanced with more sophisticated NLP
-        const lines = response.split('\n').filter(line => line.match(/^\d+\./));
-        return lines.map(line => {
-            const match = line.match(/^\d+\.\s*\[?([^\]]+)\]?\s*-\s*(.+)$/);
-            if (match) {
-                return {
-                    action: match[1].trim(),
-                    reasoning: match[2].trim()
-                };
+        const numRecommendations = game.settings.get(MODULE_ID, 'numRecommendations') || 3;
+        
+        try {
+            // Try to extract JSON from response
+            const jsonMatch = response.match(/\[[\s\S]*\]/);
+            if (!jsonMatch) {
+                throw new Error('No JSON array found in response');
             }
-            return {
-                action: line.replace(/^\d+\.\s*/, ''),
-                reasoning: 'AI recommendation'
-            };
-        }).slice(0, 3); // Only take top 3
+
+            const parsed = JSON.parse(jsonMatch[0]);
+            
+            if (!Array.isArray(parsed)) {
+                throw new Error('Response is not an array');
+            }
+
+            // Map to our internal format and take configured number
+            return parsed.slice(0, numRecommendations).map(item => ({
+                action: item.action || 'Unknown Action',
+                reasoning: item.reasoning || 'No reasoning provided'
+            }));
+        } catch (error) {
+            console.error(`${MODULE_TITLE} | Failed to parse JSON response:`, error);
+            console.debug(`${MODULE_TITLE} | Raw response:`, response);
+            
+            // Fallback: try to parse old text format
+            const lines = response.split('\n').filter(line => line.match(/^\d+\./));
+            if (lines.length > 0) {
+                return lines.map(line => {
+                    const match = line.match(/^\d+\.\s*\[?([^\]]+)\]?\s*-\s*(.+)$/);
+                    if (match) {
+                        return {
+                            action: match[1].trim(),
+                            reasoning: match[2].trim()
+                        };
+                    }
+                    return {
+                        action: line.replace(/^\d+\.\s*/, ''),
+                        reasoning: 'AI recommendation'
+                    };
+                }).slice(0, numRecommendations);
+            }
+            
+            // Ultimate fallback
+            return [
+                { action: 'Parse Error', reasoning: 'Could not parse AI response. Check console for details.' }
+            ];
+        }
     }
 
     /**

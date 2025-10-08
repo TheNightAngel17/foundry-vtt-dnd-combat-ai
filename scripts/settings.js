@@ -155,6 +155,21 @@ export class CombatAISettings {
             default: true
         });
 
+        // Number of recommendations
+        game.settings.register(MODULE_ID, 'numRecommendations', {
+            name: 'Number of Recommendations',
+            hint: 'How many action recommendations to generate for each NPC turn',
+            scope: 'world',
+            config: true,
+            type: Number,
+            default: 3,
+            range: {
+                min: 1,
+                max: 5,
+                step: 1
+            }
+        });
+
         // Include player character names in prompts
         game.settings.register(MODULE_ID, 'includePlayerNames', {
             name: 'Include Player Names',
@@ -231,6 +246,7 @@ export class CombatAISettings {
             localLLMEndpoint: game.settings.get(MODULE_ID, 'localLLMEndpoint'),
             localLLMModel: game.settings.get(MODULE_ID, 'localLLMModel'),
             autoDisplay: game.settings.get(MODULE_ID, 'autoDisplay'),
+            numRecommendations: game.settings.get(MODULE_ID, 'numRecommendations'),
             includePlayerNames: game.settings.get(MODULE_ID, 'includePlayerNames'),
             contextTurns: game.settings.get(MODULE_ID, 'contextTurns'),
             requestTimeout: game.settings.get(MODULE_ID, 'requestTimeout'),
