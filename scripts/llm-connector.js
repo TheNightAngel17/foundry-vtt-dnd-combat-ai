@@ -55,7 +55,7 @@ export class LLMConnector {
                     content: prompt
                 }
             ],
-            max_output_tokens: 500,
+            max_completion_tokens: 500,
             temperature: Number.isFinite(temperature) ? temperature : 0.6
         };
 
