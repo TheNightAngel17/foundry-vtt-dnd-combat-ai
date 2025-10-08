@@ -1,0 +1,78 @@
+name: Release Foundry Module
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag (e.g., v1.0.0)"
+        required: true
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Determine release tag
+        id: release
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            tag="${{ github.event.inputs.tag }}"
+            if [ -z "$tag" ]; then
+              echo "A tag input is required when triggering manually." >&2
+              exit 1
+            fi
+          else
+            tag="${{ github.event.release.tag_name }}"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ steps.release.outputs.tag }}
+
+      - name: Ensure release exists (workflow dispatch only)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view "${{ steps.release.outputs.tag }}"
+
+      - name: Validate manifest version matches tag
+        run: |
+          TAG="${{ steps.release.outputs.tag }}"
+          VERSION=$(jq -r '.version' module.json)
+          if [ "$TAG" != "v$VERSION" ] && [ "$TAG" != "$VERSION" ]; then
+            echo "Release tag $TAG does not match module.json version $VERSION" >&2
+            exit 1
+          fi
+
+      - name: Prepare distribution folder
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          zip -r dist/module.zip \
+            module.json \
+            scripts \
+            styles \
+            lang \
+            README.md \
+            LICENSE \
+            CHANGELOG.md \
+            INSTALL.md \
+            EXAMPLES.md \
+            -x '**/.git*' '**/__pycache__*'
+          cp module.json dist/module.json
+
+      - name: Publish release assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ steps.release.outputs.tag }}" \
+            "dist/module.zip" \
+            "dist/module.json#module.json" \
+            --clobber

@@ -69,7 +69,7 @@ async function onCombatTurn(combat, updateData, options) {
     
     if (!combat) return;
     
-    const currentCombatant = combat.combatant;
+    const currentCombatant = combat.turns[updateData.turn];
     if (!currentCombatant) return;
     
     // Check if current combatant is an NPC
