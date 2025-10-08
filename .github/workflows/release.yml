@@ -98,6 +98,27 @@ jobs:
              module.json > module.json.tmp
           mv module.json.tmp module.json
 
+      - name: Prepare release notes
+        id: notes
+        run: |
+          VERSION="${{ steps.release.outputs.version }}"
+          PRERELEASE="${{ steps.release.outputs.prerelease }}"
+          
+          if [ -f ".github/RELEASE_TEMPLATE.md" ]; then
+            # Use template and replace version placeholder
+            sed "s/{{VERSION}}/$VERSION/g" .github/RELEASE_TEMPLATE.md > release_notes.md
+          else
+            echo "Automated release for version $VERSION." > release_notes.md
+          fi
+          
+          # Add CI build note if prerelease
+          if [ "$PRERELEASE" = "true" ]; then
+            echo "**CI Build - For Testing Only**" > release_notes.tmp
+            echo "" >> release_notes.tmp
+            cat release_notes.md >> release_notes.tmp
+            mv release_notes.tmp release_notes.md
+          fi
+
       - name: Ensure GitHub release exists
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -112,9 +133,9 @@ jobs:
             TITLE="D&D Combat AI $VERSION"
             if [ "$PRERELEASE" = "true" ]; then
               TITLE="$TITLE (CI Build)"
-              gh release create "$TAG" --title "$TITLE" --notes "Automated CI release for version $VERSION." --prerelease --latest=false
+              gh release create "$TAG" --title "$TITLE" --notes-file release_notes.md --prerelease --latest=false
             else
-              gh release create "$TAG" --title "$TITLE" --notes "Automated release for version $VERSION."
+              gh release create "$TAG" --title "$TITLE" --notes-file release_notes.md
             fi
           fi
 
