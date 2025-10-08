@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - 'releases/**'
   release:
     types:
       - published
@@ -30,6 +31,8 @@ jobs:
         id: release
         run: |
           EVENT="${{ github.event_name }}"
+          REF="${GITHUB_REF}"
+          prerelease="false"
 
           if [ "$EVENT" = "workflow_dispatch" ]; then
             tag="${{ github.event.inputs.tag }}"
@@ -47,27 +50,53 @@ jobs:
               echo "Unable to determine version from module.json" >&2
               exit 1
             fi
-            if [[ "$version" == v* ]]; then
-              tag="$version"
-              version="${version#v}"
+            
+            # Check if we're on a releases/** branch
+            if [[ "$REF" == refs/heads/releases/* ]]; then
+              # Use GitHub run number, padded to 8 digits
+              build_number=$(printf "%08d" ${{ github.run_number }})
+              tag="v${version}-ci-${build_number}"
+              prerelease="true"
+              echo "Building CI prerelease: $tag (build #$build_number)"
             else
-              tag="v$version"
-            fi
+              # Main branch - standard release
+              if [[ "$version" == v* ]]; then
+                tag="$version"
+                version="${version#v}"
+              else
+                tag="v$version"
+              fi
 
-            git fetch --tags --quiet
-            if git rev-parse -q --verify "refs/tags/$tag" >/dev/null 2>&1 || git ls-remote --tags origin "$tag" | grep -q "$tag"; then
-              echo "Tag $tag already exists. Bump the module.json version before merging to main." >&2
-              exit 1
+              git fetch --tags --quiet
+              if git rev-parse -q --verify "refs/tags/$tag" >/dev/null 2>&1 || git ls-remote --tags origin "$tag" | grep -q "$tag"; then
+                echo "Tag $tag already exists. Bump the module.json version before merging to main." >&2
+                exit 1
+              fi
             fi
           fi
 
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "prerelease=$prerelease" >> "$GITHUB_OUTPUT"
 
       - name: Checkout release ref
         if: github.event_name != 'push'
         run: |
           git checkout "${{ steps.release.outputs.tag }}"
+
+      - name: Update module.json for CI build
+        if: steps.release.outputs.prerelease == 'true'
+        run: |
+          TAG="${{ steps.release.outputs.tag }}"
+          VERSION="${TAG#v}"
+          
+          # Update version, manifest, and download URLs in module.json
+          jq --arg ver "$VERSION" \
+             --arg manifest "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai/releases/download/$TAG/module.json" \
+             --arg download "https://github.com/TheNightAngel17/foundry-vtt-dnd-combat-ai/releases/download/$TAG/module.zip" \
+             '.version = $ver | .manifest = $manifest | .download = $download' \
+             module.json > module.json.tmp
+          mv module.json.tmp module.json
 
       - name: Ensure GitHub release exists
         env:
@@ -75,14 +104,22 @@ jobs:
         run: |
           TAG="${{ steps.release.outputs.tag }}"
           VERSION="${{ steps.release.outputs.version }}"
+          PRERELEASE="${{ steps.release.outputs.prerelease }}"
+          
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "Release $TAG already exists"
           else
             TITLE="D&D Combat AI $VERSION"
-            gh release create "$TAG" --title "$TITLE" --notes "Automated release for version $VERSION."
+            if [ "$PRERELEASE" = "true" ]; then
+              TITLE="$TITLE (CI Build)"
+              gh release create "$TAG" --title "$TITLE" --notes "Automated CI release for version $VERSION." --prerelease --latest=false
+            else
+              gh release create "$TAG" --title "$TITLE" --notes "Automated release for version $VERSION."
+            fi
           fi
 
       - name: Validate manifest version matches tag
+        if: steps.release.outputs.prerelease != 'true'
         run: |
           TAG="${{ steps.release.outputs.tag }}"
           VERSION=$(jq -r '.version' module.json)
