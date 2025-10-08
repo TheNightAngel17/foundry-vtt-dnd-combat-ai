@@ -88,7 +88,10 @@ export class CombatAnalyzer {
 
                 // Check if the item has activities (new dnd5e system structure)
                 if (item.system?.activities && typeof item.system.activities === 'object') {
-                    const activityEntries = Object.entries(item.system.activities);
+                    // Handle both Map objects and plain objects
+                    const activityEntries = item.system.activities instanceof Map 
+                        ? Array.from(item.system.activities.entries())
+                        : Object.entries(item.system.activities);
                     
                     if (game.settings.get(MODULE_ID, 'debugMode')) {
                         console.debug(`${MODULE_TITLE} | Found ${activityEntries.length} activities in ${item.name}`);
