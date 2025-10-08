@@ -101,17 +101,18 @@ jobs:
       - name: Prepare release notes
         id: notes
         run: |
-          VERSION="${{ steps.release.outputs.version }}"
+          TAG="${{ steps.release.outputs.tag }}"
+          VERSION="${TAG#v}"
           PRERELEASE="${{ steps.release.outputs.prerelease }}"
           
           if [ -f ".github/RELEASE_TEMPLATE.md" ]; then
-            # Use template and replace version placeholder
+            # Use template and replace version placeholder with full tag (including -rc-######## if present)
             sed "s/{{VERSION}}/$VERSION/g" .github/RELEASE_TEMPLATE.md > release_notes.md
           else
             echo "Automated release for version $VERSION." > release_notes.md
           fi
           
-          # Add CI build note if prerelease
+          # Add RC build note if prerelease
           if [ "$PRERELEASE" = "true" ]; then
             echo "**Release Candidate - For Testing Only**" > release_notes.tmp
             echo "" >> release_notes.tmp
