@@ -39,7 +39,33 @@ export class LLMConnector {
      */
     async callOpenAI(prompt, apiKey) {
         const model = game.settings.get(MODULE_ID, 'openaiModel');
+        const temperature = game.settings.get(MODULE_ID, 'openaiTemperature') ?? 0.6;
+        const reasoningEffort = game.settings.get(MODULE_ID, 'openaiReasoningEffort') ?? 'medium';
         const url = 'https://api.openai.com/v1/chat/completions';
+
+        const payload = {
+            model: model,
+            messages: [
+                {
+                    role: 'system',
+                    content: 'You are a helpful D&D 5e Dungeon Master assistant that provides tactical combat advice for NPCs.'
+                },
+                {
+                    role: 'user',
+                    content: prompt
+                }
+            ],
+            max_tokens: 500,
+            temperature: Number.isFinite(temperature) ? temperature : 0.6
+        };
+
+        if (reasoningEffort) {
+            payload.reasoning_effort = reasoningEffort;
+        }
+
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | OpenAI request payload`, payload);
+        }
 
         const response = await fetch(url, {
             method: 'POST',
@@ -47,21 +73,7 @@ export class LLMConnector {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
             },
-            body: JSON.stringify({
-                model: model,
-                messages: [
-                    {
-                        role: 'system',
-                        content: 'You are a helpful D&D 5e Dungeon Master assistant that provides tactical combat advice for NPCs.'
-                    },
-                    {
-                        role: 'user',
-                        content: prompt
-                    }
-                ],
-                max_tokens: 500,
-                temperature: 0.7
-            })
+            body: JSON.stringify(payload)
         });
 
         if (!response.ok) {

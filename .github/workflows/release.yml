@@ -1,6 +1,9 @@
 name: Release Foundry Module
 
 on:
+  push:
+    branches:
+      - main
   release:
     types:
       - published
@@ -18,32 +21,66 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Determine release tag
         id: release
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          EVENT="${{ github.event_name }}"
+
+          if [ "$EVENT" = "workflow_dispatch" ]; then
             tag="${{ github.event.inputs.tag }}"
             if [ -z "$tag" ]; then
               echo "A tag input is required when triggering manually." >&2
               exit 1
             fi
-          else
+            version="${tag#v}"
+          elif [ "$EVENT" = "release" ]; then
             tag="${{ github.event.release.tag_name }}"
+            version="${tag#v}"
+          else
+            version=$(jq -r '.version' module.json)
+            if [ -z "$version" ] || [ "$version" = "null" ]; then
+              echo "Unable to determine version from module.json" >&2
+              exit 1
+            fi
+            if [[ "$version" == v* ]]; then
+              tag="$version"
+              version="${version#v}"
+            else
+              tag="v$version"
+            fi
+
+            git fetch --tags --quiet
+            if git rev-parse -q --verify "refs/tags/$tag" >/dev/null 2>&1 || git ls-remote --tags origin "$tag" | grep -q "$tag"; then
+              echo "Tag $tag already exists. Bump the module.json version before merging to main." >&2
+              exit 1
+            fi
           fi
+
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ steps.release.outputs.tag }}
+      - name: Checkout release ref
+        if: github.event_name != 'push'
+        run: |
+          git checkout "${{ steps.release.outputs.tag }}"
 
-      - name: Ensure release exists (workflow dispatch only)
-        if: github.event_name == 'workflow_dispatch'
+      - name: Ensure GitHub release exists
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release view "${{ steps.release.outputs.tag }}"
+          TAG="${{ steps.release.outputs.tag }}"
+          VERSION="${{ steps.release.outputs.version }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists"
+          else
+            TITLE="D&D Combat AI $VERSION"
+            gh release create "$TAG" --title "$TITLE" --notes "Automated release for version $VERSION."
+          fi
 
       - name: Validate manifest version matches tag
         run: |

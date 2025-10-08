@@ -75,12 +75,40 @@ export class CombatAISettings {
             config: true,
             type: String,
             choices: {
-                'gpt-3.5-turbo': 'GPT-3.5 Turbo (Fast, economical)',
-                'gpt-3.5-turbo-16k': 'GPT-3.5 Turbo 16K (Longer context)',
-                'gpt-4': 'GPT-4 (Most capable, slower)',
-                'gpt-4-turbo-preview': 'GPT-4 Turbo (Fast GPT-4)'
+                'gpt-5-nano': 'GPT-5 Nano (Fast, economical)',
+                'gpt-5-mini': 'GPT-5 Mini (Balanced)',
+                'gpt-5': 'GPT-5 (Most capable)'
             },
-            default: 'gpt-3.5-turbo'
+            default: 'gpt-5-mini'
+        });
+
+        game.settings.register(MODULE_ID, 'openaiTemperature', {
+            name: 'OpenAI Temperature',
+            hint: 'Controls randomness of OpenAI responses (0 = deterministic, 2 = very creative)',
+            scope: 'world',
+            config: true,
+            type: Number,
+            default: 0.6,
+            range: {
+                min: 0,
+                max: 2,
+                step: 0.1
+            }
+        });
+
+        game.settings.register(MODULE_ID, 'openaiReasoningEffort', {
+            name: 'OpenAI Reasoning Effort',
+            hint: 'How much reasoning time the model should spend (higher = more thorough, slower)',
+            scope: 'world',
+            config: true,
+            type: String,
+            choices: {
+                'minimal': 'Minimal (Fastest, minimal reasoning)',
+                'low': 'Low (Balanced speed and depth)',
+                'medium': 'Medium (Thorough planning)',
+                'high': 'High (Maximum reasoning time)'
+            },
+            default: 'medium'
         });
 
         // Anthropic specific settings
@@ -197,6 +225,8 @@ export class CombatAISettings {
             llmProvider: game.settings.get(MODULE_ID, 'llmProvider'),
             apiKey: game.settings.get(MODULE_ID, 'apiKey'),
             openaiModel: game.settings.get(MODULE_ID, 'openaiModel'),
+            openaiTemperature: game.settings.get(MODULE_ID, 'openaiTemperature'),
+            openaiReasoningEffort: game.settings.get(MODULE_ID, 'openaiReasoningEffort'),
             anthropicModel: game.settings.get(MODULE_ID, 'anthropicModel'),
             localLLMEndpoint: game.settings.get(MODULE_ID, 'localLLMEndpoint'),
             localLLMModel: game.settings.get(MODULE_ID, 'localLLMModel'),

@@ -2,7 +2,7 @@
  * Combat Analyzer - Analyzes combat situations for AI decision making
  */
 
-import { MODULE_TITLE } from './main.js';
+import { MODULE_ID, MODULE_TITLE } from './main.js';
 
 export class CombatAnalyzer {
     /**
@@ -11,7 +11,7 @@ export class CombatAnalyzer {
     analyzeCombatSituation(combat, currentCombatant) {
         const actor = currentCombatant.actor;
         
-        return {
+        const situation = {
             currentNPC: this.analyzeNPC(actor, currentCombatant),
             round: combat.round,
             turn: combat.turn,
@@ -22,6 +22,12 @@ export class CombatAnalyzer {
             recentActions: this.getRecentActions(combat),
             battlefieldConditions: this.getBattlefieldConditions(combat)
         };
+
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Combat situation analyzed`, situation);
+        }
+
+        return situation;
     }
 
     /**
