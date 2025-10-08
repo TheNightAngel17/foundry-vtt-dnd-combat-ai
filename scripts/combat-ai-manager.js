@@ -5,13 +5,49 @@
 import { MODULE_ID, MODULE_TITLE } from './main.js';
 import { LLMConnector } from './llm-connector.js';
 import { CombatAnalyzer } from './combat-analyzer.js';
+import { ActionCache } from './action-cache.js';
 
 export class CombatAIManager {
     constructor() {
         this.llmConnector = new LLMConnector();
-        this.combatAnalyzer = new CombatAnalyzer();
+        this.actionCache = new ActionCache();
+        this.combatAnalyzer = new CombatAnalyzer(this.actionCache);
         this.currentCombat = null;
         this.combatHistory = [];
+    }
+
+    /**
+     * Pre-cache all NPC actions when combat starts
+     */
+    async preCacheNPCActions(combat) {
+        if (!combat || !combat.combatants) return;
+
+        const npcCombatants = combat.combatants.filter(c => 
+            c.actor && !c.actor.hasPlayerOwner
+        );
+
+        if (npcCombatants.length === 0) {
+            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                console.debug(`${MODULE_TITLE} | No NPCs to pre-cache`);
+            }
+            return;
+        }
+
+        console.log(`${MODULE_TITLE} | Pre-caching actions for ${npcCombatants.length} NPCs...`);
+        
+        const promises = npcCombatants.map(async (combatant) => {
+            try {
+                await this.actionCache.getActorActions(combatant.actor, this.llmConnector);
+                if (game.settings.get(MODULE_ID, 'debugMode')) {
+                    console.debug(`${MODULE_TITLE} | Cached actions for ${combatant.actor.name}`);
+                }
+            } catch (error) {
+                console.error(`${MODULE_TITLE} | Failed to cache actions for ${combatant.actor.name}:`, error);
+            }
+        });
+
+        await Promise.all(promises);
+        console.log(`${MODULE_TITLE} | Finished pre-caching NPC actions`);
     }
 
     /**
@@ -23,8 +59,8 @@ export class CombatAIManager {
             
             this.currentCombat = combat;
             
-            // Analyze current combat situation
-            const combatSituation = this.combatAnalyzer.analyzeCombatSituation(combat, combatant);
+            // Analyze current combat situation (now async because it uses action cache)
+            const combatSituation = await this.combatAnalyzer.analyzeCombatSituation(combat, combatant, this.llmConnector);
             
             // Get difficulty setting
             const difficulty = game.settings.get(MODULE_ID, 'aiDifficulty');
@@ -210,6 +246,8 @@ Format your response as:
      */
     onCombatEnd(combat) {
         this.currentCombat = null;
+        // Clear expired cache entries when combat ends
+        this.actionCache.clearExpiredCache();
         console.log(`${MODULE_TITLE} | Combat tracking ended`);
     }
 }

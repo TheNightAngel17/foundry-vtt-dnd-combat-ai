@@ -86,10 +86,15 @@ async function onCombatTurn(combat, updateData, options) {
 /**
  * Handle combat start
  */
-function onCombatStart(combat) {
+async function onCombatStart(combat) {
     console.log(`${MODULE_TITLE} | Combat started`);
     if (combatAIManager) {
         combatAIManager.onCombatStart(combat);
+        
+        // Pre-cache NPC actions if AI is enabled
+        if (game.settings.get(MODULE_ID, 'enableAI')) {
+            await combatAIManager.preCacheNPCActions(combat);
+        }
     }
 }
 

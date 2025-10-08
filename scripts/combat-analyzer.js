@@ -5,10 +5,14 @@
 import { MODULE_ID, MODULE_TITLE } from './main.js';
 
 export class CombatAnalyzer {
+    constructor(actionCache) {
+        this.actionCache = actionCache;
+    }
+
     /**
      * Analyze the current combat situation for AI decision making
      */
-    analyzeCombatSituation(combat, currentCombatant) {
+    async analyzeCombatSituation(combat, currentCombatant, aiService) {
         const actor = currentCombatant.actor;
         
         const situation = {
@@ -16,7 +20,7 @@ export class CombatAnalyzer {
             round: combat.round,
             turn: combat.turn,
             initiativeOrder: this.getInitiativeOrder(combat),
-            availableActions: this.getAvailableActions(actor),
+            availableActions: await this.actionCache.getActorActions(actor, aiService),
             enemies: this.getEnemies(combat, currentCombatant),
             allies: this.getAllies(combat, currentCombatant),
             recentActions: this.getRecentActions(combat),
