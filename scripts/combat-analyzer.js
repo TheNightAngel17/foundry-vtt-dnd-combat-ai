@@ -58,6 +58,12 @@ export class CombatAnalyzer {
     getAvailableActions(actor) {
         const actions = [];
 
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Getting available actions for ${actor.name}`);
+            console.debug(`${MODULE_TITLE} | Actor has items:`, !!actor.items);
+            console.debug(`${MODULE_TITLE} | Items type:`, actor.items?.constructor?.name);
+        }
+
         // Basic actions
         actions.push(
             { name: 'Attack', description: 'Make a weapon or spell attack', type: 'action' },
@@ -69,36 +75,126 @@ export class CombatAnalyzer {
             { name: 'Search', description: 'Look for something', type: 'action' }
         );
 
-        // Add class features and spells if available
+        // Extract all activities from items
         if (actor.items) {
+            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                console.debug(`${MODULE_TITLE} | Processing ${actor.items.size || actor.items.length} items for ${actor.name}`);
+            }
+
             actor.items.forEach(item => {
-                if (item.type === 'feat' && item.system.activation?.type) {
+                if (game.settings.get(MODULE_ID, 'debugMode')) {
+                    console.debug(`${MODULE_TITLE} | Item: ${item.name}, Type: ${item.type}, Has activities: ${!!item.system?.activities}`, item.system?.activities);
+                }
+
+                // Check if the item has activities (new dnd5e system structure)
+                if (item.system?.activities && typeof item.system.activities === 'object') {
+                    const activityEntries = Object.entries(item.system.activities);
+                    
+                    if (game.settings.get(MODULE_ID, 'debugMode')) {
+                        console.debug(`${MODULE_TITLE} | Found ${activityEntries.length} activities in ${item.name}`);
+                    }
+
+                    activityEntries.forEach(([activityId, activity]) => {
+                        if (!activity || typeof activity !== 'object') {
+                            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                                console.warn(`${MODULE_TITLE} | Invalid activity in ${item.name}: ${activityId}`, activity);
+                            }
+                            return;
+                        }
+
+                        const actionData = {
+                            itemName: item.name,
+                            itemType: item.type,
+                            activityId: activityId,
+                            activityType: activity.type,
+                            name: `${item.name}${activity.type ? ` (${activity.type})` : ''}`,
+                            description: this.extractActivityDescription(item, activity),
+                            activation: activity.activation,
+                            uses: activity.uses || item.system.uses,
+                            consumption: activity.consumption,
+                            range: activity.range,
+                            target: activity.target,
+                            duration: activity.duration
+                        };
+
+                        // Add activity-specific details
+                        if (activity.type === 'attack') {
+                            actionData.attack = activity.attack;
+                            actionData.damage = activity.damage;
+                        } else if (activity.type === 'save') {
+                            actionData.save = activity.save;
+                            actionData.damage = activity.damage;
+                        } else if (activity.type === 'heal') {
+                            actionData.healing = activity.healing;
+                        } else if (activity.type === 'utility') {
+                            actionData.roll = activity.roll;
+                        }
+
+                        actions.push(actionData);
+
+                        if (game.settings.get(MODULE_ID, 'debugMode')) {
+                            console.debug(`${MODULE_TITLE} | Added activity: ${actionData.name}`);
+                        }
+                    });
+                }
+                // Fallback for legacy items without activities
+                else if (item.type === 'feat' && item.system.activation?.type) {
                     actions.push({
+                        itemName: item.name,
+                        itemType: item.type,
                         name: item.name,
                         description: item.system.description?.value || 'Special ability',
-                        type: item.system.activation.type,
+                        activation: item.system.activation,
                         uses: item.system.uses
                     });
                 } else if (item.type === 'spell' && item.system.preparation?.prepared) {
                     actions.push({
+                        itemName: item.name,
+                        itemType: item.type,
                         name: item.name,
                         description: item.system.description?.value || 'Spell',
-                        type: 'action',
+                        activation: { type: 'action', value: 1 },
                         level: item.system.level,
                         school: item.system.school
                     });
                 } else if (item.type === 'weapon') {
                     actions.push({
+                        itemName: item.name,
+                        itemType: item.type,
                         name: `Attack with ${item.name}`,
                         description: `${item.system.damage?.parts?.[0]?.[0] || '1d6'} damage`,
-                        type: 'action',
+                        activation: { type: 'action', value: 1 },
                         range: item.system.range
                     });
                 }
             });
         }
 
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Total actions found: ${actions.length}`, actions);
+        }
+
         return actions;
+    }
+
+    /**
+     * Extract a clean description from an activity
+     */
+    extractActivityDescription(item, activity) {
+        // Try to get description from activity first, then item
+        let description = activity.description?.value || item.system.description?.value || '';
+        
+        // Clean HTML tags for a simpler text representation
+        if (description) {
+            // Remove HTML tags but keep the text content
+            description = description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            // Limit length for AI context
+            if (description.length > 500) {
+                description = description.substring(0, 497) + '...';
+            }
+        }
+        
+        return description || `${activity.type} activity`;
     }
 
     /**
