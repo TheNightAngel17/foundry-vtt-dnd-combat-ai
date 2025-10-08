@@ -88,44 +88,49 @@ export class ActionCache {
         if (!actor.items) return rawActions;
 
         actor.items.forEach(item => {
-            if (item.system?.activities && typeof item.system.activities === 'object') {
-                const activityEntries = item.system.activities instanceof Map 
-                    ? Array.from(item.system.activities.entries())
-                    : Object.entries(item.system.activities);
-                
-                if (activityEntries.length === 0) return;
+            try {
+                if (item.system?.activities && typeof item.system.activities === 'object') {
+                    const activityEntries = item.system.activities instanceof Map 
+                        ? Array.from(item.system.activities.entries())
+                        : Object.entries(item.system.activities);
+                    
+                    if (activityEntries.length === 0) return;
 
-                // Collect all activation times
-                const activationTimes = activityEntries
-                    .map(([_, activity]) => activity?.activation?.type)
-                    .filter(type => type);
-                
-                let activationTime = 'action';
-                if (activationTimes.length === 1) {
-                    activationTime = activationTimes[0];
-                } else if (activationTimes.length > 1) {
-                    const uniqueTimes = [...new Set(activationTimes)];
-                    activationTime = uniqueTimes.length === 1 ? uniqueTimes[0] : 'multiple';
+                    // Collect all activation times
+                    const activationTimes = activityEntries
+                        .map(([_, activity]) => activity?.activation?.type)
+                        .filter(type => type);
+                    
+                    let activationTime = 'action';
+                    if (activationTimes.length === 1) {
+                        activationTime = activationTimes[0];
+                    } else if (activationTimes.length > 1) {
+                        const uniqueTimes = [...new Set(activationTimes)];
+                        activationTime = uniqueTimes.length === 1 ? uniqueTimes[0] : 'multiple';
+                    }
+
+                    // Extract detailed information for LLM processing
+                    const actionInfo = {
+                        name: item.name,
+                        itemType: item.type,
+                        activationTime: activationTime,
+                        rawDescription: item.system.description?.value || '',
+                        activities: activityEntries.map(([id, activity]) => ({
+                            type: activity.type,
+                            activationType: activity.activation?.type,
+                            damage: this.extractDamageInfo(activity),
+                            range: this.extractRangeInfo(activity),
+                            target: this.extractTargetInfo(activity),
+                            save: this.extractSaveInfo(activity),
+                            healing: this.extractHealingInfo(activity)
+                        }))
+                    };
+
+                    rawActions.push(actionInfo);
                 }
-
-                // Extract detailed information for LLM processing
-                const actionInfo = {
-                    name: item.name,
-                    itemType: item.type,
-                    activationTime: activationTime,
-                    rawDescription: item.system.description?.value || '',
-                    activities: activityEntries.map(([id, activity]) => ({
-                        type: activity.type,
-                        activationType: activity.activation?.type,
-                        damage: this.extractDamageInfo(activity),
-                        range: this.extractRangeInfo(activity),
-                        target: this.extractTargetInfo(activity),
-                        save: this.extractSaveInfo(activity),
-                        healing: this.extractHealingInfo(activity)
-                    }))
-                };
-
-                rawActions.push(actionInfo);
+            } catch (error) {
+                console.warn(`${MODULE_TITLE} | Error extracting action from item ${item.name}:`, error);
+                // Continue processing other items
             }
         });
 
@@ -136,11 +141,29 @@ export class ActionCache {
      * Extract damage information from activity
      */
     extractDamageInfo(activity) {
-        if (activity.damage?.parts && activity.damage.parts.length > 0) {
-            return activity.damage.parts.map(([formula, type]) => ({
-                formula: formula,
-                type: type
-            }));
+        if (activity.damage?.parts) {
+            // Handle both Map and Array formats
+            const parts = activity.damage.parts instanceof Map
+                ? Array.from(activity.damage.parts.values())
+                : activity.damage.parts;
+            
+            if (parts.length > 0) {
+                return parts.map(part => {
+                    // Handle both array [formula, type] and object {formula, type} formats
+                    if (Array.isArray(part)) {
+                        return {
+                            formula: part[0],
+                            type: part[1]
+                        };
+                    } else if (typeof part === 'object') {
+                        return {
+                            formula: part.formula || part.number || '',
+                            type: part.type || part.denomination || ''
+                        };
+                    }
+                    return null;
+                }).filter(p => p !== null);
+            }
         }
         return null;
     }
