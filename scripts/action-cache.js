@@ -226,25 +226,31 @@ export class ActionCache {
         
         return `You are helping to create concise, tactical descriptions of D&D 5e creature abilities for combat AI decision-making.
 
-For the creature "${actor.name}", I need you to analyze the following abilities and create clear, concise descriptions (max 100 words each) that focus on:
-1. What the ability does mechanically
-2. Key tactical considerations (damage, range, targets, special effects)
-3. If one item has multiple distinct activities, note them separately
+For the creature "${actor.name}", analyze ALL the following abilities and create a comprehensive action list:
 
-Here is the raw ability data:
+IMPORTANT RULES:
+1. Merge related actions intelligently (e.g., "Multiattack" that allows "3 bites" OR "2 tail lashes and 1 bite" should list all options)
+2. For items with multiple distinct activities, create separate entries (e.g., a staff that casts Fireball AND Lightning Bolt = 2 entries)
+3. Keep descriptions concise (max 150 characters) focusing on: damage, range, targets, special effects
+4. Include all combat-relevant options and variations
+
+Raw ability data:
 ${actionsJson}
 
-Please respond with a JSON array where each entry has:
+Respond with a JSON array where each entry has this exact structure:
 {
-    "name": "ability name",
+    "name": "ability name (with variants if applicable)",
     "description": "concise tactical description",
     "activationTime": "action/bonus/reaction/multiple",
     "itemType": "feat/spell/weapon"
 }
 
-If a single item has multiple distinct usable activities (like a staff that can cast fireball AND lightning bolt), create separate entries for each distinct use.
+EXAMPLES of good merging:
+- "Multiattack (3 Bites)" - description: "Make three bite attacks at +7, 2d6+4 piercing each"
+- "Multiattack (2 Claws, 1 Bite)" - description: "Alternative: two claw attacks +6, 1d8+3 slashing, one bite +7, 2d6+4 piercing"
+- "Staff of Power (Fireball)" - separate from "Staff of Power (Lightning Bolt)"
 
-Respond ONLY with valid JSON, no additional text.`;
+Respond ONLY with the JSON array, no other text.`;
     }
 
     /**
@@ -284,8 +290,8 @@ Respond ONLY with valid JSON, no additional text.`;
         if (!description) return 'No description available';
         
         let cleaned = description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-        if (cleaned.length > 100) {
-            cleaned = cleaned.substring(0, 97) + '...';
+        if (cleaned.length > 150) {
+            cleaned = cleaned.substring(0, 147) + '...';
         }
         return cleaned;
     }
