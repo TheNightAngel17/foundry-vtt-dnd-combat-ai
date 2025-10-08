@@ -55,9 +55,9 @@ jobs:
             if [[ "$REF" == refs/heads/releases/* ]]; then
               # Use GitHub run number, padded to 8 digits
               build_number=$(printf "%08d" ${{ github.run_number }})
-              tag="v${version}-ci-${build_number}"
+              tag="v${version}-rc-${build_number}"
               prerelease="true"
-              echo "Building CI prerelease: $tag (build #$build_number)"
+              echo "Building RC prerelease: $tag (build #$build_number)"
             else
               # Main branch - standard release
               if [[ "$version" == v* ]]; then
@@ -113,7 +113,7 @@ jobs:
           
           # Add CI build note if prerelease
           if [ "$PRERELEASE" = "true" ]; then
-            echo "**CI Build - For Testing Only**" > release_notes.tmp
+            echo "**Release Candidate - For Testing Only**" > release_notes.tmp
             echo "" >> release_notes.tmp
             cat release_notes.md >> release_notes.tmp
             mv release_notes.tmp release_notes.md
@@ -130,11 +130,11 @@ jobs:
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "Release $TAG already exists"
           else
-            TITLE="D&D Combat AI $VERSION"
             if [ "$PRERELEASE" = "true" ]; then
-              TITLE="$TITLE (CI Build)"
+              TITLE="D&D Combat AI ${TAG#v}"
               gh release create "$TAG" --title "$TITLE" --notes-file release_notes.md --prerelease --latest=false
             else
+              TITLE="D&D Combat AI $VERSION"
               gh release create "$TAG" --title "$TITLE" --notes-file release_notes.md
             fi
           fi
