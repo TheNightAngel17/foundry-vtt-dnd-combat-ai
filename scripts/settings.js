@@ -107,7 +107,7 @@ export class CombatAISettings {
             range: {
                 min: 500,
                 max: 8000,
-                step: 500
+                step: 100
             }
         });
 
