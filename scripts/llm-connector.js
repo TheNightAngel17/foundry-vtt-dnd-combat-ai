@@ -39,7 +39,6 @@ export class LLMConnector {
      */
     async callOpenAI(prompt, apiKey) {
         const model = game.settings.get(MODULE_ID, 'openaiModel');
-        const temperature = game.settings.get(MODULE_ID, 'openaiTemperature') ?? 0.6;
         const reasoningEffort = game.settings.get(MODULE_ID, 'openaiReasoningEffort') ?? 'medium';
         const url = 'https://api.openai.com/v1/chat/completions';
 
@@ -56,7 +55,6 @@ export class LLMConnector {
                 }
             ],
             max_completion_tokens: 500,
-            temperature: Number.isFinite(temperature) ? temperature : 0.6
         };
 
         if (reasoningEffort) {

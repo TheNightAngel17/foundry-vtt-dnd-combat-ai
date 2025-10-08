@@ -82,20 +82,6 @@ export class CombatAISettings {
             default: 'gpt-5-mini'
         });
 
-        game.settings.register(MODULE_ID, 'openaiTemperature', {
-            name: 'OpenAI Temperature',
-            hint: 'Controls randomness of OpenAI responses (0 = deterministic, 2 = very creative)',
-            scope: 'world',
-            config: true,
-            type: Number,
-            default: 0.6,
-            range: {
-                min: 0,
-                max: 2,
-                step: 0.1
-            }
-        });
-
         game.settings.register(MODULE_ID, 'openaiReasoningEffort', {
             name: 'OpenAI Reasoning Effort',
             hint: 'How much reasoning time the model should spend (higher = more thorough, slower)',
@@ -225,7 +211,6 @@ export class CombatAISettings {
             llmProvider: game.settings.get(MODULE_ID, 'llmProvider'),
             apiKey: game.settings.get(MODULE_ID, 'apiKey'),
             openaiModel: game.settings.get(MODULE_ID, 'openaiModel'),
-            openaiTemperature: game.settings.get(MODULE_ID, 'openaiTemperature'),
             openaiReasoningEffort: game.settings.get(MODULE_ID, 'openaiReasoningEffort'),
             anthropicModel: game.settings.get(MODULE_ID, 'anthropicModel'),
             localLLMEndpoint: game.settings.get(MODULE_ID, 'localLLMEndpoint'),
