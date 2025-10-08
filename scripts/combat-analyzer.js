@@ -66,25 +66,19 @@ export class CombatAnalyzer {
 
         // Basic actions
         actions.push(
-            { name: 'Attack', description: 'Make a weapon or spell attack', type: 'action' },
-            { name: 'Dash', description: 'Move up to your speed', type: 'action' },
-            { name: 'Dodge', description: 'Focus on avoiding attacks', type: 'action' },
-            { name: 'Help', description: 'Give an ally advantage on their next check', type: 'action' },
-            { name: 'Hide', description: 'Make a Stealth check', type: 'action' },
-            { name: 'Ready', description: 'Prepare an action for a specific trigger', type: 'action' },
-            { name: 'Search', description: 'Look for something', type: 'action' }
+            { name: 'Attack', description: 'Make a weapon or spell attack', activationTime: 'action', itemType: 'basic' },
+            { name: 'Dash', description: 'Move up to your speed', activationTime: 'action', itemType: 'basic' },
+            { name: 'Dodge', description: 'Focus on avoiding attacks', activationTime: 'action', itemType: 'basic' },
+            { name: 'Help', description: 'Give an ally advantage on their next check', activationTime: 'action', itemType: 'basic' },
+            { name: 'Hide', description: 'Make a Stealth check', activationTime: 'action', itemType: 'basic' },
+            { name: 'Ready', description: 'Prepare an action for a specific trigger', activationTime: 'action', itemType: 'basic' },
+            { name: 'Search', description: 'Look for something', activationTime: 'action', itemType: 'basic' }
         );
 
         // Extract all activities from items
         if (actor.items) {
-            if (game.settings.get(MODULE_ID, 'debugMode')) {
-                console.debug(`${MODULE_TITLE} | Processing ${actor.items.size || actor.items.length} items for ${actor.name}`);
-            }
 
             actor.items.forEach(item => {
-                if (game.settings.get(MODULE_ID, 'debugMode')) {
-                    console.debug(`${MODULE_TITLE} | Item: ${item.name}, Type: ${item.type}, Has activities: ${!!item.system?.activities}`, item.system?.activities);
-                }
 
                 // Check if the item has activities (new dnd5e system structure)
                 if (item.system?.activities && typeof item.system.activities === 'object') {
@@ -93,81 +87,55 @@ export class CombatAnalyzer {
                         ? Array.from(item.system.activities.entries())
                         : Object.entries(item.system.activities);
                     
-                    if (game.settings.get(MODULE_ID, 'debugMode')) {
-                        console.debug(`${MODULE_TITLE} | Found ${activityEntries.length} activities in ${item.name}`);
+                    // Skip items with no activities (loot, equipment, etc.)
+                    if (activityEntries.length === 0) {
+                        return;
+                    }
+                    
+                    // Collect all activation times from activities
+                    const activationTimes = activityEntries
+                        .map(([_, activity]) => activity?.activation?.type)
+                        .filter(type => type); // Remove undefined/null
+                    
+                    // Determine activation time: single value, "multiple", or default to "action"
+                    let activationTime = 'action';
+                    if (activationTimes.length === 1) {
+                        activationTime = activationTimes[0];
+                    } else if (activationTimes.length > 1) {
+                        const uniqueTimes = [...new Set(activationTimes)];
+                        activationTime = uniqueTimes.length === 1 ? uniqueTimes[0] : 'multiple';
                     }
 
-                    activityEntries.forEach(([activityId, activity]) => {
-                        if (!activity || typeof activity !== 'object') {
-                            if (game.settings.get(MODULE_ID, 'debugMode')) {
-                                console.warn(`${MODULE_TITLE} | Invalid activity in ${item.name}: ${activityId}`, activity);
-                            }
-                            return;
-                        }
+                    const actionData = {
+                        name: item.name,
+                        description: this.extractItemDescription(item),
+                        activationTime: activationTime,
+                        itemType: item.type
+                    };
 
-                        const actionData = {
-                            itemName: item.name,
-                            itemType: item.type,
-                            activityId: activityId,
-                            activityType: activity.type,
-                            name: `${item.name}${activity.type ? ` (${activity.type})` : ''}`,
-                            description: this.extractActivityDescription(item, activity),
-                            activation: activity.activation,
-                            uses: activity.uses || item.system.uses,
-                            consumption: activity.consumption,
-                            range: activity.range,
-                            target: activity.target,
-                            duration: activity.duration
-                        };
-
-                        // Add activity-specific details
-                        if (activity.type === 'attack') {
-                            actionData.attack = activity.attack;
-                            actionData.damage = activity.damage;
-                        } else if (activity.type === 'save') {
-                            actionData.save = activity.save;
-                            actionData.damage = activity.damage;
-                        } else if (activity.type === 'heal') {
-                            actionData.healing = activity.healing;
-                        } else if (activity.type === 'utility') {
-                            actionData.roll = activity.roll;
-                        }
-
-                        actions.push(actionData);
-
-                        if (game.settings.get(MODULE_ID, 'debugMode')) {
-                            console.debug(`${MODULE_TITLE} | Added activity: ${actionData.name}`);
-                        }
-                    });
+                    actions.push(actionData);
                 }
                 // Fallback for legacy items without activities
                 else if (item.type === 'feat' && item.system.activation?.type) {
                     actions.push({
-                        itemName: item.name,
-                        itemType: item.type,
                         name: item.name,
-                        description: item.system.description?.value || 'Special ability',
-                        activation: item.system.activation,
-                        uses: item.system.uses
+                        description: this.extractItemDescription(item),
+                        activationTime: item.system.activation.type,
+                        itemType: item.type
                     });
                 } else if (item.type === 'spell' && item.system.preparation?.prepared) {
                     actions.push({
-                        itemName: item.name,
-                        itemType: item.type,
                         name: item.name,
-                        description: item.system.description?.value || 'Spell',
-                        activation: { type: 'action', value: 1 },
-                        level: item.system.level,
-                        school: item.system.school
+                        description: this.extractItemDescription(item),
+                        activationTime: 'action',
+                        itemType: item.type
                     });
                 } else if (item.type === 'weapon') {
                     actions.push({
-                        itemName: item.name,
-                        itemType: item.type,
                         name: `Attack with ${item.name}`,
-                        description: `${item.system.damage?.parts?.[0]?.[0] || '1d6'} damage`,
-                        activation: { type: 'action', value: 1 },
-                        range: item.system.range
+                        description: this.extractItemDescription(item),
+                        activationTime: 'action',
+                        itemType: item.type
                     });
                 }
             });
@@ -181,11 +149,11 @@ export class CombatAnalyzer {
     }
 
     /**
-     * Extract a clean description from an activity
+     * Extract a clean description from an item
      */
-    extractActivityDescription(item, activity) {
-        // Try to get description from activity first, then item
-        let description = activity.description?.value || item.system.description?.value || '';
+    extractItemDescription(item) {
+        // Get description from item's system only
+        let description = item.system.description?.value || '';
         
         // Clean HTML tags for a simpler text representation
         if (description) {
@@ -197,7 +165,7 @@ export class CombatAnalyzer {
             }
         }
         
-        return description || `${activity.type} activity`;
+        return description || 'No description available';
     }
 
     /**
