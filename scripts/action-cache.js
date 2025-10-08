@@ -59,7 +59,7 @@ export class ActionCache {
         const prompt = this.buildDescriptionPrompt(actor, rawActions);
         
         try {
-            const response = await aiService.chat(prompt);
+            const response = await aiService.generateResponse(prompt);
             const parsedActions = this.parseActionDescriptions(response, rawActions);
             
             if (game.settings.get(MODULE_ID, 'debugMode')) {
