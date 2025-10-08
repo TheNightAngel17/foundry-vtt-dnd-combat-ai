@@ -299,3 +299,72 @@
 .window-app.dark .recommendations-list li:hover {
     background: var(--color-bg-dark-tertiary);
 }
+
+/* LLM Configuration Menu Styles */
+.llm-config-form {
+    padding: 10px;
+}
+
+.llm-config-form .form-group {
+    margin-bottom: 15px;
+}
+
+.llm-config-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--color-text-dark-primary);
+}
+
+.llm-config-form select,
+.llm-config-form input[type="text"],
+.llm-config-form input[type="password"],
+.llm-config-form input[type="number"] {
+    width: 100%;
+    padding: 5px 8px;
+    border: 1px solid var(--color-border-dark-primary);
+    border-radius: 3px;
+    background: var(--color-bg-option);
+    color: var(--color-text-dark-primary);
+}
+
+.llm-config-form input[type="number"] {
+    width: auto;
+    min-width: 120px;
+}
+
+.llm-config-form .notes {
+    margin: 5px 0 0 0;
+    font-size: 0.9em;
+    font-style: italic;
+    color: var(--color-text-dark-secondary);
+}
+
+.llm-config-form .provider-section {
+    padding: 10px;
+    background: var(--color-bg-btn);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.llm-config-form button[type="submit"] {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: var(--color-button-primary);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.llm-config-form button[type="submit"]:hover {
+    background: var(--color-button-primary-hover);
+}
+
+.llm-config-form button[type="submit"] i {
+    font-size: 0.9em;
+}

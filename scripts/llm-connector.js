@@ -13,22 +13,26 @@ export class LLMConnector {
 
     /**
      * Generate AI response using the configured LLM
+     * @param {string} prompt - The prompt to send to the LLM
+     * @param {string} configType - Either 'actionCache' or 'combatRecommendation' (default)
      */
-    async generateResponse(prompt) {
-        const provider = game.settings.get(MODULE_ID, 'llmProvider');
-        const apiKey = game.settings.get(MODULE_ID, 'apiKey');
+    async generateResponse(prompt, configType = 'combatRecommendation') {
+        // Get configuration for the specified type
+        const prefix = configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
+        const provider = game.settings.get(MODULE_ID, `${prefix}Provider`);
+        const apiKey = game.settings.get(MODULE_ID, `${prefix}ApiKey`);
 
-        if (!apiKey) {
-            throw new Error('No API key configured. Please configure your LLM API key in module settings.');
+        if (!apiKey && provider !== 'local') {
+            throw new Error(`No API key configured for ${configType}. Please configure your LLM API key in module settings.`);
         }
 
         switch (provider) {
             case 'openai':
-                return this.callOpenAI(prompt, apiKey);
+                return this.callOpenAI(prompt, apiKey, prefix);
             case 'anthropic':
-                return this.callAnthropic(prompt, apiKey);
+                return this.callAnthropic(prompt, apiKey, prefix);
             case 'local':
-                return this.callLocalLLM(prompt);
+                return this.callLocalLLM(prompt, prefix);
             default:
                 throw new Error(`Unsupported LLM provider: ${provider}`);
         }
@@ -36,11 +40,12 @@ export class LLMConnector {
 
     /**
      * Call OpenAI API
+     * @param {string} prefix - Settings prefix ('actionCacheLLM' or 'combatLLM')
      */
-    async callOpenAI(prompt, apiKey) {
-        const model = game.settings.get(MODULE_ID, 'openaiModel');
-        const reasoningEffort = game.settings.get(MODULE_ID, 'openaiReasoningEffort') ?? 'medium';
-        const maxCompletionTokens = game.settings.get(MODULE_ID, 'openaiMaxCompletionTokens') ?? 500;
+    async callOpenAI(prompt, apiKey, prefix) {
+        const model = game.settings.get(MODULE_ID, `${prefix}Model`);
+        const reasoningEffort = game.settings.get(MODULE_ID, `${prefix}ReasoningEffort`) ?? 'medium';
+        const maxCompletionTokens = game.settings.get(MODULE_ID, `${prefix}MaxTokens`) ?? 500;
         const url = 'https://api.openai.com/v1/chat/completions';
 
         const payload = {
@@ -91,9 +96,11 @@ export class LLMConnector {
 
     /**
      * Call Anthropic Claude API
+     * @param {string} prefix - Settings prefix ('actionCacheLLM' or 'combatLLM')
      */
-    async callAnthropic(prompt, apiKey) {
-        const model = game.settings.get(MODULE_ID, 'anthropicModel');
+    async callAnthropic(prompt, apiKey, prefix) {
+        const model = game.settings.get(MODULE_ID, `${prefix}Model`);
+        const maxTokens = game.settings.get(MODULE_ID, `${prefix}MaxTokens`) ?? 500;
         const url = 'https://api.anthropic.com/v1/messages';
 
         const response = await fetch(url, {
@@ -105,7 +112,7 @@ export class LLMConnector {
             },
             body: JSON.stringify({
                 model: model,
-                max_tokens: 500,
+                max_tokens: maxTokens,
                 messages: [
                     {
                         role: 'user',
@@ -126,10 +133,12 @@ export class LLMConnector {
 
     /**
      * Call local LLM endpoint (e.g., Ollama, LM Studio)
+     * @param {string} prefix - Settings prefix ('actionCacheLLM' or 'combatLLM')
      */
-    async callLocalLLM(prompt) {
-        const endpoint = game.settings.get(MODULE_ID, 'localLLMEndpoint');
-        const model = game.settings.get(MODULE_ID, 'localLLMModel');
+    async callLocalLLM(prompt, prefix) {
+        const endpoint = game.settings.get(MODULE_ID, `${prefix}LocalEndpoint`);
+        const model = game.settings.get(MODULE_ID, `${prefix}Model`);
+        const maxTokens = game.settings.get(MODULE_ID, `${prefix}MaxTokens`) ?? 500;
 
         if (!endpoint) {
             throw new Error('Local LLM endpoint not configured');
@@ -154,7 +163,7 @@ export class LLMConnector {
                             content: prompt
                         }
                     ],
-                    max_tokens: 500,
+                    max_tokens: maxTokens,
                     temperature: 0.7
                 })
             });

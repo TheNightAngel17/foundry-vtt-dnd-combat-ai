@@ -39,112 +39,6 @@ export class CombatAISettings {
             default: 'normal'
         });
 
-        // LLM Provider
-        game.settings.register(MODULE_ID, 'llmProvider', {
-            name: 'LLM Provider',
-            hint: 'Choose your preferred Large Language Model provider',
-            scope: 'world',
-            config: true,
-            type: String,
-            choices: {
-                'openai': 'OpenAI (ChatGPT)',
-                'anthropic': 'Anthropic (Claude)',
-                'local': 'Local LLM (Ollama, LM Studio, etc.)'
-            },
-            default: 'openai',
-            onChange: value => {
-                this.onProviderChange(value);
-            }
-        });
-
-        // API Key (sensitive)
-        game.settings.register(MODULE_ID, 'apiKey', {
-            name: 'API Key',
-            hint: 'Your API key for the selected LLM provider (stored securely)',
-            scope: 'world',
-            config: true,
-            type: String,
-            default: ''
-        });
-
-        // OpenAI specific settings
-        game.settings.register(MODULE_ID, 'openaiModel', {
-            name: 'OpenAI Model',
-            hint: 'Which OpenAI model to use for combat AI',
-            scope: 'world',
-            config: true,
-            type: String,
-            choices: {
-                'gpt-5-nano': 'GPT-5 Nano (Fast, economical)',
-                'gpt-5-mini': 'GPT-5 Mini (Balanced)',
-                'gpt-5': 'GPT-5 (Most capable)'
-            },
-            default: 'gpt-5-mini'
-        });
-
-        game.settings.register(MODULE_ID, 'openaiReasoningEffort', {
-            name: 'OpenAI Reasoning Effort',
-            hint: 'How much reasoning time the model should spend (higher = more thorough, slower)',
-            scope: 'world',
-            config: true,
-            type: String,
-            choices: {
-                'minimal': 'Minimal (Fastest, minimal reasoning)',
-                'low': 'Low (Balanced speed and depth)',
-                'medium': 'Medium (Thorough planning)',
-                'high': 'High (Maximum reasoning time)'
-            },
-            default: 'medium'
-        });
-
-        game.settings.register(MODULE_ID, 'openaiMaxCompletionTokens', {
-            name: 'OpenAI Max Completion Tokens',
-            hint: 'Maximum number of tokens to generate in the response (includes reasoning tokens for GPT-5)',
-            scope: 'world',
-            config: true,
-            type: Number,
-            default: 2000,
-            range: {
-                min: 500,
-                max: 8000,
-                step: 100
-            }
-        });
-
-        // Anthropic specific settings
-        game.settings.register(MODULE_ID, 'anthropicModel', {
-            name: 'Anthropic Model',
-            hint: 'Which Claude model to use for combat AI',
-            scope: 'world',
-            config: true,
-            type: String,
-            choices: {
-                'claude-3-haiku-20240307': 'Claude 3 Haiku (Fast, economical)',
-                'claude-3-sonnet-20240229': 'Claude 3 Sonnet (Balanced)',
-                'claude-3-opus-20240229': 'Claude 3 Opus (Most capable)'
-            },
-            default: 'claude-3-haiku-20240307'
-        });
-
-        // Local LLM settings
-        game.settings.register(MODULE_ID, 'localLLMEndpoint', {
-            name: 'Local LLM Endpoint',
-            hint: 'URL for your local LLM server (e.g., http://localhost:11434 for Ollama)',
-            scope: 'world',
-            config: true,
-            type: String,
-            default: 'http://localhost:11434'
-        });
-
-        game.settings.register(MODULE_ID, 'localLLMModel', {
-            name: 'Local LLM Model',
-            hint: 'Model name to use with your local LLM server',
-            scope: 'world',
-            config: true,
-            type: String,
-            default: 'llama2'
-        });
-
         // Auto-display recommendations
         game.settings.register(MODULE_ID, 'autoDisplay', {
             name: 'Auto-display Recommendations',
@@ -219,15 +113,140 @@ export class CombatAISettings {
             type: Boolean,
             default: false
         });
-    }
 
-    /**
-     * Handle provider change - show/hide relevant settings
-     */
-    static onProviderChange(provider) {
-        // This could be used to dynamically show/hide settings based on provider
-        // For now, just log the change
-        console.log('LLM provider changed to:', provider);
+        // ========================================
+        // Action Cache LLM Configuration
+        // ========================================
+        
+        game.settings.registerMenu(MODULE_ID, 'actionCacheLLMConfig', {
+            name: 'Action Cache LLM Settings',
+            label: 'Configure Action Cache LLM',
+            hint: 'Configure the LLM used for generating cached action descriptions',
+            icon: 'fas fa-database',
+            type: LLMConfigMenu,
+            restricted: true,
+            configType: 'actionCache'
+        });
+
+        // Action Cache LLM - Simplified settings
+        game.settings.register(MODULE_ID, 'actionCacheLLMProvider', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: 'local',
+            choices: {
+                'openai': 'OpenAI',
+                'anthropic': 'Anthropic',
+                'local': 'Local'
+            }
+        });
+
+        game.settings.register(MODULE_ID, 'actionCacheLLMApiKey', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: ''
+        });
+
+        game.settings.register(MODULE_ID, 'actionCacheLLMModel', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: 'llama3.2'
+        });
+
+        game.settings.register(MODULE_ID, 'actionCacheLLMMaxTokens', {
+            scope: 'world',
+            config: false,
+            type: Number,
+            default: 1000
+        });
+
+        game.settings.register(MODULE_ID, 'actionCacheLLMReasoningEffort', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: 'low',
+            choices: {
+                'low': 'Low',
+                'medium': 'Medium',
+                'high': 'High'
+            }
+        });
+
+        game.settings.register(MODULE_ID, 'actionCacheLLMLocalEndpoint', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: 'http://localhost:11434'
+        });
+
+        // ========================================
+        // Combat Recommendation LLM Configuration
+        // ========================================
+        
+        game.settings.registerMenu(MODULE_ID, 'combatLLMConfig', {
+            name: 'Combat Recommendation LLM Settings',
+            label: 'Configure Combat LLM',
+            hint: 'Configure the LLM used for generating combat recommendations',
+            icon: 'fas fa-brain',
+            type: LLMConfigMenu,
+            restricted: true,
+            configType: 'combatRecommendation'
+        });
+
+        // Combat LLM - Simplified settings
+        game.settings.register(MODULE_ID, 'combatLLMProvider', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: 'openai',
+            choices: {
+                'openai': 'OpenAI',
+                'anthropic': 'Anthropic',
+                'local': 'Local'
+            }
+        });
+
+        game.settings.register(MODULE_ID, 'combatLLMApiKey', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: ''
+        });
+
+        game.settings.register(MODULE_ID, 'combatLLMModel', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: 'gpt-4o-mini'
+        });
+
+        game.settings.register(MODULE_ID, 'combatLLMMaxTokens', {
+            scope: 'world',
+            config: false,
+            type: Number,
+            default: 2000
+        });
+
+        game.settings.register(MODULE_ID, 'combatLLMReasoningEffort', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: 'medium',
+            choices: {
+                'low': 'Low',
+                'medium': 'Medium',
+                'high': 'High'
+            }
+        });
+
+        game.settings.register(MODULE_ID, 'combatLLMLocalEndpoint', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: 'http://localhost:11434'
+        });
     }
 
     /**
@@ -237,14 +256,6 @@ export class CombatAISettings {
         return {
             enableAI: game.settings.get(MODULE_ID, 'enableAI'),
             aiDifficulty: game.settings.get(MODULE_ID, 'aiDifficulty'),
-            llmProvider: game.settings.get(MODULE_ID, 'llmProvider'),
-            apiKey: game.settings.get(MODULE_ID, 'apiKey'),
-            openaiModel: game.settings.get(MODULE_ID, 'openaiModel'),
-            openaiReasoningEffort: game.settings.get(MODULE_ID, 'openaiReasoningEffort'),
-            openaiMaxCompletionTokens: game.settings.get(MODULE_ID, 'openaiMaxCompletionTokens'),
-            anthropicModel: game.settings.get(MODULE_ID, 'anthropicModel'),
-            localLLMEndpoint: game.settings.get(MODULE_ID, 'localLLMEndpoint'),
-            localLLMModel: game.settings.get(MODULE_ID, 'localLLMModel'),
             autoDisplay: game.settings.get(MODULE_ID, 'autoDisplay'),
             numRecommendations: game.settings.get(MODULE_ID, 'numRecommendations'),
             includePlayerNames: game.settings.get(MODULE_ID, 'includePlayerNames'),
@@ -265,17 +276,131 @@ export class CombatAISettings {
             return { valid: true, issues: ['AI assistance is disabled'] };
         }
 
-        if (!settings.apiKey && settings.llmProvider !== 'local') {
-            issues.push('API key is required for cloud providers');
+        // Validate Action Cache LLM config
+        const actionCacheConfig = this.getLLMConfig('actionCache');
+        if (actionCacheConfig.provider !== 'local' && !actionCacheConfig.apiKey) {
+            issues.push('Action Cache: API key is required for cloud providers');
+        }
+        if (actionCacheConfig.provider === 'local' && !actionCacheConfig.localEndpoint) {
+            issues.push('Action Cache: Local LLM endpoint URL is required');
         }
 
-        if (settings.llmProvider === 'local' && !settings.localLLMEndpoint) {
-            issues.push('Local LLM endpoint URL is required');
+        // Validate Combat Recommendation LLM config
+        const combatConfig = this.getLLMConfig('combatRecommendation');
+        if (combatConfig.provider !== 'local' && !combatConfig.apiKey) {
+            issues.push('Combat Recommendations: API key is required for cloud providers');
+        }
+        if (combatConfig.provider === 'local' && !combatConfig.localEndpoint) {
+            issues.push('Combat Recommendations: Local LLM endpoint URL is required');
         }
 
         return {
             valid: issues.length === 0,
             issues: issues
         };
+    }
+
+    /**
+     * Get LLM configuration for a specific purpose
+     */
+    static getLLMConfig(configType) {
+        const prefix = configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
+        
+        return {
+            provider: game.settings.get(MODULE_ID, `${prefix}Provider`),
+            apiKey: game.settings.get(MODULE_ID, `${prefix}ApiKey`),
+            model: game.settings.get(MODULE_ID, `${prefix}Model`),
+            maxTokens: game.settings.get(MODULE_ID, `${prefix}MaxTokens`),
+            reasoningEffort: game.settings.get(MODULE_ID, `${prefix}ReasoningEffort`),
+            localEndpoint: game.settings.get(MODULE_ID, `${prefix}LocalEndpoint`)
+        };
+    }
+}
+
+/**
+ * LLM Configuration Menu
+ */
+class LLMConfigMenu extends FormApplication {
+    constructor(object, options) {
+        super(object, options);
+        this.configType = options.configType || 'combatRecommendation';
+    }
+
+    static get defaultOptions() {
+        return foundry.utils.mergeObject(super.defaultOptions, {
+            classes: ['dnd-combat-ai', 'llm-config'],
+            width: 600,
+            height: 'auto',
+            closeOnSubmit: true,
+            submitOnChange: false,
+            tabs: []
+        });
+    }
+
+    get title() {
+        return this.configType === 'actionCache' 
+            ? 'Action Cache LLM Configuration' 
+            : 'Combat Recommendation LLM Configuration';
+    }
+
+    getData() {
+        const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
+        const provider = game.settings.get(MODULE_ID, `${prefix}Provider`);
+        
+        return {
+            configType: this.configType,
+            provider: provider,
+            apiKey: game.settings.get(MODULE_ID, `${prefix}ApiKey`),
+            model: game.settings.get(MODULE_ID, `${prefix}Model`),
+            maxTokens: game.settings.get(MODULE_ID, `${prefix}MaxTokens`),
+            reasoningEffort: game.settings.get(MODULE_ID, `${prefix}ReasoningEffort`),
+            localEndpoint: game.settings.get(MODULE_ID, `${prefix}LocalEndpoint`),
+            isOpenAI: provider === 'openai',
+            isAnthropic: provider === 'anthropic',
+            isLocal: provider === 'local'
+        };
+    }
+
+    get template() {
+        return `modules/dnd-combat-ai/templates/llm-config.hbs`;
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+
+        html.find('[name="provider"]').on('change', event => {
+            const provider = event.target.value;
+            const isOpenAI = provider === 'openai';
+            const isAnthropic = provider === 'anthropic';
+            const isLocal = provider === 'local';
+            
+            // Show/hide sections based on provider
+            html.find('.api-key-group').toggle(!isLocal);
+            html.find('.reasoning-group').toggle(isOpenAI);
+            html.find('.local-group').toggle(isLocal);
+            
+            // Update model placeholder and suggestions
+            const modelInput = html.find('[name="model"]');
+            if (isOpenAI) {
+                modelInput.attr('placeholder', 'gpt-4o-mini');
+            } else if (isAnthropic) {
+                modelInput.attr('placeholder', 'claude-3-5-haiku-20241022');
+            } else {
+                modelInput.attr('placeholder', 'llama3.2');
+            }
+        });
+    }
+
+    async _updateObject(event, formData) {
+        const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
+        
+        await game.settings.set(MODULE_ID, `${prefix}Provider`, formData.provider);
+        await game.settings.set(MODULE_ID, `${prefix}ApiKey`, formData.apiKey || '');
+        await game.settings.set(MODULE_ID, `${prefix}Model`, formData.model || 'llama3.2');
+        await game.settings.set(MODULE_ID, `${prefix}MaxTokens`, formData.maxTokens || 1000);
+        await game.settings.set(MODULE_ID, `${prefix}ReasoningEffort`, formData.reasoningEffort || 'low');
+        await game.settings.set(MODULE_ID, `${prefix}LocalEndpoint`, formData.localEndpoint || 'http://localhost:11434');
+
+        ui.notifications.info(`${this.title} saved successfully`);
     }
 }

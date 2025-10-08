@@ -84,7 +84,7 @@ export class CombatAIManager {
         const prompt = this.buildPrompt(situation, difficulty);
         
         try {
-            const response = await this.llmConnector.generateResponse(prompt);
+            const response = await this.llmConnector.generateResponse(prompt, 'combatRecommendation');
             return this.parseAIResponse(response);
         } catch (error) {
             console.error(`${MODULE_TITLE} | LLM generation failed:`, error);
