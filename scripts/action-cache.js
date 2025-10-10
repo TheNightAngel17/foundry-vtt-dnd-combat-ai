@@ -241,7 +241,7 @@ Respond with a JSON array where each entry has this exact structure:
 {
     "name": "ability name (with variants if applicable)",
     "description": "concise tactical description",
-    "activationTime": "action/bonus/reaction/multiple",
+    "activationTime": "action/bonus/reaction/legendary/lair",
     "itemType": "feat/spell/weapon"
 }
 
