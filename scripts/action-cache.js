@@ -222,7 +222,7 @@ export class ActionCache {
      * Build prompt for LLM to create action descriptions
      */
     buildDescriptionPrompt(actor, rawActions) {
-        const actionsJson = JSON.stringify(rawActions, null, 2);
+        const actionsJson = JSON.stringify(rawActions);
         
         return `You are helping to create concise, tactical descriptions of D&D 5e creature abilities for combat AI decision-making.
 

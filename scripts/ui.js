@@ -21,6 +21,9 @@ export class CombatAIUI {
         Hooks.on('renderCombatTracker', (app, html, data) => {
             if (!game.user.isGM) return;
 
+            // Ensure html is a jQuery object
+            html = html instanceof jQuery ? html : $(html);
+
             const header = html.find('#combat-tracker .window-title');
             if (header.length === 0) return;
 
