@@ -16,15 +16,18 @@ export class CombatAIUI {
 
     /**
      * Add combat controls to the combat tracker
+     * TODO: Re-enable this feature once UI injection is more stable
      */
     static addCombatControls() {
+        // Temporarily disabled - causing issues with hook errors
+        /*
         Hooks.on('renderCombatTracker', (app, html, data) => {
             if (!game.user.isGM) return;
 
-            // Ensure html is a jQuery object
-            html = html instanceof jQuery ? html : $(html);
+            // Ensure html is a jQuery object - handle both jQuery objects and HTML elements
+            const $html = html instanceof jQuery ? html : $(html);
 
-            const header = html.find('#combat-tracker .window-title');
+            const header = $html.find('.window-title');
             if (header.length === 0) return;
 
             // Add AI difficulty selector
@@ -69,6 +72,7 @@ export class CombatAIUI {
                 });
             }
         });
+        */
     }
 
     /**

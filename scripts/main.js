@@ -54,11 +54,37 @@ function setupCombatHooks() {
     // Hook into combat turn changes
     Hooks.on('combatTurn', onCombatTurn);
     
+    // Hook into combat round changes (for first turn of new round)
+    Hooks.on('combatRound', onCombatRound);
+    
     // Hook into combat start
     Hooks.on('combatStart', onCombatStart);
     
     // Hook into combat end
     Hooks.on('combatEnd', onCombatEnd);
+    
+    // Hook into combatant creation to pre-cache NPC actions
+    Hooks.on('createCombatant', onCreateCombatant);
+}
+
+/**
+ * Handle NPC turn (shared logic for turn and round changes)
+ */
+async function handleNPCTurnIfNeeded(combat, turnIndex, context) {
+    const currentCombatant = combat?.turns?.[turnIndex];
+    console.log(`${MODULE_TITLE} | Current combatant (${context}):`, currentCombatant?.name || currentCombatant?.actor?.name || 'none', currentCombatant);
+    
+    if (!combat || !currentCombatant) return;
+
+    // Check if current combatant is an NPC
+    if (currentCombatant.actor && !currentCombatant.actor.hasPlayerOwner) {
+        console.log(`${MODULE_TITLE} | NPC turn detected (${context}): ${currentCombatant.actor.name}`);
+
+        // Only proceed if AI assistance is enabled
+        if (game.settings.get(MODULE_ID, 'enableAI')) {
+            await combatAIManager.handleNPCTurn(combat, currentCombatant);
+        }
+    }
 }
 
 /**
@@ -66,21 +92,16 @@ function setupCombatHooks() {
  */
 async function onCombatTurn(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat turn changed`);
-    
-    if (!combat) return;
-    
-    const currentCombatant = combat.turns[updateData.turn];
-    if (!currentCombatant) return;
-    
-    // Check if current combatant is an NPC
-    if (currentCombatant.actor && !currentCombatant.actor.hasPlayerOwner) {
-        console.log(`${MODULE_TITLE} | NPC turn detected: ${currentCombatant.actor.name}`);
-        
-        // Only proceed if AI assistance is enabled
-        if (game.settings.get(MODULE_ID, 'enableAI')) {
-            await combatAIManager.handleNPCTurn(combat, currentCombatant);
-        }
-    }
+    await handleNPCTurnIfNeeded(combat, updateData.turn, 'turn change');
+}
+
+/**
+ * Handle combat round changes (first turn of new round)
+ */
+async function onCombatRound(combat, updateData, options) {
+    console.log(`${MODULE_TITLE} | Combat round changed to round ${updateData.round}`);
+    // When a new round starts, get the first combatant (turn 0)
+    await handleNPCTurnIfNeeded(combat, 0, 'round change');
 }
 
 /**
@@ -90,11 +111,24 @@ async function onCombatStart(combat) {
     console.log(`${MODULE_TITLE} | Combat started`);
     if (combatAIManager) {
         combatAIManager.onCombatStart(combat);
-        
-        // Pre-cache NPC actions if AI is enabled
-        if (game.settings.get(MODULE_ID, 'enableAI')) {
-            await combatAIManager.preCacheNPCActions(combat);
-        }
+    }
+}
+
+/**
+ * Handle combatant creation - pre-cache NPC actions
+ */
+async function onCreateCombatant(combatant, options, userId) {
+    // Only proceed if AI is enabled and this is an NPC
+    if (!game.settings.get(MODULE_ID, 'enableAI')) return;
+    if (!combatant.actor || combatant.actor.hasPlayerOwner) return;
+    
+    console.log(`${MODULE_TITLE} | NPC added to combat: ${combatant.actor.name}, pre-caching actions...`);
+    
+    try {
+        await combatAIManager.actionCache.getActorActions(combatant.actor, combatAIManager.llmConnector);
+        console.log(`${MODULE_TITLE} | Successfully cached actions for ${combatant.actor.name}`);
+    } catch (error) {
+        console.error(`${MODULE_TITLE} | Failed to cache actions for ${combatant.actor.name}:`, error);
     }
 }
 

@@ -63,7 +63,7 @@ export class ActionCache {
             const parsedActions = this.parseActionDescriptions(response, rawActions);
             
             if (game.settings.get(MODULE_ID, 'debugMode')) {
-                console.debug(`${MODULE_TITLE} | Generated ${parsedActions.length} action descriptions for ${actor.name}`);
+                console.log(`${MODULE_TITLE} | Generated ${parsedActions.length} action descriptions for ${actor.name}:`, parsedActions);
             }
             
             return parsedActions;

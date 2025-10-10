@@ -68,7 +68,7 @@ export class LLMConnector {
         }
 
         if (game.settings.get(MODULE_ID, 'debugMode')) {
-            console.debug(`${MODULE_TITLE} | OpenAI request payload`, payload);
+            console.log(`${MODULE_TITLE} | OpenAI request payload:`, payload);
         }
 
         const response = await fetch(url, {
@@ -88,7 +88,7 @@ export class LLMConnector {
         const data = await response.json();
         
         if (game.settings.get(MODULE_ID, 'debugMode')) {
-            console.debug(`${MODULE_TITLE} | OpenAI response data`, data);
+            console.log(`${MODULE_TITLE} | OpenAI response data:`, data);
         }
         
         return data.choices[0].message.content;
