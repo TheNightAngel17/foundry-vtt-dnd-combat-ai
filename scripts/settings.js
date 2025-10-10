@@ -360,7 +360,7 @@ class LLMConfigMenu extends FormApplication {
     }
 
     get template() {
-        return `modules/dnd-combat-ai/templates/llm-config.hbs`;
+        return 'modules/dnd-combat-ai/templates/llm-config.hbs';
     }
 
     activateListeners(html) {

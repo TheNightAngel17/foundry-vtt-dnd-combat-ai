@@ -6,7 +6,7 @@
             <option value="anthropic" {{#if isAnthropic}}selected{{/if}}>Anthropic</option>
             <option value="local" {{#if isLocal}}selected{{/if}}>Local (Ollama/LM Studio)</option>
         </select>
-        <p class="notes">Choose which LLM provider to use for {{#if (eq configType 'actionCache')}}generating cached action descriptions{{else}}combat recommendations{{/if}}</p>
+        <p class="notes">Choose which LLM provider to use for this configuration</p>
     </div>
 
     <!-- API Key (for OpenAI and Anthropic) -->
