@@ -275,9 +275,9 @@ export class CombatAnalyzer {
 
         const results = [];
         
-        // Handle value array (standard damage types)
-        if (traits.value && Array.isArray(traits.value)) {
-            results.push(...traits.value);
+        // Handle value Set (standard damage types)
+        if (traits.value && traits.value instanceof Set) {
+            results.push(...Array.from(traits.value));
         }
         
         // Handle custom string
@@ -297,9 +297,9 @@ export class CombatAnalyzer {
 
         const results = [];
         
-        // Handle value array (standard conditions)
-        if (conditionImmunities.value && Array.isArray(conditionImmunities.value)) {
-            results.push(...conditionImmunities.value);
+        // Handle value Set (standard conditions)
+        if (conditionImmunities.value && conditionImmunities.value instanceof Set) {
+            results.push(...Array.from(conditionImmunities.value));
         }
         
         // Handle custom string

@@ -118,34 +118,13 @@ export class CombatAISettings {
         // DDB Importer Configuration
         // ========================================
         
-        game.settings.registerMenu(MODULE_ID, 'ddbImporterConfig', {
-            name: 'DDB Importer Settings',
-            label: 'Configure DDB Importer',
-            hint: 'Configure D&D Beyond Importer integration',
-            icon: 'fas fa-file-import',
-            type: DDBImporterConfigMenu,
-            restricted: true
-        });
-
         game.settings.register(MODULE_ID, 'useDDBImporter', {
+            name: 'Use DDB Importer Integration',
+            hint: 'Enable integration with D&D Beyond Importer module (if installed)',
             scope: 'world',
-            config: false,
+            config: true,
             type: Boolean,
             default: false
-        });
-
-        game.settings.register(MODULE_ID, 'ddbImporterUrl', {
-            scope: 'world',
-            config: false,
-            type: String,
-            default: ''
-        });
-
-        game.settings.register(MODULE_ID, 'cobaltSession', {
-            scope: 'world',
-            config: false,
-            type: String,
-            default: ''
         });
 
         // ========================================
@@ -352,10 +331,73 @@ export class CombatAISettings {
      * Get DDB Importer configuration
      */
     static getDDBImporterConfig() {
+        const useDDBImporter = game.settings.get(MODULE_ID, 'useDDBImporter');
+        
+        // If not using DDB Importer, return empty config
+        if (!useDDBImporter) {
+            return {
+                useDDBImporter: false,
+                ddbImporterUrl: '',
+                cobaltSession: ''
+            };
+        }
+        
+        // Read directly from DDB Importer module settings
+        // Check if the module is installed and active
+        const ddbModule = game.modules.get('ddb-importer');
+        if (!ddbModule?.active) {
+            console.warn('Combat AI: D&D Beyond Importer module is not active');
+            return {
+                useDDBImporter: false,
+                ddbImporterUrl: '',
+                cobaltSession: ''
+            };
+        }
+        
+        // Read settings from DDB Importer
+        // Common setting keys: 'api-endpoint' or 'apiEndpoint', 'cobalt-cookie' or 'cobaltCookie'
+        // Default DDB Importer proxy URL
+        const DEFAULT_DDB_PROXY_URL = 'https://proxy.ddb.mrprimate.co.uk';
+        
+        let ddbImporterUrl = '';
+        let cobaltSession = '';
+        let useCustomProxy = false;
+        
+        // Check if custom proxy is enabled
+        try {
+            useCustomProxy = game.settings.get('ddb-importer', 'custom-proxy') || 
+                           game.settings.get('ddb-importer', 'customProxy') || false;
+        } catch (e) {
+            console.warn('Combat AI: Could not read DDB Importer custom proxy setting, defaulting to false');
+        }
+        
+        // Get the API endpoint URL
+        try {
+            if (useCustomProxy) {
+                // Use custom proxy URL if enabled
+                ddbImporterUrl = game.settings.get('ddb-importer', 'api-endpoint') || 
+                               game.settings.get('ddb-importer', 'apiEndpoint') || 
+                               DEFAULT_DDB_PROXY_URL;
+            } else {
+                // Use default proxy URL
+                ddbImporterUrl = DEFAULT_DDB_PROXY_URL;
+            }
+        } catch (e) {
+            console.warn('Combat AI: Could not read DDB Importer API endpoint setting, using default');
+            ddbImporterUrl = DEFAULT_DDB_PROXY_URL;
+        }
+        
+        // Get the cobalt session cookie from localStorage (DDB Importer stores it there)
+        try {
+            cobaltSession = localStorage.getItem('ddb-cobalt-cookie') || '';
+        } catch (e) {
+            console.warn('Combat AI: Could not read DDB Importer cobalt cookie from localStorage');
+        }
+        
         return {
-            useDDBImporter: game.settings.get(MODULE_ID, 'useDDBImporter'),
-            ddbImporterUrl: game.settings.get(MODULE_ID, 'ddbImporterUrl'),
-            cobaltSession: game.settings.get(MODULE_ID, 'cobaltSession')
+            useDDBImporter: true,
+            ddbImporterUrl,
+            cobaltSession
         };
     }
 }
@@ -465,40 +507,5 @@ class CombatLLMConfigMenu extends LLMConfigMenu {
     constructor(object, options) {
         super(object, options);
         this.configType = 'combatRecommendation';
-    }
-}
-/**
- * DDB Importer Configuration Menu
- */
-class DDBImporterConfigMenu extends FormApplication {
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            classes: ['dnd-combat-ai', 'ddb-importer-config'],
-            width: 600,
-            height: 'auto',
-            closeOnSubmit: true,
-            submitOnChange: false,
-            template: 'modules/dnd-combat-ai/templates/ddb-importer-config.hbs'
-        });
-    }
-
-    get title() {
-        return 'DDB Importer Configuration';
-    }
-
-    getData() {
-        return {
-            useDDBImporter: game.settings.get(MODULE_ID, 'useDDBImporter'),
-            ddbImporterUrl: game.settings.get(MODULE_ID, 'ddbImporterUrl'),
-            cobaltSession: game.settings.get(MODULE_ID, 'cobaltSession')
-        };
-    }
-
-    async _updateObject(event, formData) {
-        await game.settings.set(MODULE_ID, 'useDDBImporter', formData.useDDBImporter || false);
-        await game.settings.set(MODULE_ID, 'ddbImporterUrl', formData.ddbImporterUrl || '');
-        await game.settings.set(MODULE_ID, 'cobaltSession', formData.cobaltSession || '');
-
-        ui.notifications.info('DDB Importer Configuration saved successfully');
     }
 }
