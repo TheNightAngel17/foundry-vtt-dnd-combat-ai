@@ -1,4 +1,8 @@
-### Ancient Amethyst Dragon 
+
+
+
+
+# Ancient Amethyst Dragon 
 
 _Gargantuan Dragon (Gem), Typically Neutral_
 
@@ -9,11 +13,22 @@ _Gargantuan Dragon (Gem), Typically Neutral_
    - fly 80 ft
    - swim 40 ft
 
-#### Abilities
+## Abilities
 
-|STR|DEX|CON|INT|WIS|CHA|
-|--|--|--|--|--|--|
-|26|14|27|26|19|23|
-|+8|+2|+8|+8|+4|+6|
+|Ability|STR|DEX|CON|INT|WIS|CHA|
+|--|--|--|--|--|--|--|
+|Score|26|14|27|26|19|23|
+|Modifier|+8|+2|+8|+8|+4|+6|
+|Saving Throw|+8|+9|+15|+8|+11|+13|
 
-Saving Throws:
+## Skills
+
+- Arcana: +22
+- Perception +18
+- Persuasion +13
+- Stealth +9
+
+## Resistances
+
+- 
+

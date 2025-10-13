@@ -223,23 +223,91 @@ export class CombatAnalyzer {
         const token = combatant.token;
         const currentToken = currentCombatant.token;
 
-        let distance = 'Unknown';
+        let distance = null;
+        let direction = null;
         if (token && currentToken) {
             const dx = token.x - currentToken.x;
             const dy = token.y - currentToken.y;
             distance = Math.round(Math.sqrt(dx * dx + dy * dy) / canvas.grid.size) * 5; // Convert to feet
+            
+            // Calculate angle in degrees (0° = East, 90° = North, 180° = West, 270° = South)
+            // atan2 returns angle from -π to π, we convert to 0-360 degrees
+            let angleRadians = Math.atan2(-dy, dx); // Negative dy because canvas Y increases downward
+            let angleDegrees = angleRadians * (180 / Math.PI);
+            
+            // Normalize to 0-360 range
+            if (angleDegrees < 0) {
+                angleDegrees += 360;
+            }
+            
+            direction = Math.round(angleDegrees * 10) / 10; // Round to 1 decimal place
         }
+
+        // Extract damage resistances, immunities, and vulnerabilities
+        const damageResistances = this.getDamageTraits(actor, 'dr');
+        const damageImmunities = this.getDamageTraits(actor, 'di');
+        const damageVulnerabilities = this.getDamageTraits(actor, 'dv');
+        const conditionImmunities = this.getConditionImmunities(actor);
 
         return {
             name: actor.name,
             hp: `${actor.system.attributes.hp.value}/${actor.system.attributes.hp.max}`,
             hpPercentage: Math.round((actor.system.attributes.hp.value / actor.system.attributes.hp.max) * 100),
             ac: actor.system.attributes.ac.value,
-            distance: `${distance} ft`,
+            distance: distance, // Distance in feet (number or null)
+            direction: direction, // Direction in degrees (number or null)
+            damageResistances: damageResistances,
+            damageImmunities: damageImmunities,
+            damageVulnerabilities: damageVulnerabilities,
+            conditionImmunities: conditionImmunities,
             conditions: this.getActorConditions(actor),
             unconscious: actor.system.attributes.hp.value <= 0,
             position: token ? { x: token.x, y: token.y } : null
         };
+    }
+
+    /**
+     * Get damage traits (resistances, immunities, vulnerabilities)
+     */
+    getDamageTraits(actor, traitType) {
+        const traits = actor.system.traits?.[traitType];
+        if (!traits) return [];
+
+        const results = [];
+        
+        // Handle value array (standard damage types)
+        if (traits.value && Array.isArray(traits.value)) {
+            results.push(...traits.value);
+        }
+        
+        // Handle custom string
+        if (traits.custom && traits.custom.trim()) {
+            results.push(traits.custom.trim());
+        }
+
+        return results;
+    }
+
+    /**
+     * Get condition immunities
+     */
+    getConditionImmunities(actor) {
+        const conditionImmunities = actor.system.traits?.ci;
+        if (!conditionImmunities) return [];
+
+        const results = [];
+        
+        // Handle value array (standard conditions)
+        if (conditionImmunities.value && Array.isArray(conditionImmunities.value)) {
+            results.push(...conditionImmunities.value);
+        }
+        
+        // Handle custom string
+        if (conditionImmunities.custom && conditionImmunities.custom.trim()) {
+            results.push(conditionImmunities.custom.trim());
+        }
+
+        return results;
     }
 
     /**

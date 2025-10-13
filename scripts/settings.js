@@ -115,6 +115,40 @@ export class CombatAISettings {
         });
 
         // ========================================
+        // DDB Importer Configuration
+        // ========================================
+        
+        game.settings.registerMenu(MODULE_ID, 'ddbImporterConfig', {
+            name: 'DDB Importer Settings',
+            label: 'Configure DDB Importer',
+            hint: 'Configure D&D Beyond Importer integration',
+            icon: 'fas fa-file-import',
+            type: DDBImporterConfigMenu,
+            restricted: true
+        });
+
+        game.settings.register(MODULE_ID, 'useDDBImporter', {
+            scope: 'world',
+            config: false,
+            type: Boolean,
+            default: false
+        });
+
+        game.settings.register(MODULE_ID, 'ddbImporterUrl', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: ''
+        });
+
+        game.settings.register(MODULE_ID, 'cobaltSession', {
+            scope: 'world',
+            config: false,
+            type: String,
+            default: ''
+        });
+
+        // ========================================
         // Action Cache LLM Configuration
         // ========================================
         
@@ -313,6 +347,17 @@ export class CombatAISettings {
             localEndpoint: game.settings.get(MODULE_ID, `${prefix}LocalEndpoint`)
         };
     }
+
+    /**
+     * Get DDB Importer configuration
+     */
+    static getDDBImporterConfig() {
+        return {
+            useDDBImporter: game.settings.get(MODULE_ID, 'useDDBImporter'),
+            ddbImporterUrl: game.settings.get(MODULE_ID, 'ddbImporterUrl'),
+            cobaltSession: game.settings.get(MODULE_ID, 'cobaltSession')
+        };
+    }
 }
 
 /**
@@ -420,5 +465,40 @@ class CombatLLMConfigMenu extends LLMConfigMenu {
     constructor(object, options) {
         super(object, options);
         this.configType = 'combatRecommendation';
+    }
+}
+/**
+ * DDB Importer Configuration Menu
+ */
+class DDBImporterConfigMenu extends FormApplication {
+    static get defaultOptions() {
+        return foundry.utils.mergeObject(super.defaultOptions, {
+            classes: ['dnd-combat-ai', 'ddb-importer-config'],
+            width: 600,
+            height: 'auto',
+            closeOnSubmit: true,
+            submitOnChange: false,
+            template: 'modules/dnd-combat-ai/templates/ddb-importer-config.hbs'
+        });
+    }
+
+    get title() {
+        return 'DDB Importer Configuration';
+    }
+
+    getData() {
+        return {
+            useDDBImporter: game.settings.get(MODULE_ID, 'useDDBImporter'),
+            ddbImporterUrl: game.settings.get(MODULE_ID, 'ddbImporterUrl'),
+            cobaltSession: game.settings.get(MODULE_ID, 'cobaltSession')
+        };
+    }
+
+    async _updateObject(event, formData) {
+        await game.settings.set(MODULE_ID, 'useDDBImporter', formData.useDDBImporter || false);
+        await game.settings.set(MODULE_ID, 'ddbImporterUrl', formData.ddbImporterUrl || '');
+        await game.settings.set(MODULE_ID, 'cobaltSession', formData.cobaltSession || '');
+
+        ui.notifications.info('DDB Importer Configuration saved successfully');
     }
 }

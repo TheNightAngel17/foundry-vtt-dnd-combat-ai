@@ -183,10 +183,10 @@ Recent Actions:
 ${situation.recentActions.map(action => `- ${action.actor}: ${action.action}`).join('\n')}
 
 Enemy Analysis:
-${situation.enemies.map(enemy => `- ${enemy.name}: ${enemy.hp} HP, AC ${enemy.ac}, Distance: ${enemy.distance}`).join('\n')}
+${situation.enemies.map(combatant => this.buildCombatantMarkdown(combatant)).join('\n')}
 
 Ally Analysis:
-${situation.allies.map(ally => `- ${ally.name}: ${ally.hp} HP, AC ${ally.ac}, Distance: ${ally.distance}`).join('\n')}
+${situation.allies.map(combatant => this.buildCombatantMarkdown(combatant)).join('\n')}
 
 Please recommend the top ${numRecommendations} action(s) for EACH action type available to this NPC, considering:
 1. The difficulty level specified
@@ -200,6 +200,41 @@ Respond with a JSON object organized by action type (${availableTypes.join(', ')
 ${JSON.stringify(exampleResponse, null, 2)}
 
 Respond ONLY with the JSON object, no additional text.`;
+    }
+
+    /**
+     * Build markdown representation of a combatant for the prompt
+     */
+    buildCombatantMarkdown(combatant) {
+        const distanceInfo = combatant.distance !== null && combatant.direction !== null 
+            ? `${combatant.distance} ft @ ${combatant.direction}°`
+            : (combatant.distance !== null ? `${combatant.distance} ft` : 'Unknown');
+        
+        const conditionsList = combatant.conditions.length > 0 
+            ? combatant.conditions.map(c => c.name).join(', ')
+            : 'None';
+        
+        const statusFlags = combatant.unconscious ? ' [UNCONSCIOUS]' : '';
+        
+        // Build defenses line
+        let defensesLine = `AC ${combatant.ac}`;
+        if (combatant.damageResistances && combatant.damageResistances.length > 0) {
+            defensesLine += `, Resist: ${combatant.damageResistances.join(', ')}`;
+        }
+        if (combatant.damageImmunities && combatant.damageImmunities.length > 0) {
+            defensesLine += `, Immune: ${combatant.damageImmunities.join(', ')}`;
+        }
+        if (combatant.damageVulnerabilities && combatant.damageVulnerabilities.length > 0) {
+            defensesLine += `, Vulnerable: ${combatant.damageVulnerabilities.join(', ')}`;
+        }
+        if (combatant.conditionImmunities && combatant.conditionImmunities.length > 0) {
+            defensesLine += `, Condition Immune: ${combatant.conditionImmunities.join(', ')}`;
+        }
+        
+        return `- ${combatant.name} (${combatant.hp})${statusFlags}
+   - Location: ${distanceInfo}
+   - Defenses: ${defensesLine}
+   - Conditions: ${conditionsList}`;
     }
 
     /**
