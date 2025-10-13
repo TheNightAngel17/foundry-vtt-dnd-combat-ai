@@ -180,10 +180,26 @@ export class CombatAISettings {
             type: String,
             default: 'low',
             choices: {
+                'minimal': 'Minimal',
                 'low': 'Low',
                 'medium': 'Medium',
-                'high': 'High'
+                'high': 'High',
+                'max': 'Max'
             }
+        });
+
+        game.settings.register(MODULE_ID, 'actionCacheLLMTemperature', {
+            scope: 'world',
+            config: false,
+            type: Number,
+            default: 0.7
+        });
+
+        game.settings.register(MODULE_ID, 'actionCacheLLMTopP', {
+            scope: 'world',
+            config: false,
+            type: Number,
+            default: 1.0
         });
 
         game.settings.register(MODULE_ID, 'actionCacheLLMLocalEndpoint', {
@@ -246,10 +262,26 @@ export class CombatAISettings {
             type: String,
             default: 'medium',
             choices: {
+                'minimal': 'Minimal',
                 'low': 'Low',
                 'medium': 'Medium',
-                'high': 'High'
+                'high': 'High',
+                'max': 'Max'
             }
+        });
+
+        game.settings.register(MODULE_ID, 'combatLLMTemperature', {
+            scope: 'world',
+            config: false,
+            type: Number,
+            default: 0.7
+        });
+
+        game.settings.register(MODULE_ID, 'combatLLMTopP', {
+            scope: 'world',
+            config: false,
+            type: Number,
+            default: 1.0
         });
 
         game.settings.register(MODULE_ID, 'combatLLMLocalEndpoint', {
@@ -323,6 +355,8 @@ export class CombatAISettings {
             model: game.settings.get(MODULE_ID, `${prefix}Model`),
             maxTokens: game.settings.get(MODULE_ID, `${prefix}MaxTokens`),
             reasoningEffort: game.settings.get(MODULE_ID, `${prefix}ReasoningEffort`),
+            temperature: game.settings.get(MODULE_ID, `${prefix}Temperature`),
+            topP: game.settings.get(MODULE_ID, `${prefix}TopP`),
             localEndpoint: game.settings.get(MODULE_ID, `${prefix}LocalEndpoint`)
         };
     }
@@ -439,6 +473,8 @@ class LLMConfigMenu extends FormApplication {
             model: game.settings.get(MODULE_ID, `${prefix}Model`),
             maxTokens: game.settings.get(MODULE_ID, `${prefix}MaxTokens`),
             reasoningEffort: game.settings.get(MODULE_ID, `${prefix}ReasoningEffort`),
+            temperature: game.settings.get(MODULE_ID, `${prefix}Temperature`),
+            topP: game.settings.get(MODULE_ID, `${prefix}TopP`),
             localEndpoint: game.settings.get(MODULE_ID, `${prefix}LocalEndpoint`),
             isOpenAI: provider === 'openai',
             isAnthropic: provider === 'anthropic',
@@ -462,6 +498,8 @@ class LLMConfigMenu extends FormApplication {
             // Show/hide sections based on provider
             html.find('.api-key-group').toggle(!isLocal);
             html.find('.reasoning-group').toggle(isOpenAI);
+            html.find('.temperature-group').toggle(isOpenAI);
+            html.find('.topp-group').toggle(isOpenAI);
             html.find('.local-group').toggle(isLocal);
             
             // Update model placeholder and suggestions
@@ -484,6 +522,8 @@ class LLMConfigMenu extends FormApplication {
         await game.settings.set(MODULE_ID, `${prefix}Model`, formData.model || 'llama3.2');
         await game.settings.set(MODULE_ID, `${prefix}MaxTokens`, formData.maxTokens || 1000);
         await game.settings.set(MODULE_ID, `${prefix}ReasoningEffort`, formData.reasoningEffort || 'low');
+        await game.settings.set(MODULE_ID, `${prefix}Temperature`, formData.temperature || 0.7);
+        await game.settings.set(MODULE_ID, `${prefix}TopP`, formData.topP || 1.0);
         await game.settings.set(MODULE_ID, `${prefix}LocalEndpoint`, formData.localEndpoint || 'http://localhost:11434');
 
         ui.notifications.info(`${this.title} saved successfully`);

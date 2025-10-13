@@ -45,6 +45,8 @@ export class LLMConnector {
     async callOpenAI(prompt, apiKey, prefix) {
         const model = game.settings.get(MODULE_ID, `${prefix}Model`);
         const reasoningEffort = game.settings.get(MODULE_ID, `${prefix}ReasoningEffort`) ?? 'medium';
+        const temperature = game.settings.get(MODULE_ID, `${prefix}Temperature`) ?? 0.7;
+        const topP = game.settings.get(MODULE_ID, `${prefix}TopP`) ?? 1.0;
         const maxCompletionTokens = game.settings.get(MODULE_ID, `${prefix}MaxTokens`) ?? 500;
         const url = 'https://api.openai.com/v1/chat/completions';
 
@@ -63,8 +65,15 @@ export class LLMConnector {
             max_completion_tokens: maxCompletionTokens,
         };
 
-        if (reasoningEffort) {
-            payload.reasoning_effort = reasoningEffort;
+        // Only use reasoning_effort for GPT-5 models
+        if (model.startsWith('gpt-5')) {
+            if (reasoningEffort) {
+                payload.reasoning_effort = reasoningEffort;
+            }
+        } else {
+            // Use temperature and top_p for GPT-4.x and other models
+            payload.temperature = temperature;
+            payload.top_p = topP;
         }
 
         if (game.settings.get(MODULE_ID, 'debugMode')) {

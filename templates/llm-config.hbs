@@ -55,15 +55,31 @@
         <p class="notes">Maximum response length (tokens)</p>
     </div>
 
-    <!-- Reasoning Effort (for O1 models) -->
+    <!-- Reasoning Effort (for GPT-5/O1 models) -->
     <div class="form-group reasoning-group" style="{{#unless isOpenAI}}display:none;{{/unless}}">
-        <label for="reasoningEffort">Reasoning Effort (O1 models only)</label>
+        <label for="reasoningEffort">Reasoning Effort (GPT-5/O1 models only)</label>
         <select name="reasoningEffort">
+            <option value="minimal" {{#if (eq reasoningEffort 'minimal')}}selected{{/if}}>Minimal</option>
             <option value="low" {{#if (eq reasoningEffort 'low')}}selected{{/if}}>Low</option>
             <option value="medium" {{#if (eq reasoningEffort 'medium')}}selected{{/if}}>Medium</option>
             <option value="high" {{#if (eq reasoningEffort 'high')}}selected{{/if}}>High</option>
+            <option value="max" {{#if (eq reasoningEffort 'max')}}selected{{/if}}>Max</option>
         </select>
-        <p class="notes">How much reasoning effort to apply (only for O1 models, ignored otherwise)</p>
+        <p class="notes">Reasoning effort for GPT-5/O1 models (ignored for GPT-4.x models)</p>
+    </div>
+
+    <!-- Temperature (for GPT-4.x and other models) -->
+    <div class="form-group temperature-group" style="{{#unless isOpenAI}}display:none;{{/unless}}">
+        <label for="temperature">Temperature</label>
+        <input type="number" name="temperature" value="{{temperature}}" min="0" max="2" step="0.1">
+        <p class="notes">Controls randomness (0 = deterministic, 2 = very random). Used for GPT-4.x models.</p>
+    </div>
+
+    <!-- Top P (for GPT-4.x and other models) -->
+    <div class="form-group topp-group" style="{{#unless isOpenAI}}display:none;{{/unless}}">
+        <label for="topP">Top P</label>
+        <input type="number" name="topP" value="{{topP}}" min="0" max="1" step="0.05">
+        <p class="notes">Nucleus sampling parameter (0-1). Used for GPT-4.x models.</p>
     </div>
 
     <!-- Local Endpoint -->
