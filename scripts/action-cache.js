@@ -12,6 +12,110 @@ export class ActionCache {
     }
 
     /**
+     * Formatting guidelines for action descriptions
+     * Used in LLM prompts to ensure consistent output
+     */
+    static get FORMATTING_GUIDELINES() {
+        return `Use consistent formatting for all names and descriptions:
+   - Attacks: 
+      - Name: "<name-of-action>"
+      - Description: "<Melee/Ranged> <Spell/Weapon> Attack: +X to hit, range y/Y ft., target. Hit: Z (damage dice) type [+ additional effects]"
+      - Example: 
+         \`\`\`json
+         {
+            "name": "Bow Attack",
+            "description": "Ranged Weapon Attack: +5 to hit, range 60/120 ft., target. Hit: 1d6+3 piercing damage.",
+            "activationTime": "action",
+            "itemType": "weapon"
+         }
+         \`\`\`
+   - Saves: 
+      - Name: "<name-of-action>"
+      - Description: "<Target(s)>. DC X [ability] save or [effect]. On save: [reduced effect]"
+      - Example: 
+         \`\`\`json
+         {
+            "name": "Knock Down",
+            "description": "15 foot cone from self. DC 15 STR save or take 3d6 bludgeoning damage and be knocked prone. On save: half damage, not prone.",
+            "activationTime": "action",
+            "itemType": "weapon"
+         }
+         \`\`\`
+   - Spells:
+      - If a spell has a Spell Save DC or an Attack Roll, include that information in the description similar to attacks and saves above
+      - Name: "<name-of-spell> (Spell)"
+      - Description: "x/day, [spell level] spell. [effect] [success effect]"
+      - Inate Example: 
+         \`\`\`json
+         {
+            "name": "Misty Step (Spell)",
+            "description": "1/day, 2nd-level spell. Target can teleport up to 30 feet to an unoccupied space.",
+            "activationTime": "bonus",
+            "itemType": "spell"
+         }
+         \`\`\`
+      - Slot Example: 
+         \`\`\`json
+         {
+            "name": "Fireball (Spell)",
+            "description": "3rd-level spell. Can Be upcast. 20-ft radius, 150 ft. range. DC 15 DEX save or take 8d6 fire damage. On save: half damage.",
+            "activationTime": "action",
+            "itemType": "spell"
+         }
+         \`\`\`
+   - Recharge abilities: 
+      - Name: "<name-of-action> (Recharge X-Y)"
+      - Description: "[description]"
+   - Multiattack:
+      - when there are multiple attack options, create separate entries for each attack pattern
+         - e.g. if Multiattack says 3 bites or claw attacks, create separate entries for each:
+            - 3 bites
+            - 3 claws
+            - 2 claws + 1 bite
+            - 2 bites + 1 claw
+      - Only use action names such as "Makes 3 Bite Attacks" or "Makes 2 Claw and 1 Bite Attacks"
+      - Ensure that the actions referenced in Multiattack are included in the final list as their own entries   
+      - Example:
+         \`\`\`json
+         {
+            "name": "Multiattack (3 Bow Attacks)",
+            "description": "Make 3 bow attacks.",
+            "activationTime": "action",
+            "itemType": "weapon"
+         },
+         {
+            "name": "Multiattack (2 Bow Attacks, 1 Knock Down)",
+            "description": "Make 2 bow attacks and use Knock Down.",
+            "activationTime": "action",
+            "itemType": "weapon"
+         }
+         \`\`\`
+   - Legendary/Mythic Actions: 
+      - If an action doesn't specify a cost, assume it costs 1 action
+      - If an action references other actions, replace the legendary/mythic action's description with the description from the referenced action
+      - Name: "<name-of-action> (<Legendary/Mythic> - <cost> Actions)"
+      - Description: "[description]"
+      - Example:
+         \`\`\`json
+         {
+            "name": "Bow Attack (Legendary - 1 Action)",
+            "description": "Ranged Weapon Attack: +5 to hit, range 60/120 ft., target. Hit: 1d6+3 piercing damage.",
+            "activationTime": "legendary",
+            "itemType": "weapon"
+         }
+         \`\`\`
+      - Example:
+         \`\`\`json
+         {
+            "name": "Fireball (Mythic - 1 Action)",
+            "description": "3rd-level spell. Can Be upcast. 20-ft radius, 150 ft. range. DC 15 DEX save or take 8d6 fire damage. On save: half damage.",
+            "activationTime": "mythic",
+            "itemType": "spell"
+         }
+         \`\`\``;
+    }
+
+    /**
      * Get cached actions for an actor, or generate them if not cached
      */
     async getActorActions(actor, aiService) {
@@ -215,102 +319,7 @@ IMPORTANT RULES:
    - If special effects are mentioned or implied, include them with as much detail as possible while keeping to the word limit.
 5. Parse HTML text and dice notation (e.g., "<span data-dicenotation="2d10+8">") to extract key information
 6. Categorize activation times correctly: action, bonus, reaction, legendary, lair, mythic
-7. Use consistent formatting for all names and descriptions:
-   - Attacks: 
-      - Name: "<name-of-action>"
-      - Description: "<Melee/Ranged> <Spell/Weapon> Attack: +X to hit, range y/Y ft., target. Hit: Z (damage dice) type [+ additional effects]"
-      - Example: 
-         \`\`\`json
-         {
-            "name": "Bow Attack",
-            "description": "Ranged Weapon Attack: +5 to hit, range 60/120 ft., target. Hit: 1d6+3 piercing damage.",
-            "activationTime": "action",
-            "itemType": "weapon"
-         }
-         \`\`\`
-   - Saves: 
-      - Name: "<name-of-action>"
-      - Description: "<Target(s)>. DC X [ability] save or [effect]. On save: [reduced effect]"
-      - Example: 
-         \`\`\`json
-         {
-            "name": "Knock Down",
-            "description": "15 foot cone from self. DC 15 STR save or take 3d6 bludgeoning damage and be knocked prone. On save: half damage, not prone.",
-            "activationTime": "action",
-            "itemType": "weapon"
-         }
-         \`\`\`
-   - Spells:
-      - Name: "<name-of-spell> (Spell)"
-      - Description: "x/day, [spell level] spell. [effect] [success effect]"
-      - Inate Example: 
-         \`\`\`json
-         {
-            "name": "Misty Step (Spell)",
-            "description": "1/day, 2nd-level spell. Target can teleport up to 30 feet to an unoccupied space.",
-            "activationTime": "bonus",
-            "itemType": "spell"
-         }
-         \`\`\`
-      - Slot Example: 
-         \`\`\`json
-         {
-            "name": "Fireball (Spell)",
-            "description": "3rd-level spell. Can Be upcast. 20-ft radius, 150 ft. range. DC 15 DEX save or take 8d6 fire damage. On save: half damage.",
-            "activationTime": "action",
-            "itemType": "spell"
-         }
-         \`\`\`
-   - Recharge abilities: 
-      - Name: "<name-of-action> (Recharge X-Y)"
-      - Description: "[description]"
-   - Multiattack:
-      - when there are multiple attack options, create separate entries for each attack pattern
-         - e.g. if Multiattack says 3 bites or claw attacks, create separate entries for each:
-            - 3 bites
-            - 3 claws
-            - 2 claws + 1 bite
-            - 2 bites + 1 claw
-      - Only use action names such as "Makes 3 Bite Attacks" or "Makes 2 Claw and 1 Bite Attacks"
-      - Example:
-         \`\`\`json
-         {
-            "name": "Multiattack (3 Bow Attacks)",
-            "description": "Make 3 bow attacks.",
-            "activationTime": "action",
-            "itemType": "weapon"
-         },
-         {
-            "name": "Multiattack (2 Bow Attacks, 1 Knock Down)",
-            "description": "Make 2 bow attacks and use Knock Down.",
-            "activationTime": "action",
-            "itemType": "weapon"
-         }
-         \`\`\`
-   - Ensure that the actions referenced in Multiattack are included in the final list as their own entries   
-   - Legendary/Mythic Actions: 
-      - If an action doesn't specify a cost, assume it costs 1 action
-      - If an action references other actions, replace the legendary/mythic action's description with the description from the referenced action
-      - Name: "<name-of-action> (<Legendary/Mythic> - <cost> Actions)"
-      - Description: "[description]"
-      - Example:
-         \`\`\`json
-         {
-            "name": "Bow Attack (Legendary - 1 Action)",
-            "description": "Ranged Weapon Attack: +5 to hit, range 60/120 ft., target. Hit: 1d6+3 piercing damage.",
-            "activationTime": "legendary",
-            "itemType": "weapon"
-         }
-         \`\`\`
-      - Example:
-         \`\`\`json
-         {
-            "name": "Fireball (Mythic - 1 Action)",
-            "description": "3rd-level spell. Can Be upcast. 20-ft radius, 150 ft. range. DC 15 DEX save or take 8d6 fire damage. On save: half damage.",
-            "activationTime": "mythic",
-            "itemType": "spell"
-         }
-         \`\`\`
+7. ${ActionCache.FORMATTING_GUIDELINES}
 
 Ability Data:
 ${activeSections}
@@ -488,102 +497,7 @@ IMPORTANT RULES:
 4. Keep descriptions concise (max 200 characters) focusing on: damage, range, targets, applied conditions, and special effects
 5. Categorize activation times correctly: action, bonus, reaction, legendary, lair, mythic, special
 6. Extract all numerical values from damage formulas and modifiers
-7. Use consistent formatting for all names and descriptions:
-   - Attacks: 
-      - Name: "<name-of-action>"
-      - Description: "<Melee/Ranged> <Spell/Weapon> Attack: +X to hit, range y/Y ft., target. Hit: Z (damage dice) type [+ additional effects]"
-      - Example: 
-         \`\`\`json
-         {
-            "name": "Bow Attack",
-            "description": "Ranged Weapon Attack: +5 to hit, range 60/120 ft., target. Hit: 1d6+3 piercing damage.",
-            "activationTime": "action",
-            "itemType": "weapon"
-         }
-         \`\`\`
-   - Saves: 
-      - Name: "<name-of-action>"
-      - Description: "<Target(s)>. DC X [ability] save or [effect]. On save: [reduced effect]"
-      - Example: 
-         \`\`\`json
-         {
-            "name": "Knock Down",
-            "description": "15 foot cone from self. DC 15 STR save or take 3d6 bludgeoning damage and be knocked prone. On save: half damage, not prone.",
-            "activationTime": "action",
-            "itemType": "weapon"
-         }
-         \`\`\`
-   - Spells:
-      - Name: "<name-of-spell> (Spell)"
-      - Description: "x/day, [spell level] spell. [effect] [success effect]"
-      - Inate Example: 
-         \`\`\`json
-         {
-            "name": "Misty Step (Spell)",
-            "description": "1/day, 2nd-level spell. Target can teleport up to 30 feet to an unoccupied space.",
-            "activationTime": "bonus",
-            "itemType": "spell"
-         }
-         \`\`\`
-      - Slot Example: 
-         \`\`\`json
-         {
-            "name": "Fireball (Spell)",
-            "description": "3rd-level spell. Can Be upcast. 20-ft radius, 150 ft. range. DC 15 DEX save or take 8d6 fire damage. On save: half damage.",
-            "activationTime": "action",
-            "itemType": "spell"
-         }
-         \`\`\`
-   - Recharge abilities: 
-      - Name: "<name-of-action> (Recharge X-Y)"
-      - Description: "[description]"
-   - Multiattack:
-      - when there are multiple attack options, create separate entries for each attack pattern
-         - e.g. if Multiattack says 3 bites or claw attacks, create separate entries for each:
-            - 3 bites
-            - 3 claws
-            - 2 claws + 1 bite
-            - 2 bites + 1 claw
-      - Only use action names such as "Makes 3 Bite Attacks" or "Makes 2 Claw and 1 Bite Attacks"
-      - Example:
-         \`\`\`json
-         {
-            "name": "Multiattack (3 Bow Attacks)",
-            "description": "Make 3 bow attacks.",
-            "activationTime": "action",
-            "itemType": "weapon"
-         },
-         {
-            "name": "Multiattack (2 Bow Attacks, 1 Knock Down)",
-            "description": "Make 2 bow attacks and use Knock Down.",
-            "activationTime": "action",
-            "itemType": "weapon"
-         }
-         \`\`\`
-   - Ensure that the actions referenced in Multiattack are included in the final list as their own entries   
-   - Legendary/Mythic Actions: 
-      - If an action doesn't specify a cost, assume it costs 1 action
-      - If an action references other actions, replace the legendary/mythic action's description with the description from the referenced action
-      - Name: "<name-of-action> (<Legendary/Mythic> - <cost> Actions)"
-      - Description: "[description]"
-      - Example:
-         \`\`\`json
-         {
-            "name": "Bow Attack (Legendary - 1 Action)",
-            "description": "Ranged Weapon Attack: +5 to hit, range 60/120 ft., target. Hit: 1d6+3 piercing damage.",
-            "activationTime": "legendary",
-            "itemType": "weapon"
-         }
-         \`\`\`
-      - Example:
-         \`\`\`json
-         {
-            "name": "Fireball (Mythic - 1 Action)",
-            "description": "3rd-level spell. Can Be upcast. 20-ft radius, 150 ft. range. DC 15 DEX save or take 8d6 fire damage. On save: half damage.",
-            "activationTime": "mythic",
-            "itemType": "spell"
-         }
-         \`\`\`
+7. ${ActionCache.FORMATTING_GUIDELINES}
 
 Raw ability data:
 ${actionsJson}

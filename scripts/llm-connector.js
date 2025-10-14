@@ -112,23 +112,30 @@ export class LLMConnector {
         const maxTokens = game.settings.get(MODULE_ID, `${prefix}MaxTokens`) ?? 500;
         const url = 'https://api.anthropic.com/v1/messages';
 
+        const payload = {
+            model: model,
+            max_tokens: maxTokens,
+            messages: [
+                {
+                    role: 'user',
+                    content: prompt
+                }
+            ]
+        };
+
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.log(`${MODULE_TITLE} | Anthropic request payload:`, payload);
+        }
+
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': apiKey,
-                'anthropic-version': '2023-06-01'
+                'anthropic-version': '2023-06-01',
+                'anthropic-dangerous-direct-browser-access': 'true'
             },
-            body: JSON.stringify({
-                model: model,
-                max_tokens: maxTokens,
-                messages: [
-                    {
-                        role: 'user',
-                        content: prompt
-                    }
-                ]
-            })
+            body: JSON.stringify(payload)
         });
 
         if (!response.ok) {
@@ -137,6 +144,11 @@ export class LLMConnector {
         }
 
         const data = await response.json();
+        
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.log(`${MODULE_TITLE} | Anthropic response data:`, data);
+        }
+        
         return data.content[0].text;
     }
 
@@ -155,30 +167,41 @@ export class LLMConnector {
 
         // Try OpenAI-compatible API format first
         try {
+            const payload = {
+                model: model || 'default',
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a helpful D&D 5e Dungeon Master assistant that provides tactical combat advice for NPCs.'
+                    },
+                    {
+                        role: 'user',
+                        content: prompt
+                    }
+                ],
+                max_tokens: maxTokens,
+                temperature: 0.7
+            };
+
+            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                console.log(`${MODULE_TITLE} | Local LLM (OpenAI-compatible) request payload:`, payload);
+            }
+
             const response = await fetch(`${endpoint}/v1/chat/completions`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    model: model || 'default',
-                    messages: [
-                        {
-                            role: 'system',
-                            content: 'You are a helpful D&D 5e Dungeon Master assistant that provides tactical combat advice for NPCs.'
-                        },
-                        {
-                            role: 'user',
-                            content: prompt
-                        }
-                    ],
-                    max_tokens: maxTokens,
-                    temperature: 0.7
-                })
+                body: JSON.stringify(payload)
             });
 
             if (response.ok) {
                 const data = await response.json();
+                
+                if (game.settings.get(MODULE_ID, 'debugMode')) {
+                    console.log(`${MODULE_TITLE} | Local LLM (OpenAI-compatible) response data:`, data);
+                }
+                
                 return data.choices[0].message.content;
             }
         } catch (error) {
@@ -187,20 +210,31 @@ export class LLMConnector {
 
         // Try Ollama format
         try {
+            const payload = {
+                model: model || 'llama2',
+                prompt: prompt,
+                stream: false
+            };
+
+            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                console.log(`${MODULE_TITLE} | Local LLM (Ollama) request payload:`, payload);
+            }
+
             const response = await fetch(`${endpoint}/api/generate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    model: model || 'llama2',
-                    prompt: prompt,
-                    stream: false
-                })
+                body: JSON.stringify(payload)
             });
 
             if (response.ok) {
                 const data = await response.json();
+                
+                if (game.settings.get(MODULE_ID, 'debugMode')) {
+                    console.log(`${MODULE_TITLE} | Local LLM (Ollama) response data:`, data);
+                }
+                
                 return data.response;
             }
         } catch (error) {
