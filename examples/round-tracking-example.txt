@@ -1,0 +1,82 @@
+================================================================================
+EXAMPLE: Round Description Dialog
+================================================================================
+
+Title: Round 2 Description
+
+Content:
+------------------------------------------------------------------------
+Describe what happened during round 2 of combat:
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ Auto-detected changes:                                              │
+├─────────────────────────────────────────────────────────────────────┤
+│ Goblin Scout took 12 damage (18 → 6 HP)                            │
+│ Fighter moved approximately 25 ft                                   │
+│ Wizard gained condition: Concentrating                             │
+│ Rogue took 8 damage (24 → 16 HP)                                   │
+└─────────────────────────────────────────────────────────────────────┘
+
+Round Description:
+┌─────────────────────────────────────────────────────────────────────┐
+│ Round 2 Summary:                                                    │
+│                                                                     │
+│ Goblin Scout took 12 damage (18 → 6 HP)                           │
+│ Fighter moved approximately 25 ft                                   │
+│ Wizard gained condition: Concentrating                             │
+│ Rogue took 8 damage (24 → 16 HP)                                   │
+│                                                                     │
+│ Additional notes:                                                   │
+│ [GM enters narrative here]                                          │
+└─────────────────────────────────────────────────────────────────────┘
+
+Buttons:
+[💾 Save Description]  [✖ Skip]
+
+================================================================================
+
+EXAMPLE: Filled Out Description
+================================================================================
+
+Round Description (as entered by GM):
+------------------------------------------------------------------------
+Round 2 Summary:
+
+Goblin Scout took 12 damage (18 → 6 HP)
+Fighter moved approximately 25 ft
+Wizard gained condition: Concentrating
+Rogue took 8 damage (24 → 16 HP)
+
+Additional notes: The goblin scout attempted to flee toward the forest 
+but was intercepted by the fighter who closed the distance rapidly. The 
+wizard cast Haste on the rogue to enable a deadly combination. The rogue 
+dashed forward using the extra movement from Haste and attempted a sneak 
+attack on the goblin shaman, but took an opportunity attack from a goblin 
+warrior in the process.
+
+================================================================================
+
+EXAMPLE: AI Prompt (with Round History)
+================================================================================
+
+You are controlling an NPC in a D&D 5e combat encounter...
+
+[... standard combat analysis ...]
+
+Combat History:
+Round 1: Combat begins. The party encounters a goblin ambush in the forest 
+clearing. Goblins have taken cover behind rocks and trees. The wizard won 
+initiative and cast Sleep, taking out 2 goblin minions immediately.
+
+Round 2: Goblin Scout took 12 damage (18 → 6 HP), Fighter moved 
+approximately 25 ft, Wizard gained condition: Concentrating, Rogue took 8 
+damage (24 → 16 HP). The goblin scout attempted to flee toward the forest 
+but was intercepted by the fighter who closed the distance rapidly. The 
+wizard cast Haste on the rogue to enable a deadly combination. The rogue 
+dashed forward using the extra movement from Haste and attempted a sneak 
+attack on the goblin shaman, but took an opportunity attack from a goblin 
+warrior in the process.
+
+[... rest of AI prompt ...]
+
+================================================================================
