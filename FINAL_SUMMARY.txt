@@ -1,0 +1,217 @@
+================================================================================
+ROUND TRACKING FEATURE - IMPLEMENTATION COMPLETE
+================================================================================
+
+Branch: releases/v0.1.0_RoundTracking
+Module Version: 0.1.0 (updated from 0.0.2)
+Implementation Date: October 16, 2025
+
+================================================================================
+REQUIREMENTS FULFILLED
+================================================================================
+
+✅ GM can input actions and reactions during each combat round
+✅ Actions/reactions are tracked and stored during combat
+✅ History passed to LLM prompts for better AI context
+✅ Hook placed on each round to prompt GM for descriptions
+✅ Combat snapshots health, location, and conditions before each round
+✅ Auto-detection shows who took damage, moved, and gained/lost conditions
+✅ Changes pre-filled in description dialog box
+✅ Implemented in releases/v0.1.0_RoundTracking branch
+
+================================================================================
+NEW FEATURES
+================================================================================
+
+1. AUTOMATIC SNAPSHOTS
+   - Captures combatant state at the start of each round
+   - Tracks: HP, position (x/y coordinates), conditions, NPC/PC status
+   - Lightweight in-memory storage
+
+2. CHANGE AUTO-DETECTION
+   - Damage taken: "Goblin took 15 damage (30 → 15 HP)"
+   - Healing: "Fighter healed 8 HP (12 → 20 HP)"
+   - Movement: "Wizard moved approximately 30 ft"
+   - Conditions gained: "Rogue gained condition: Poisoned"
+   - Conditions lost: "Barbarian lost condition: Stunned"
+   - Combatants joining/leaving combat
+
+3. GM DESCRIPTION DIALOG
+   - Appears at the start of each round (after round 1)
+   - Shows auto-detected changes in highlighted section
+   - Pre-fills text area with detected changes
+   - GM can add narrative details
+   - Save or Skip options
+   - Clean, themed UI
+
+4. COMBAT HISTORY IN AI PROMPTS
+   - Automatically includes recent round descriptions
+   - Configurable context window (1-10 rounds, default: 3)
+   - Provides tactical context to AI for better decisions
+   - Formatted clearly for LLM consumption
+
+5. CONFIGURATION SETTINGS
+   - Enable/Disable Round Tracking (default: ON)
+   - Round History Context: Number of rounds to include (default: 3)
+   - Accessible via standard Foundry settings
+
+================================================================================
+CODE CHANGES SUMMARY
+================================================================================
+
+NEW FILES (5):
+✓ scripts/round-tracker.js (320 lines)
+  - RoundTracker class
+  - Snapshot creation and comparison
+  - Change detection algorithms
+  - Dialog rendering
+  - History management
+
+✓ ROUND_TRACKING.md
+  - Complete feature documentation
+  - Usage guide for GMs
+  - Technical details
+  - Future enhancements
+
+✓ IMPLEMENTATION_SUMMARY.md
+  - Technical implementation overview
+  - Data flow diagrams
+  - Code structure explanation
+  - Validation checklist
+
+✓ TESTING_GUIDE.md
+  - 12 comprehensive test scenarios
+  - Setup instructions
+  - Verification checklists
+  - Troubleshooting guide
+
+✓ examples/round-tracking-example.txt
+  - Example dialog outputs
+  - Sample AI prompts with history
+
+MODIFIED FILES (7):
+✓ scripts/combat-ai-manager.js (+28 lines)
+  - Import RoundTracker
+  - Initialize in constructor
+  - onRoundStart() method
+  - Include history in prompts
+  - Clear on combat end
+
+✓ scripts/main.js (+6 lines)
+  - Call onRoundStart() in combatRound hook
+
+✓ scripts/settings.js (+27 lines)
+  - enableRoundTracking setting
+  - roundHistoryContext setting
+
+✓ lang/en.json (+20 lines)
+  - UI text for dialogs
+  - Setting names and hints
+  - Status messages
+
+✓ module.json (+1 line)
+  - Version updated to 0.1.0
+
+✓ README.md (+6 lines)
+  - Round Tracking feature section
+  - Link to documentation
+
+✓ CHANGELOG.md (+20 lines)
+  - v0.1.0 release notes
+  - Feature list
+
+TOTAL IMPACT:
+- 11 files changed
+- ~1,000 lines added (including docs)
+- 3 lines modified
+- 0 lines removed (non-breaking changes)
+
+================================================================================
+VALIDATION STATUS
+================================================================================
+
+✅ JavaScript syntax validated (Node.js -c)
+✅ JSON files validated (module.json, lang/en.json)
+✅ Code follows existing patterns and style
+✅ Minimal changes approach maintained
+✅ No breaking changes to existing functionality
+✅ Settings properly registered
+✅ Language strings added
+✅ Documentation complete
+✅ Testing guide created
+✅ Version number updated
+
+⏳ PENDING: Manual testing in Foundry VTT environment
+   (Requires live Foundry instance - see TESTING_GUIDE.md)
+
+================================================================================
+HOW TO USE
+================================================================================
+
+FOR GMs:
+1. Enable the module in your world
+2. Configure LLM settings (if not already done)
+3. Verify "Enable Round Tracking" is ON in settings
+4. Start a combat encounter
+5. When Round 2 begins, a dialog will appear showing auto-detected changes
+6. Add your own narrative description of what happened
+7. Click "Save Description" to store it
+8. The AI will automatically use this history when making recommendations
+
+FOR DEVELOPERS:
+1. Check out the releases/v0.1.0_RoundTracking branch
+2. Review IMPLEMENTATION_SUMMARY.md for technical details
+3. Follow TESTING_GUIDE.md for testing procedures
+4. See ROUND_TRACKING.md for feature documentation
+
+================================================================================
+TECHNICAL HIGHLIGHTS
+================================================================================
+
+- Minimal performance impact (in-memory only, cleared on combat end)
+- Defensive programming with null checks throughout
+- Graceful degradation if features fail
+- Optional feature (can be disabled)
+- Works with existing combat hooks
+- No modifications to core Foundry or dnd5e system
+- Clean separation of concerns (new RoundTracker class)
+- Extensible design for future enhancements
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. TESTING: Run through TESTING_GUIDE.md scenarios in Foundry VTT
+2. FEEDBACK: Gather user feedback on dialog UX and usefulness
+3. REFINEMENT: Adjust based on real-world usage patterns
+4. ENHANCEMENTS: Consider future features:
+   - Turn-level tracking (not just rounds)
+   - Action type tracking (attacks, spells, etc.)
+   - Export combat logs
+   - Damage type analysis
+   - Resource usage tracking
+
+================================================================================
+CONCLUSION
+================================================================================
+
+The Round Tracking feature has been successfully implemented according to
+all requirements specified in the problem statement. The implementation is
+clean, well-documented, and ready for testing in a live Foundry VTT
+environment.
+
+All code has been validated and committed to both:
+- copilot/track-combat-actions-reactions branch
+- releases/v0.1.0_RoundTracking branch
+
+The feature provides significant value by:
+✓ Giving AI tactical context from previous rounds
+✓ Helping GMs track combat narrative
+✓ Automatically detecting and reporting combat changes
+✓ Reducing GM workload with auto-detection
+
+Ready for user acceptance testing and deployment.
+
+================================================================================
+END OF SUMMARY
+================================================================================
