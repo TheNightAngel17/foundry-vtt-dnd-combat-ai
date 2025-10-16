@@ -27,6 +27,13 @@ An intelligent FoundryVTT module that provides AI-powered combat assistance for 
 - Manual AI assistance button for current NPCs
 - Comprehensive settings dialog with connection testing
 
+### 📜 Round Tracking (New in v0.1.0)
+- Automatic snapshots of combatant state at the start of each round
+- Auto-detection of damage, healing, movement, and condition changes
+- GM prompts to describe each round of combat
+- Combat history automatically included in AI prompts for better context
+- See [ROUND_TRACKING.md](ROUND_TRACKING.md) for details
+
 ## Installation
 
 1. **Install from Foundry**: Search for "D&D Combat AI" in the Add-on Modules tab

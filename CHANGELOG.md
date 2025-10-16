@@ -5,6 +5,28 @@ All notable changes to the D&D Combat AI module will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0] - 2025-10-16
+
+### Added
+- **Round Tracking System**: New feature to track combat rounds with GM descriptions
+  - Automatic snapshots of combatant state (HP, position, conditions) at the start of each round
+  - Auto-detection and reporting of changes between rounds:
+    - Damage taken and healing received
+    - Movement tracking with distance estimates
+    - Conditions gained or lost
+    - Combatants joining or leaving combat
+  - GM dialog prompt at round start with pre-filled auto-detected changes
+  - Combat history automatically included in AI prompts for better tactical context
+  - Configurable number of rounds to include in AI context (default: 3)
+  - Settings to enable/disable round tracking feature
+- New `RoundTracker` class to manage round history and snapshots
+- Documentation in ROUND_TRACKING.md
+
+### Changed
+- Updated module version to 0.1.0
+- Enhanced AI prompts to include round history when available
+- Combat hooks now trigger round tracking on round start
+
 ## [1.0.0] - 2025-01-XX
 
 ### Added
