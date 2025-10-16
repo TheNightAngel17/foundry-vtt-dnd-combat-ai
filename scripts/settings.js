@@ -115,6 +115,33 @@ export class CombatAISettings {
         });
 
         // ========================================
+        // Round Tracking Configuration
+        // ========================================
+        
+        game.settings.register(MODULE_ID, 'enableRoundTracking', {
+            name: 'Enable Round Tracking',
+            hint: 'Track combat rounds with GM descriptions and auto-detected changes',
+            scope: 'world',
+            config: true,
+            type: Boolean,
+            default: true
+        });
+
+        game.settings.register(MODULE_ID, 'roundHistoryContext', {
+            name: 'Round History Context',
+            hint: 'How many previous rounds to include in AI prompts',
+            scope: 'world',
+            config: true,
+            type: Number,
+            default: 3,
+            range: {
+                min: 1,
+                max: 10,
+                step: 1
+            }
+        });
+
+        // ========================================
         // DDB Importer Configuration
         // ========================================
         

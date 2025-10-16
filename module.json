@@ -2,7 +2,7 @@
   "id": "dnd-combat-ai",
   "title": "D&D Combat AI",
   "description": "AI-powered combat assistance for NPCs in D&D 5e. Provides intelligent action recommendations based on combat situation and difficulty settings.",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "authors": [
     {
       "name": "Mitchell Lemons",

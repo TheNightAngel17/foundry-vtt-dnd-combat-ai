@@ -39,6 +39,14 @@
       "DebugMode": {
         "Name": "Debug Mode",
         "Hint": "Enable detailed logging for troubleshooting"
+      },
+      "EnableRoundTracking": {
+        "Name": "Enable Round Tracking",
+        "Hint": "Track combat rounds with GM descriptions and auto-detected changes"
+      },
+      "RoundHistoryContext": {
+        "Name": "Round History Context",
+        "Hint": "How many previous rounds to include in AI prompts"
       }
     },
     
@@ -60,7 +68,12 @@
       "Acknowledged": "Acknowledged",
       "Save": "Save",
       "Cancel": "Cancel",
-      "SettingsTitle": "Combat AI Settings"
+      "SettingsTitle": "Combat AI Settings",
+      "RoundDescription": "Round Description",
+      "SaveDescription": "Save Description",
+      "Skip": "Skip",
+      "AutoDetectedChanges": "Auto-detected changes",
+      "DescribeRound": "Describe what happened during round {round} of combat:"
     },
     
     "Messages": {
@@ -86,7 +99,10 @@
       "LocalLLMEndpointNotConfigured": "Local LLM endpoint not configured",
       "FailedToConnectLocalLLM": "Failed to connect to local LLM endpoint",
       "LLMGenerationFailed": "LLM generation failed",
-      "ErrorProcessingNPCTurn": "Error processing NPC turn"
+      "ErrorProcessingNPCTurn": "Error processing NPC turn",
+      "RoundDescriptionSaved": "Round {round} description saved",
+      "RoundSnapshotCreated": "Round {round} snapshot created",
+      "RoundHistoryCleared": "Round history cleared"
     },
     
     "Providers": {

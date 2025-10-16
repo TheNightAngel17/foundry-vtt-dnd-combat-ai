@@ -6,12 +6,14 @@ import { MODULE_ID, MODULE_TITLE } from './main.js';
 import { LLMConnector } from './llm-connector.js';
 import { CombatAnalyzer } from './combat-analyzer.js';
 import { ActionCache } from './action-cache.js';
+import { RoundTracker } from './round-tracker.js';
 
 export class CombatAIManager {
     constructor() {
         this.llmConnector = new LLMConnector();
         this.actionCache = new ActionCache();
         this.combatAnalyzer = new CombatAnalyzer(this.actionCache);
+        this.roundTracker = new RoundTracker();
         this.currentCombat = null;
         this.combatHistory = [];
     }
@@ -162,6 +164,11 @@ export class CombatAIManager {
             }));
         });
 
+        // Get round history if enabled
+        const roundHistory = this.roundTracker.getRoundHistoryForPrompt(
+            game.settings.get(MODULE_ID, 'roundHistoryContext') || 3
+        );
+
         return `You are controlling an NPC in a D&D 5e combat encounter. Your goal is to play at a "${difficulty}" difficulty level.
 
 Difficulty Guidelines: ${difficultyDescriptions[difficulty]}
@@ -181,6 +188,7 @@ Combat State:
 
 Recent Actions:
 ${situation.recentActions.map(action => `- ${action.actor}: ${action.action}`).join('\n')}
+${roundHistory}
 
 Enemy Analysis:
 ${situation.enemies.map(combatant => this.buildCombatantMarkdown(combatant)).join('\n')}
@@ -444,7 +452,26 @@ Respond ONLY with the JSON object, no additional text.`;
     onCombatStart(combat) {
         this.currentCombat = combat;
         this.combatHistory = [];
+        this.roundTracker.clearHistory();
         console.log(`${MODULE_TITLE} | Combat tracking started`);
+    }
+
+    /**
+     * Handle round start
+     */
+    async onRoundStart(combat) {
+        if (!combat) return;
+        
+        // Create snapshot for this round
+        this.roundTracker.onRoundStart(combat);
+        
+        // Prompt GM for round description (async, doesn't block)
+        if (game.user.isGM && game.settings.get(MODULE_ID, 'enableRoundTracking')) {
+            // Small delay to let the UI update before showing dialog
+            setTimeout(async () => {
+                await this.roundTracker.promptRoundDescription(combat);
+            }, 500);
+        }
     }
 
     /**
@@ -454,6 +481,7 @@ Respond ONLY with the JSON object, no additional text.`;
         this.currentCombat = null;
         // Clear expired cache entries when combat ends
         this.actionCache.clearExpiredCache();
+        this.roundTracker.clearHistory();
         console.log(`${MODULE_TITLE} | Combat tracking ended`);
     }
 }

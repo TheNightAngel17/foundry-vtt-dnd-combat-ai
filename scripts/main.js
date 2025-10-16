@@ -100,6 +100,12 @@ async function onCombatTurn(combat, updateData, options) {
  */
 async function onCombatRound(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat round changed to round ${updateData.round}`);
+    
+    // Notify round tracker about new round
+    if (combatAIManager) {
+        await combatAIManager.onRoundStart(combat);
+    }
+    
     // When a new round starts, get the first combatant (turn 0)
     await handleNPCTurnIfNeeded(combat, 0, 'round change');
 }
