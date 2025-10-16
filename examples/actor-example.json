@@ -1,0 +1,5410 @@
+{
+  "name": "Juiblex",
+  "type": "npc",
+  "img": "https://www.dndbeyond.com/avatars/25746/470/637880557727798992.png?1758606070426",
+  "system": {
+    "currency": {
+      "pp": 0,
+      "gp": 0,
+      "ep": 0,
+      "sp": 0,
+      "cp": 0
+    },
+    "abilities": {
+      "str": {
+        "value": 24,
+        "proficient": 0,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "dex": {
+        "value": 10,
+        "proficient": 1,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "con": {
+        "value": 23,
+        "proficient": 1,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "int": {
+        "value": 20,
+        "proficient": 0,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "wis": {
+        "value": 20,
+        "proficient": 1,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "cha": {
+        "value": 16,
+        "proficient": 0,
+        "max": null,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      }
+    },
+    "bonuses": {
+      "mwak": {
+        "attack": "",
+        "damage": ""
+      },
+      "rwak": {
+        "attack": "",
+        "damage": ""
+      },
+      "msak": {
+        "attack": "",
+        "damage": ""
+      },
+      "rsak": {
+        "attack": "",
+        "damage": ""
+      },
+      "abilities": {
+        "check": "",
+        "save": "",
+        "skill": ""
+      },
+      "spell": {
+        "dc": ""
+      }
+    },
+    "skills": {
+      "acr": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ani": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "arc": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ath": {
+        "ability": "str",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "dec": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "his": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ins": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "itm": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "inv": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "med": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "nat": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "prc": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 1,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "prf": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "per": {
+        "ability": "cha",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "rel": {
+        "ability": "int",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "slt": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "ste": {
+        "ability": "dex",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      },
+      "sur": {
+        "ability": "wis",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "value": 0,
+        "bonuses": {
+          "check": "",
+          "passive": ""
+        }
+      }
+    },
+    "tools": {},
+    "spells": {
+      "spell1": {
+        "value": 0
+      },
+      "spell2": {
+        "value": 0
+      },
+      "spell3": {
+        "value": 0
+      },
+      "spell4": {
+        "value": 0
+      },
+      "spell5": {
+        "value": 0
+      },
+      "spell6": {
+        "value": 0
+      },
+      "spell7": {
+        "value": 0
+      },
+      "spell8": {
+        "value": 0
+      },
+      "spell9": {
+        "value": 0
+      },
+      "pact": {
+        "value": 0
+      }
+    },
+    "attributes": {
+      "ac": {
+        "flat": 18,
+        "calc": "natural",
+        "formula": ""
+      },
+      "init": {
+        "ability": "",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonus": ""
+      },
+      "movement": {
+        "burrow": null,
+        "climb": 30,
+        "fly": null,
+        "swim": null,
+        "walk": 30,
+        "units": "ft",
+        "hover": false,
+        "ignoredDifficultTerrain": []
+      },
+      "attunement": {
+        "max": 3
+      },
+      "senses": {
+        "darkvision": 0,
+        "blindsight": 0,
+        "tremorsense": 0,
+        "truesight": 120,
+        "units": "ft",
+        "special": ""
+      },
+      "spellcasting": "wis",
+      "exhaustion": 0,
+      "concentration": {
+        "ability": "",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonuses": {
+          "save": ""
+        },
+        "limit": 1
+      },
+      "loyalty": {},
+      "hd": {
+        "spent": 0
+      },
+      "hp": {
+        "value": 192,
+        "max": 350,
+        "temp": 0,
+        "tempmax": null,
+        "formula": "28d12 + 168"
+      },
+      "death": {
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "success": 0,
+        "failure": 0,
+        "bonuses": {
+          "save": ""
+        }
+      },
+      "spell": {
+        "level": 17
+      }
+    },
+    "details": {
+      "biography": {
+        "value": "<p>Called the Faceless Lord and the Oozing Hunger in ancient grimoires, Juiblex is demon lord of slime and ooze, a noxious creature that doesn't care about the plots and schemes of others of its kind. It exists only to consume, digesting and transforming living matter into more of itself.</p>\n<p>A true horror, Juiblex is a mass of bubbling slime, swirling black and green, with glaring red eyes floating and shifting within it. It can rise up like a 20-foot hill, lashing out with dripping pseudopods to drag victims into its bulk. Those consumed by Juiblex are obliterated.</p>",
+        "public": ""
+      },
+      "alignment": "Chaotic Evil",
+      "ideal": "",
+      "bond": "",
+      "flaw": "",
+      "race": null,
+      "type": {
+        "value": "fiend",
+        "subtype": "Demon"
+      },
+      "habitat": {
+        "value": [],
+        "custom": ""
+      },
+      "cr": 23,
+      "treasure": {
+        "value": []
+      }
+    },
+    "resources": {
+      "legact": {
+        "max": 3,
+        "spent": 0
+      },
+      "legres": {
+        "max": 3,
+        "spent": 2
+      },
+      "lair": {
+        "value": true,
+        "initiative": null,
+        "inside": false
+      }
+    },
+    "source": {
+      "book": "MotM",
+      "page": "",
+      "custom": "",
+      "license": "",
+      "rules": "2014",
+      "revision": 1
+    },
+    "traits": {
+      "size": "huge",
+      "di": {
+        "value": [
+          "poison",
+          "acid",
+          "slashing",
+          "bludgeoning",
+          "piercing"
+        ],
+        "bypasses": [
+          "mgc"
+        ],
+        "custom": ""
+      },
+      "dr": {
+        "value": [
+          "lightning",
+          "cold",
+          "fire"
+        ],
+        "bypasses": [],
+        "custom": ""
+      },
+      "dv": {
+        "value": [],
+        "bypasses": [],
+        "custom": ""
+      },
+      "dm": {
+        "amount": {},
+        "bypasses": []
+      },
+      "ci": {
+        "value": [
+          "blinded",
+          "charmed",
+          "deafened",
+          "exhaustion",
+          "frightened",
+          "grappled",
+          "paralyzed",
+          "petrified",
+          "poisoned",
+          "prone",
+          "restrained",
+          "stunned",
+          "unconscious"
+        ],
+        "custom": ""
+      },
+      "languages": {
+        "value": [],
+        "custom": "All; Telepathy 120 ft.",
+        "communication": {}
+      },
+      "important": false
+    }
+  },
+  "prototypeToken": {
+    "name": "Juiblex",
+    "displayName": 30,
+    "actorLink": true,
+    "width": 3,
+    "height": 3,
+    "texture": {
+      "src": "tokenizer/npc-images/juiblex.Token.webp?1758606070426",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "offsetX": 0,
+      "offsetY": 0,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "rotation": 0,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": true,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": -1,
+    "displayBars": 50,
+    "bar1": {
+      "attribute": "attributes.hp"
+    },
+    "bar2": {
+      "attribute": "resources.legact"
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": true,
+      "range": 120,
+      "angle": 360,
+      "visionMode": "basic",
+      "attenuation": 0,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0,
+      "color": null
+    },
+    "detectionModes": [
+      {
+        "id": "seeAll",
+        "range": 120,
+        "enabled": true
+      }
+    ],
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": true,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": true
+    },
+    "movementAction": null,
+    "flags": {
+      "tagger": {
+        "tags": [
+          "dndbeyond",
+          "ddb-importer",
+          "fiend"
+        ]
+      }
+    },
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
+  },
+  "items": [
+    {
+      "_id": "BDIYCHDvYhBNzppM",
+      "name": "Multiattack",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "utilityMulaction": {
+            "type": "utility",
+            "_id": "utilityMulaction",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "",
+                "type": "",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p> Juiblex makes three Acid Lash attacks.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "multiattack",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "titleHTML": "<strong>Multiattack.</strong>",
+          "fullName": "Multiattack.",
+          "actionCopy": false,
+          "type": "action",
+          "description": "<p><em><strong></strong></em> Juiblex makes three Acid Lash attacks.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 0,
+      "img": "icons/skills/melee/strike-weapons-orange.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "ztfgChdYmQEuq603",
+      "name": "Acid Lash",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "attackAcLaaction": {
+            "type": "attack",
+            "_id": "attackAcLaaction",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "value": "60",
+              "units": "ft",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "",
+                "type": "",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "attack": {
+              "ability": "str",
+              "bonus": "",
+              "critical": {},
+              "flat": false,
+              "type": {
+                "value": "ranged",
+                "classification": "weapon"
+              }
+            },
+            "damage": {
+              "includeBase": false,
+              "parts": [
+                {
+                  "number": 4,
+                  "denomination": 6,
+                  "bonus": "@mod",
+                  "types": [
+                    "acid"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                }
+              ],
+              "critical": {}
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "attackMode": "oneHanded",
+            "ammunition": "",
+            "otherActivityUuid": "",
+            "attackRollPerTarget": "default",
+            "fumbleThreshold": 1,
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p>[[/attack extended]], reach 10 ft. or range 60/120 ft., one target. <em>Hit:</em>  [[/damage 4d6 + @abilities.str.mod type=acid average=true]] damage. Any creature killed by this attack is drawn into Juiblex's body, where the corpse is dissolved after 1 minute.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "acid-lash",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "titleHTML": "<strong>Acid Lash.</strong>",
+          "fullName": "Acid Lash.",
+          "actionCopy": false,
+          "type": "action",
+          "description": "<p><em><strong></strong> Melee or Ranged Weapon Attack:</em> +14 to hit, reach 10 ft. or range 60/120 ft., one target. <em>Hit:</em> 21 (4d6 + 7) acid damage. Any creature killed by this attack is drawn into Juiblex’s body, where the corpse is dissolved after 1 minute.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [
+              {
+                "profBonus": "",
+                "levelBonus": false,
+                "versatile": false,
+                "other": false,
+                "part": {
+                  "number": 4,
+                  "denomination": 6,
+                  "bonus": "@mod",
+                  "types": [
+                    "acid"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                },
+                "includesDice": true,
+                "noBonus": false,
+                "damageHasMod": true
+              }
+            ],
+            "baseAbility": "str",
+            "toHit": 14,
+            "proficient": true,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "otherSaveDamage": "halfdam"
+        }
+      },
+      "sort": 1,
+      "img": "icons/creatures/abilities/stinger-poison-green.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "DsSk21OdDgokNIoc",
+      "name": "Eject Slime",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "saveEjeSliaction": {
+            "type": "save",
+            "_id": "saveEjeSliaction",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "target": "",
+                  "value": "1",
+                  "scaling": {
+                    "mode": "",
+                    "formula": ""
+                  }
+                }
+              ],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "ft",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "radius",
+                "size": "60",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "1",
+                "type": "creature",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "damage": {
+              "parts": [
+                {
+                  "number": 10,
+                  "denomination": 10,
+                  "bonus": "",
+                  "types": [
+                    "acid"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                }
+              ],
+              "onSave": "half",
+              "critical": {
+                "allow": false
+              }
+            },
+            "save": {
+              "ability": [
+                "dex"
+              ],
+              "dc": {
+                "calculation": "",
+                "formula": "21"
+              }
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "friendlySave": "default",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "max": "1",
+          "recovery": [
+            {
+              "period": "recharge",
+              "formula": "5",
+              "type": "recoverAll"
+            }
+          ]
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p> Juiblex spews out a corrosive slime, targeting one creature that it can see within 60 feet of it. The target must succeed on a [[/save dex 21 format=long]] or take  [[/damage 10d10 type=acid average=true]] damage. Unless the target avoids taking all of this damage, any metal armor worn by the target takes a permanent −1 penalty to the AC it offers, and any metal weapon the target is carrying or wearing takes a permanent −1 penalty to damage rolls. The penalty worsens each time a target is subjected to this effect. If the penalty on an object drops to −5, the object is destroyed. The penalty on an object can be removed by the mending spell.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "eject-slime",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "level": null,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "titleHTML": "<strong>Eject Slime (Recharge 5–6).</strong>",
+          "fullName": "Eject Slime (Recharge 5–6).",
+          "actionCopy": false,
+          "type": "action",
+          "description": "<p><em><strong></strong></em> Juiblex spews out a corrosive slime, targeting one creature that it can see within 60 feet of it. The target must succeed on a DC 21 Dexterity saving throw or take 55 (10d10) acid damage. Unless the target avoids taking all of this damage, any metal armor worn by the target takes a permanent −1 penalty to the AC it offers, and any metal weapon the target is carrying or wearing takes a permanent −1 penalty to damage rolls. The penalty worsens each time a target is subjected to this effect. If the penalty on an object drops to −5, the object is destroyed. The penalty on an object can be removed by the mending spell.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [
+              {
+                "profBonus": "",
+                "levelBonus": false,
+                "versatile": false,
+                "other": false,
+                "part": {
+                  "number": 10,
+                  "denomination": 10,
+                  "bonus": "",
+                  "types": [
+                    "acid"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                },
+                "includesDice": true,
+                "noBonus": true,
+                "damageHasMod": false
+              }
+            ],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 2,
+      "img": "icons/commodities/materials/slime-thick-orange.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.9",
+        "lastModifiedBy": "7AqeohPEjtOT4uHz",
+        "modifiedTime": 1759904502157
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "NxfTwpvQjKGQoUOG",
+      "name": "Spellcasting",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "utilitySpeaction": {
+            "type": "utility",
+            "_id": "utilitySpeaction",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "",
+                "type": "",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p> Juiblex casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 20):</p><p>At will: detect magic</p><p>3/day each: contagion, gaseous form</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "spellcasting",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "titleHTML": "<strong>Spellcasting.</strong>",
+          "fullName": "Spellcasting.",
+          "actionCopy": false,
+          "type": "action",
+          "description": "<p><em><strong></strong></em> Juiblex casts one of the following spells, requiring no material components and using Wisdom as the spellcasting ability (spell save DC 20):</p><p>At will: detect magic</p><p>3/day each: contagion, gaseous form</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 3,
+      "img": "icons/magic/light/beam-rays-magenta-large.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "U6OgN7crMBb2SI1e",
+      "name": "Lair Actions",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "saveLairActilair": {
+            "type": "save",
+            "_id": "saveLairActilair",
+            "sort": 0,
+            "activation": {
+              "type": "lair",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [
+              {
+                "_id": "IZcYuQ9JmFNPQrth",
+                "onSave": false
+              }
+            ],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "",
+                "type": "creature",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "damage": {
+              "parts": [
+                {
+                  "number": 4,
+                  "denomination": 10,
+                  "bonus": "",
+                  "types": [
+                    "fire"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                }
+              ],
+              "onSave": "half",
+              "critical": {
+                "allow": false
+              }
+            },
+            "save": {
+              "ability": [
+                "dex"
+              ],
+              "dc": {
+                "calculation": "",
+                "formula": "21"
+              }
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "friendlySave": "default",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<h4><strong>Lair Actions</strong></h4><p>On initiative count 20 (losing initiative ties), Juiblex can take one of the following lair actions; it can't take the same lair action two rounds in a row:</p><p><strong>Green Slime.</strong> A <a title=\"green slime\" href=\"https://www.dndbeyond.com/sources/dmg/adventure-environments#GreenSlime\">green slime</a> (see the <em><a href=\"https://www.dndbeyond.com/sources/dmg\">Dungeon Master's Guide</a></em>) appears on a spot on the ceiling that Juiblex chooses within the lair. The slime disintegrates after 1 hour.</p><p><strong>Slippery Slime.</strong> Juiblex slimes a square area of ground it can see within the lair. The area can be up to 10 feet on a side. When the slime appears, each creature on it must succeed on a [[/save dex 21 format=long]] or fall prone and slide 10 feet in a random direction determined by a d8 roll. When a creature enters the area for the first time on a turn or ends its turn there, that creature must make the same save.</p><p>The slime lasts for 1 hour or until it is burned away with fire. If the slime is set on fire, it burns away after 1 round. Any creature that starts its turn in the burning slime takes  [[/damage 4d10 type=fire average=true]] damage.</p><p><strong>Sticky Slime.</strong> Juiblex slimes a square area of ground it can see within the lair. The area can be up to 10 feet on a side. When the slime appears, each creature in that area must succeed on a [[/save str 21 format=long]] or become restrained. When a creature enters the area for the first time on a turn or ends its turn there, that creature must make the same save.</p><p>A restrained creature is stuck as long as it remains in the slimy area or until it breaks free. The restrained creature, or another creature that can reach it, can use its action to try to break free and must succeed on a [[/check str 21 format=long]].</p><p>The slime lasts for 1 hour or until it is burned away with fire. If the slime is set on fire, it burns away after 1 round. Any creature that starts its turn in the burning slime takes  [[/damage 4d10 type=fire average=true]] damage.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "lair-actions",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [
+        {
+          "name": "Status: Restrained",
+          "statuses": [
+            "restrained"
+          ],
+          "changes": [],
+          "duration": {
+            "seconds": 3600,
+            "startTime": null,
+            "rounds": 10,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null,
+            "combat": null
+          },
+          "tint": "#ffffff",
+          "transfer": false,
+          "disabled": false,
+          "flags": {
+            "dae": {
+              "transfer": false,
+              "stackable": "noneNameOnly",
+              "specialDuration": []
+            },
+            "ddbimporter": {
+              "disabled": false
+            },
+            "midi-qol": {
+              "forceCEOff": true
+            },
+            "core": {}
+          },
+          "description": "",
+          "_id": "IZcYuQ9JmFNPQrth",
+          "img": "icons/environment/settlement/watchtower-silhouette-yellow.webp",
+          "type": "base",
+          "system": {},
+          "origin": null,
+          "sort": 0,
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "exportSource": null,
+            "coreVersion": "13.348",
+            "systemId": "dnd5e",
+            "systemVersion": "5.0.4",
+            "lastModifiedBy": null
+          }
+        }
+      ],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          },
+          "effectsApplied": true
+        },
+        "monsterMunch": {
+          "fullName": "Lair Actions",
+          "actionCopy": false,
+          "type": "lair",
+          "description": "<h4><strong>Lair Actions</strong></h4><p>On initiative count 20 (losing initiative ties), Juiblex can take one of the following lair actions; it can’t take the same lair action two rounds in a row:</p><p><strong>Green Slime.</strong> A <a title=\"green slime\" href=\"https://www.dndbeyond.com/sources/dmg/adventure-environments#GreenSlime\">green slime</a> (see the <em><a href=\"https://www.dndbeyond.com/sources/dmg\">Dungeon Master’s Guide</a></em>) appears on a spot on the ceiling that Juiblex chooses within the lair. The slime disintegrates after 1 hour.</p><p><strong>Slippery Slime.</strong> Juiblex slimes a square area of ground it can see within the lair. The area can be up to 10 feet on a side. When the slime appears, each creature on it must succeed on a DC 21 Dexterity saving throw or fall prone and slide 10 feet in a random direction determined by a d8 roll. When a creature enters the area for the first time on a turn or ends its turn there, that creature must make the same save.</p><p>The slime lasts for 1 hour or until it is burned away with fire. If the slime is set on fire, it burns away after 1 round. Any creature that starts its turn in the burning slime takes 22 (4d10) fire damage.</p><p><strong>Sticky Slime.</strong> Juiblex slimes a square area of ground it can see within the lair. The area can be up to 10 feet on a side. When the slime appears, each creature in that area must succeed on a DC 21 Strength saving throw or become restrained. When a creature enters the area for the first time on a turn or ends its turn there, that creature must make the same save.</p><p>A restrained creature is stuck as long as it remains in the slimy area or until it breaks free. The restrained creature, or another creature that can reach it, can use its action to try to break free and must succeed on a DC 21 Strength check.</p><p>The slime lasts for 1 hour or until it is burned away with fire. If the slime is set on fire, it burns away after 1 round. Any creature that starts its turn in the burning slime takes 22 (4d10) fire damage.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [
+              {
+                "profBonus": "",
+                "levelBonus": false,
+                "versatile": false,
+                "other": false,
+                "part": {
+                  "number": 4,
+                  "denomination": 10,
+                  "bonus": "",
+                  "types": [
+                    "fire"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                },
+                "includesDice": true,
+                "noBonus": true,
+                "damageHasMod": false
+              },
+              {
+                "profBonus": "",
+                "levelBonus": false,
+                "versatile": false,
+                "other": false,
+                "part": {
+                  "number": 4,
+                  "denomination": 10,
+                  "bonus": "",
+                  "types": [
+                    "fire"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                },
+                "includesDice": true,
+                "noBonus": true,
+                "damageHasMod": false
+              }
+            ],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam",
+          "confirmTargets": "default"
+        },
+        "midi-qol": {
+          "removeAttackDamageButtons": "default",
+          "forceCEOff": true
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "sort": 4,
+      "img": "icons/environment/settlement/watchtower-silhouette-yellow.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "jNt67uCRmbx3N21o",
+      "name": "Regional Effects",
+      "type": "feat",
+      "system": {
+        "activities": {},
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<h4><strong>Regional Effects</strong></h4><p>The region containing Juiblex's lair is warped by its magic, creating one or more of the following effects:</p><p><strong>Acidic Water.</strong> Small bodies of water, such as ponds or wells, within 1 mile of the lair turn highly acidic, corroding any object that touches them.</p><p><strong>Corrupted &amp;Reference[nat]{Nature}.</strong> Within 6 miles of the lair, all Wisdom (&amp;Reference[med]{Medicine}) and Wisdom (&amp;Reference[sur]{Survival}) checks have disadvantage.</p><p><strong>Slime.</strong> Surfaces within 6 miles of the lair are frequently covered by a thin film of slime, which is slick and sticks to anything that touches it.</p><p>If Juiblex dies, these effects fade over the course of 1d10 days.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "regional-effects",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "fullName": "Regional Effects",
+          "actionCopy": false,
+          "type": "lair",
+          "description": "<h4><strong>Regional Effects</strong></h4><p>The region containing Juiblex’s lair is warped by its magic, creating one or more of the following effects:</p><p><strong>Acidic Water.</strong> Small bodies of water, such as ponds or wells, within 1 mile of the lair turn highly acidic, corroding any object that touches them.</p><p><strong>Corrupted Nature.</strong> Within 6 miles of the lair, all Wisdom (Medicine) and Wisdom (Survival) checks have disadvantage.</p><p><strong>Slime.</strong> Surfaces within 6 miles of the lair are frequently covered by a thin film of slime, which is slick and sticks to anything that touches it.</p><p>If Juiblex dies, these effects fade over the course of 1d10 days.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 5,
+      "img": "icons/magic/air/wind-tornado-funnel-damage-blue.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "Ak1iJplVh2M1Dq5k",
+      "name": "Juiblex’s Lair",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "utilityJuiLalair": {
+            "type": "utility",
+            "_id": "utilityJuiLalair",
+            "sort": 0,
+            "activation": {
+              "type": "lair",
+              "value": null,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "",
+                "type": "",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<h3>Juiblex's Lair</h3><p>Juiblex's principal lair is known as the Slime Pits, a realm that Juiblex shares with Zuggtmoy. This layer of the Abyss, which is also known as Shedaklah, is a bubbling morass of fetid sludge. The landscape is covered in vast expanses of caustic slimes, and strange organic forms rise from the oceans of ooze at Juiblex's command.</p><p>Juiblex's challenge rating is 24 (62,000 XP) when encountered in its lair.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "juiblexs-lair",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "fullName": "Juiblex’s Lair",
+          "actionCopy": false,
+          "type": "lair",
+          "description": "<h3>Juiblex’s Lair</h3><p>Juiblex’s principal lair is known as the Slime Pits, a realm that Juiblex shares with Zuggtmoy. This layer of the Abyss, which is also known as Shedaklah, is a bubbling morass of fetid sludge. The landscape is covered in vast expanses of caustic slimes, and strange organic forms rise from the oceans of ooze at Juiblex’s command.</p><p>Juiblex’s challenge rating is 24 (62,000 XP) when encountered in its lair.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 6,
+      "img": "icons/environment/wilderness/cave-entrance-vulcano.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "K3iZefo2rbQ0PTmR",
+      "name": "Cultists of Juiblex",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "damageCuOfJulair": {
+            "type": "damage",
+            "_id": "damageCuOfJulair",
+            "sort": 0,
+            "activation": {
+              "type": "lair",
+              "value": null,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "ft",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "radius",
+                "size": "5",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "",
+                "type": "creature",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "damage": {
+              "parts": [
+                {
+                  "number": null,
+                  "denomination": 0,
+                  "bonus": "5",
+                  "types": [
+                    "force"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                }
+              ],
+              "critical": {
+                "allow": false
+              }
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            }
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<h3>Cultists of Juiblex</h3><p>The Faceless Lord grants its cultists special abilities. Lesser followers can gain the Liquid Movement trait. The most dedicated devotees of ooze can also gain the Slimy Organs trait.</p><blockquote> <p><em><strong>Liquid Movement.</strong></em> As an action, this creature can move up to 20 feet through spaces no more than an inch in diameter. It must end this movement in a space that can accommodate its full size. Otherwise, it takes 5 force damage and returns to the space where it began this movement.</p> <p><em><strong>Slimy Organs.</strong> </em>This creature has resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks.</p> <p>Whenever this creature suffers a critical hit or is reduced to 0 hit points, it sprays acid; each creature within 5 feet of it takes acid damage equal to its number of Hit Dice.</p> </blockquote>\n</div>",
+          "chat": ""
+        },
+        "identifier": "cultists-of-juiblex",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "fullName": "Cultists of Juiblex",
+          "actionCopy": false,
+          "type": "lair",
+          "description": "<h3>Cultists of Juiblex</h3><p>The Faceless Lord grants its cultists special abilities. Lesser followers can gain the Liquid Movement trait. The most dedicated devotees of ooze can also gain the Slimy Organs trait.</p><blockquote> <p><em><strong>Liquid Movement.</strong></em> As an action, this creature can move up to 20 feet through spaces no more than an inch in diameter. It must end this movement in a space that can accommodate its full size. Otherwise, it takes 5 force damage and returns to the space where it began this movement.</p> <p><em><strong>Slimy Organs.</strong> </em>This creature has resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks.</p> <p>Whenever this creature suffers a critical hit or is reduced to 0 hit points, it sprays acid; each creature within 5 feet of it takes acid damage equal to its number of Hit Dice.</p> </blockquote>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [
+              {
+                "profBonus": "",
+                "versatile": false,
+                "other": false,
+                "part": {
+                  "number": null,
+                  "denomination": 0,
+                  "bonus": "5",
+                  "types": [
+                    "force"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                },
+                "includesDice": false,
+                "noBonus": false,
+                "damageHasMod": false
+              }
+            ],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 7,
+      "img": "icons/magic/unholy/silhouette-robe-evil-glow.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "p9q0eqJhUibi1ePH",
+      "name": "Legendary Actions",
+      "type": "feat",
+      "system": {
+        "activities": {},
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p>Juiblex can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. Juiblex regains spent legendary actions at the start of its turn.</p> <p><strong>Attack.</strong> Juiblex makes one Acid Lash attack.</p> <p><strong>Corrupting Touch (Costs 2 Actions).</strong> [[/attack extended]], reach 10 ft., one creature. <em>Hit:</em>  [[/damage 4d6 + @abilities.str.mod type=poison average=true]] damage, and the target is slimed. Until the slime is scraped off with an action, the target is poisoned, and any creature, other than an Ooze, is poisoned while within 10 feet of the target.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "legendary-actions",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "fullName": "Legendary Actions",
+          "actionCopy": false,
+          "type": "legendary",
+          "description": "<p>Juiblex can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature&rsquo;s turn. Juiblex regains spent legendary actions at the start of its turn.</p> <p><strong>Attack.</strong> Juiblex makes one Acid Lash attack.</p> <p><strong>Corrupting Touch (Costs 2 Actions).</strong> Melee Weapon Attack: +14 to hit, reach 10 ft., one creature. <em>Hit:</em> 21 (4d6 + 7) poison damage, and the target is slimed. Until the slime is scraped off with an action, the target is poisoned, and any creature, other than an Ooze, is poisoned while within 10 feet of the target.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [
+              {
+                "profBonus": "",
+                "levelBonus": false,
+                "versatile": false,
+                "other": false,
+                "part": {
+                  "number": 4,
+                  "denomination": 6,
+                  "bonus": "@mod",
+                  "types": [
+                    "poison"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                },
+                "includesDice": true,
+                "noBonus": false,
+                "damageHasMod": true
+              }
+            ],
+            "baseAbility": "str",
+            "toHit": 14,
+            "proficient": true,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "otherSaveDamage": "halfdam"
+        }
+      },
+      "sort": 8,
+      "img": "icons/skills/targeting/target-strike-triple-blue.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "7rCDAgC1Vg1aisKY",
+      "name": "Attack",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "utilitylegendary": {
+            "type": "utility",
+            "_id": "utilitylegendary",
+            "sort": 0,
+            "activation": {
+              "type": "legendary",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "attribute",
+                  "target": "resources.legact.value",
+                  "value": "1",
+                  "scaling": {
+                    "mode": "",
+                    "formula": ""
+                  }
+                }
+              ],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "",
+                "type": "",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p> Juiblex makes one Acid Lash attack.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "attack",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "fullName": "Attack",
+          "actionCopy": false,
+          "type": "legendary",
+          "description": "<p><strong></strong> Juiblex makes one Acid Lash attack.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 1,
+      "img": "icons/skills/melee/strike-slashes-orange.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "VPW88y078DgRHvzf",
+      "name": "Corrupting Touch",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "attackClegendary": {
+            "type": "attack",
+            "_id": "attackClegendary",
+            "sort": 0,
+            "activation": {
+              "type": "legendary",
+              "value": 2,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "attribute",
+                  "target": "resources.legact.value",
+                  "value": "2",
+                  "scaling": {
+                    "mode": "",
+                    "formula": ""
+                  }
+                }
+              ],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "ft",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "radius",
+                "size": "10",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "1",
+                "type": "creature",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "attack": {
+              "ability": "str",
+              "bonus": "",
+              "critical": {},
+              "flat": false,
+              "type": {
+                "value": "melee",
+                "classification": "weapon"
+              }
+            },
+            "damage": {
+              "includeBase": false,
+              "parts": [
+                {
+                  "number": 4,
+                  "denomination": 6,
+                  "bonus": "@mod",
+                  "types": [
+                    "poison"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                }
+              ],
+              "critical": {}
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "attackMode": "oneHanded",
+            "ammunition": "",
+            "otherActivityUuid": "",
+            "attackRollPerTarget": "default",
+            "fumbleThreshold": 1,
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p> [[/attack extended]], reach 10 ft., one creature. <em>Hit:</em>  [[/damage 4d6 + @abilities.str.mod type=poison average=true]] damage, and the target is slimed. Until the slime is scraped off with an action, the target is poisoned, and any creature, other than an Ooze, is poisoned while within 10 feet of the target.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "corrupting-touch",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "fullName": "Corrupting Touch (Costs 2 Actions)",
+          "actionCopy": false,
+          "type": "legendary",
+          "description": "<p><strong></strong> Melee Weapon Attack: +14 to hit, reach 10 ft., one creature. <em>Hit:</em> 21 (4d6 + 7) poison damage, and the target is slimed. Until the slime is scraped off with an action, the target is poisoned, and any creature, other than an Ooze, is poisoned while within 10 feet of the target.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [
+              {
+                "profBonus": "",
+                "levelBonus": false,
+                "versatile": false,
+                "other": false,
+                "part": {
+                  "number": 4,
+                  "denomination": 6,
+                  "bonus": "@mod",
+                  "types": [
+                    "poison"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "",
+                    "number": null,
+                    "formula": ""
+                  }
+                },
+                "includesDice": true,
+                "noBonus": false,
+                "damageHasMod": true
+              }
+            ],
+            "baseAbility": "str",
+            "toHit": 14,
+            "proficient": true,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "otherSaveDamage": "halfdam"
+        }
+      },
+      "sort": 2,
+      "img": "icons/magic/light/beam-rays-teal-small.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "VTDTBonvb43jWiSq",
+      "name": "Foul",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "saveFoulspecialI": {
+            "type": "save",
+            "_id": "saveFoulspecialI",
+            "sort": 0,
+            "activation": {
+              "type": "special",
+              "value": 1,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [
+              {
+                "_id": "umaxgLMhZllvCz24",
+                "onSave": false
+              }
+            ],
+            "range": {
+              "units": "ft",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "1",
+                "type": "creature",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "damage": {
+              "parts": [],
+              "onSave": "half",
+              "critical": {
+                "allow": false
+              }
+            },
+            "save": {
+              "ability": [
+                "con"
+              ],
+              "dc": {
+                "calculation": "",
+                "formula": "21"
+              }
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "friendlySave": "default",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p><em><strong>Foul.</strong></em> Any creature other than an Ooze that starts its turn within 10 feet of Juiblex must succeed on a [[/save con 21 format=long]] or be poisoned until the start of the creature's next turn.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "foul",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [
+        {
+          "name": "Status: Poisoned",
+          "statuses": [
+            "poisoned"
+          ],
+          "changes": [],
+          "duration": {
+            "seconds": 60,
+            "startTime": null,
+            "rounds": 10,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null,
+            "combat": null
+          },
+          "tint": "#ffffff",
+          "transfer": false,
+          "disabled": false,
+          "flags": {
+            "dae": {
+              "transfer": false,
+              "stackable": "noneNameOnly",
+              "specialDuration": []
+            },
+            "ddbimporter": {
+              "disabled": false
+            },
+            "midi-qol": {
+              "forceCEOff": true
+            },
+            "core": {}
+          },
+          "description": "",
+          "_id": "umaxgLMhZllvCz24",
+          "img": "icons/commodities/biological/pustules-pink.webp",
+          "type": "base",
+          "system": {},
+          "origin": null,
+          "sort": 0,
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "exportSource": null,
+            "coreVersion": "13.348",
+            "systemId": "dnd5e",
+            "systemVersion": "5.0.4",
+            "lastModifiedBy": null
+          }
+        }
+      ],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          },
+          "effectsApplied": true
+        },
+        "monsterMunch": {
+          "titleHTML": "<em><strong>Foul.</strong></em>",
+          "fullName": "Foul.",
+          "actionCopy": false,
+          "type": "special",
+          "description": "<p><em><strong>Foul.</strong></em> Any creature other than an Ooze that starts its turn within 10 feet of Juiblex must succeed on a DC 21 Constitution saving throw or be poisoned until the start of the creature’s next turn.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam",
+          "confirmTargets": "default"
+        },
+        "midi-qol": {
+          "removeAttackDamageButtons": "default",
+          "forceCEOff": true
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "sort": 11,
+      "img": "icons/commodities/biological/pustules-pink.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "od8k38AMaEc5w8GA",
+      "name": "Legendary Resistance",
+      "type": "feat",
+      "system": {
+        "activities": {
+          "utilityLRspecial": {
+            "type": "utility",
+            "_id": "utilityLRspecial",
+            "sort": 0,
+            "activation": {
+              "type": "special",
+              "value": null,
+              "condition": "",
+              "override": false
+            },
+            "consumption": {
+              "targets": [
+                {
+                  "type": "attribute",
+                  "target": "resources.legres.value",
+                  "value": "1",
+                  "scaling": {
+                    "mode": "",
+                    "formula": ""
+                  }
+                }
+              ],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              },
+              "spellSlot": true
+            },
+            "description": {},
+            "duration": {
+              "value": "",
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "count": "",
+                "contiguous": false,
+                "type": "",
+                "size": "",
+                "width": "",
+                "height": "",
+                "units": "ft"
+              },
+              "affects": {
+                "count": "",
+                "type": "",
+                "choice": false,
+                "special": ""
+              },
+              "prompt": true,
+              "override": false
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p><em><strong>Legendary Resistance (3/Day).</strong></em> If Juiblex fails a saving throw, it can choose to succeed instead.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "legendary-resistance",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {}
+        },
+        "monsterMunch": {
+          "titleHTML": "<em><strong>Legendary Resistance (3/Day).</strong></em>",
+          "fullName": "Legendary Resistance (3/Day).",
+          "actionCopy": false,
+          "type": "special",
+          "description": "<p><em><strong>Legendary Resistance (3/Day).</strong></em> If Juiblex fails a saving throw, it can choose to succeed instead.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 12,
+      "img": "icons/equipment/shield/kite-wooden-oak-glow.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "nmwH3rb85SPMjULH",
+      "name": "Magic Resistance",
+      "type": "feat",
+      "system": {
+        "activities": {},
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p><em><strong>Magic Resistance.</strong></em> Juiblex has advantage on saving throws against spells and other magical effects.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "magic-resistance",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [
+        {
+          "name": "Magic Resistance",
+          "img": "icons/magic/defensive/shield-barrier-glowing-blue.webp",
+          "origin": "Actor.7LMLhauwCobOmQva.Item.nmwH3rb85SPMjULH",
+          "_id": "C221ArWxFIUvsHmg",
+          "type": "base",
+          "system": {},
+          "changes": [],
+          "disabled": false,
+          "duration": {
+            "startTime": null,
+            "combat": null,
+            "seconds": null,
+            "rounds": null,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null
+          },
+          "description": "",
+          "tint": "#ffffff",
+          "transfer": true,
+          "statuses": [],
+          "sort": 0,
+          "flags": {
+            "dnd5e": {
+              "riders": {
+                "statuses": []
+              }
+            },
+            "dae": {
+              "disableCondition": "",
+              "stackable": "noneName",
+              "showIcon": false,
+              "disableIncapacitated": false,
+              "durationExpression": "",
+              "macroRepeat": "none",
+              "specialDuration": []
+            },
+            "core": {
+              "overlay": false
+            },
+            "ActiveAuras": {
+              "isAura": false,
+              "aura": "All",
+              "nameOverride": "",
+              "radius": "",
+              "alignment": "",
+              "type": "",
+              "customCheck": "",
+              "ignoreSelf": false,
+              "height": false,
+              "hidden": false,
+              "displayTemp": false,
+              "hostile": false,
+              "onlyOnce": false,
+              "wallsBlock": "system",
+              "statuses": []
+            }
+          },
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "exportSource": null,
+            "coreVersion": "13.348",
+            "systemId": "dnd5e",
+            "systemVersion": "5.0.4",
+            "createdTime": 1758606611144,
+            "modifiedTime": 1758606667238,
+            "lastModifiedBy": "7AqeohPEjtOT4uHz"
+          }
+        }
+      ],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "titleHTML": "<em><strong>Magic Resistance.</strong></em>",
+          "fullName": "Magic Resistance.",
+          "actionCopy": false,
+          "type": "special",
+          "description": "<p><em><strong>Magic Resistance.</strong></em> Juiblex has advantage on saving throws against spells and other magical effects.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 13,
+      "img": "icons/magic/defensive/shield-barrier-glowing-blue.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "cZcp43v6UvWDwbpG",
+      "name": "Regeneration",
+      "type": "feat",
+      "system": {
+        "activities": {},
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p><em><strong>Regeneration.</strong> </em>Juiblex regains [[/damage 20 type=heal average=false]] hit points at the start of its turn. If it takes fire or radiant damage, this trait doesn't function at the start of its next turn. Juiblex dies only if it starts its turn with 0 hit points and doesn't regenerate.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "regeneration",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "titleHTML": "<em><strong>Regeneration.</strong> </em>",
+          "fullName": "Regeneration. ",
+          "actionCopy": false,
+          "type": "special",
+          "description": "<p><em><strong>Regeneration.</strong> </em>Juiblex regains 20 hit points at the start of its turn. If it takes fire or radiant damage, this trait doesn’t function at the start of its next turn. Juiblex dies only if it starts its turn with 0 hit points and doesn’t regenerate.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 14,
+      "img": "icons/magic/life/heart-cross-strong-purple-orange.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "_id": "DSr20xAteYIyePoz",
+      "name": "Spider Climb",
+      "type": "feat",
+      "system": {
+        "activities": {},
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p><em><strong>Spider Climb.</strong></em> Juiblex can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "spider-climb",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "advancement": [],
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "repeatable": false,
+          "items": []
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "flags": {
+        "ddbimporter": {
+          "levelBonus": false,
+          "spellSave": false,
+          "dndbeyond": {},
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          }
+        },
+        "monsterMunch": {
+          "titleHTML": "<em><strong>Spider Climb.</strong></em>",
+          "fullName": "Spider Climb.",
+          "actionCopy": false,
+          "type": "special",
+          "description": "<p><em><strong>Spider Climb.</strong></em> Juiblex can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check.</p>",
+          "actionData": {
+            "damage": {
+              "base": null,
+              "onSave": null
+            },
+            "damageParts": [],
+            "baseAbility": null,
+            "toHit": 0,
+            "proficient": false,
+            "extraAttackBonus": 0
+          }
+        },
+        "midiProperties": {
+          "saveDamage": "halfdam"
+        }
+      },
+      "sort": 15,
+      "img": "icons/creatures/invertebrates/spider-beetle-runed-green.webp",
+      "folder": null,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "type": "spell",
+      "system": {
+        "activities": {
+          "utilityDetecMagi": {
+            "type": "utility",
+            "_id": "utilityDetecMagi",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false
+            },
+            "consumption": {
+              "spellSlot": true,
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              }
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": null,
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p>For the duration, you sense the presence of magic within 30 feet of you. If you sense magic in this way, you can use your action to see a faint aura around any visible creature or object in the area that bears magic, and you learn its school of magic, if any.</p>\n<p>The spell can penetrate most barriers, but it is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "detect-magic",
+        "source": {
+          "book": "PHB",
+          "page": "",
+          "license": "",
+          "custom": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "10",
+          "units": "minute"
+        },
+        "level": 1,
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "properties": [
+          "vocal",
+          "somatic",
+          "ritual",
+          "concentration"
+        ],
+        "range": {
+          "units": "self"
+        },
+        "school": "div",
+        "target": {
+          "affects": {
+            "count": "",
+            "type": "",
+            "choice": false,
+            "special": ""
+          },
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "sphere",
+            "size": "30",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          }
+        },
+        "method": "atwill",
+        "prepared": 0
+      },
+      "effects": [],
+      "name": "Detect Magic",
+      "flags": {
+        "ddbimporter": {
+          "id": 136561,
+          "definitionId": 2065,
+          "entityTypeId": 435869154,
+          "dndbeyond": {
+            "lookup": "generic",
+            "lookupName": "generic",
+            "level": null,
+            "castAtLevel": null,
+            "homebrew": false
+          },
+          "originalName": "Detect Magic",
+          "sources": [
+            {
+              "sourceId": 1,
+              "pageNumber": null,
+              "sourceType": 2
+            },
+            {
+              "sourceId": 2,
+              "pageNumber": 231,
+              "sourceType": 1
+            }
+          ],
+          "tags": [
+            "Detection"
+          ],
+          "version": "6.4.10",
+          "is2014": true,
+          "is2024": false,
+          "addSpellEffects": true,
+          "legacy": true,
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          },
+          "effectsApplied": true
+        },
+        "midi-qol": {
+          "removeAttackDamageButtons": "default"
+        },
+        "midiProperties": {
+          "confirmTargets": "default",
+          "magicdam": true,
+          "magiceffect": true
+        },
+        "spell-class-filter-for-5e": {},
+        "tidy5e-sheet": {}
+      },
+      "img": "icons/magic/symbols/rune-sigil-black-pink.webp",
+      "folder": "66U1tsm6G77XugqT",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": null
+      },
+      "sort": 0,
+      "_id": "jmcNh5KsNoOmXvSq",
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "type": "spell",
+      "system": {
+        "activities": {
+          "ddbContagionCast": {
+            "name": "Cast",
+            "type": "attack",
+            "_id": "ddbContagionCast",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false
+            },
+            "consumption": {
+              "spellSlot": false,
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "target": "",
+                  "value": "1",
+                  "scaling": {
+                    "mode": "",
+                    "formula": ""
+                  }
+                }
+              ],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              }
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [
+              {
+                "_id": "CnrtFXqSBGLXUGLE"
+              }
+            ],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "attack": {
+              "ability": "spellcasting",
+              "bonus": "",
+              "critical": {},
+              "flat": false,
+              "type": {
+                "value": "melee",
+                "classification": "spell"
+              }
+            },
+            "damage": {
+              "parts": [],
+              "critical": {},
+              "includeBase": true
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "attackMode": "oneHanded",
+            "ammunition": "",
+            "otherActivityUuid": "",
+            "attackRollPerTarget": "default",
+            "fumbleThreshold": 1,
+            "otherActivityAsParentType": true
+          },
+          "ddbContagionSave": {
+            "name": "Save",
+            "type": "save",
+            "_id": "ddbContagionSave",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false
+            },
+            "consumption": {
+              "targets": [],
+              "spellSlot": false,
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              }
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "any",
+              "override": true,
+              "special": ""
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": [],
+              "max": ""
+            },
+            "damage": {
+              "parts": [],
+              "onSave": "half",
+              "critical": {
+                "allow": false
+              }
+            },
+            "save": {
+              "ability": [
+                "con"
+              ],
+              "dc": {
+                "formula": "",
+                "calculation": "spellcasting"
+              }
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "friendlySave": "default",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": 1,
+          "max": "3",
+          "recovery": [
+            {
+              "period": "day",
+              "type": "recoverAll"
+            }
+          ]
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p>Your touch inflicts disease. Make a melee spell attack against a creature within your reach. On a hit, the target is poisoned.</p>\n<p>At the end of each of the poisoned target’s turns, the target must make a [[/save con format=long]]. If the target succeeds on three of these saves, it is no longer poisoned, and the spell ends. If the target fails three of these saves, the target is no longer poisoned, but choose one of the diseases below. The target is subjected to the chosen disease for the spell’s duration.</p>\n<p>Since this spell induces a natural disease in its target, any effect that removes a disease or otherwise ameliorates a disease’s effects apply to it.</p>\n<p><em><strong>Blinding Sickness.</strong></em> Pain grips the creature’s mind, and its eyes turn milky white. The creature has disadvantage on Wisdom checks and Wisdom saving throws and is blinded.</p>\n<p><em><strong>Filth Fever.</strong></em> A raging fever sweeps through the creature’s body. The creature has disadvantage on Strength checks, Strength saving throws, and attack rolls that use Strength.</p>\n<p><em><strong>Flesh Rot.</strong></em> The creature’s flesh decays. The creature has disadvantage on Charisma checks and vulnerability to all damage.</p>\n<p><em><strong>Mindfire.</strong></em> The creature’s mind becomes feverish. The creature has disadvantage on Intelligence checks and Intelligence saving throws, and the creature behaves as if under the effects of the confusion spell during combat.</p>\n<p><em><strong>Seizure.</strong></em> The creature is overcome with shaking. The creature has disadvantage on Dexterity checks, Dexterity saving throws, and attack rolls that use Dexterity.</p>\n<p><em><strong>Slimy Doom.</strong></em> The creature begins to bleed uncontrollably. The creature has disadvantage on Constitution checks and Constitution saving throws. In addition, whenever the creature takes damage, it is stunned until the end of its next turn.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "contagion",
+        "source": {
+          "book": "PHB",
+          "page": "",
+          "license": "",
+          "custom": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "7",
+          "units": "day"
+        },
+        "level": 5,
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "properties": [
+          "vocal",
+          "somatic"
+        ],
+        "range": {
+          "units": "touch",
+          "special": ""
+        },
+        "school": "nec",
+        "target": {
+          "affects": {
+            "count": "",
+            "type": "",
+            "choice": false,
+            "special": ""
+          },
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          }
+        },
+        "sourceClass": "",
+        "ability": "",
+        "method": "atwill",
+        "prepared": 0
+      },
+      "effects": [
+        {
+          "img": "icons/magic/acid/pouring-gas-smoke-liquid.webp",
+          "name": "Contagion",
+          "statuses": [],
+          "changes": [
+            {
+              "key": "macro.execute",
+              "value": "function.DDBImporter.lib.DDBMacros.macroFunction.spell(\"contagion2014.js\")",
+              "mode": 0,
+              "priority": 20
+            }
+          ],
+          "duration": {
+            "seconds": 604800,
+            "startTime": null,
+            "rounds": null,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null,
+            "combat": null
+          },
+          "tint": "#ffffff",
+          "transfer": false,
+          "disabled": false,
+          "flags": {
+            "dae": {
+              "transfer": false,
+              "stackable": "noneNameOnly",
+              "macroRepeat": "endEveryTurn"
+            },
+            "ddbimporter": {
+              "disabled": false,
+              "activityMatch": "Cast"
+            },
+            "midi-qol": {
+              "forceCEOff": true
+            },
+            "core": {}
+          },
+          "description": "",
+          "_id": "CnrtFXqSBGLXUGLE",
+          "type": "base",
+          "system": {},
+          "origin": null,
+          "sort": 0,
+          "_stats": {
+            "compendiumSource": null,
+            "duplicateSource": null,
+            "exportSource": null,
+            "coreVersion": "13.348",
+            "systemId": "dnd5e",
+            "systemVersion": "5.0.4",
+            "lastModifiedBy": null
+          }
+        }
+      ],
+      "name": "Contagion",
+      "flags": {
+        "ddbimporter": {
+          "id": 239497,
+          "definitionId": 2046,
+          "entityTypeId": 435869154,
+          "dndbeyond": {
+            "lookup": "generic",
+            "lookupName": "generic",
+            "level": null,
+            "castAtLevel": null,
+            "homebrew": false
+          },
+          "originalName": "Contagion",
+          "sources": [
+            {
+              "sourceId": 1,
+              "pageNumber": null,
+              "sourceType": 2
+            },
+            {
+              "sourceId": 2,
+              "pageNumber": 227,
+              "sourceType": 1
+            }
+          ],
+          "tags": [
+            "Debuff"
+          ],
+          "version": "6.4.10",
+          "is2014": true,
+          "is2024": false,
+          "addSpellEffects": true,
+          "legacy": true,
+          "effectsApplied": true
+        },
+        "midi-qol": {
+          "removeAttackDamageButtons": "default",
+          "forceCEOff": true
+        },
+        "midiProperties": {
+          "confirmTargets": "default",
+          "magicdam": true,
+          "magiceffect": true
+        },
+        "spell-class-filter-for-5e": {},
+        "tidy5e-sheet": {},
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "img": "icons/magic/acid/pouring-gas-smoke-liquid.webp",
+      "folder": "sCLBPsLGJFbGy7xh",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": "7AqeohPEjtOT4uHz",
+        "modifiedTime": 1758606495417
+      },
+      "sort": 0,
+      "_id": "GCEmNqaCOwZiAbc5",
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "type": "spell",
+      "system": {
+        "activities": {
+          "utilityGaseoForm": {
+            "type": "utility",
+            "_id": "utilityGaseoForm",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false
+            },
+            "consumption": {
+              "spellSlot": false,
+              "targets": [
+                {
+                  "type": "itemUses",
+                  "target": "",
+                  "value": "1",
+                  "scaling": {
+                    "mode": "",
+                    "formula": ""
+                  }
+                }
+              ],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              }
+            },
+            "description": {},
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "roll": {
+              "prompt": false,
+              "visible": false
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": 2,
+          "max": "3",
+          "recovery": [
+            {
+              "period": "day",
+              "type": "recoverAll"
+            }
+          ]
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p>You transform a willing creature you touch, along with everything it's wearing and carrying, into a misty cloud for the duration. The spell ends if the creature drops to 0 hit points. An incorporeal creature isn't affected.</p>\n<p>While in this form, the target's only method of movement is a flying speed of 10 feet. The target can enter and occupy the space of another creature. The target has resistance to nonmagical damage, and it has advantage on Strength, Dexterity, and Constitution saving throws. The target can pass through small holes, narrow openings, and even mere cracks, though it treats liquids as though they were solid surfaces. The target can't fall and remains hovering in the air even when stunned or otherwise incapacitated.</p>\n<p>While in the form of a misty cloud, the target can't talk or manipulate objects, and any objects it was carrying or holding can't be dropped, used, or otherwise interacted with. The target can't attack or cast spells.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "gaseous-form",
+        "source": {
+          "book": "PHB",
+          "page": "",
+          "license": "",
+          "custom": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "1",
+          "units": "hour"
+        },
+        "level": 3,
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "properties": [
+          "vocal",
+          "somatic",
+          "concentration"
+        ],
+        "range": {
+          "units": "touch"
+        },
+        "school": "trs",
+        "target": {
+          "affects": {
+            "count": "1",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          },
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          }
+        },
+        "method": "atwill",
+        "prepared": 0
+      },
+      "effects": [],
+      "name": "Gaseous Form",
+      "flags": {
+        "ddbimporter": {
+          "id": 137921,
+          "definitionId": 2118,
+          "entityTypeId": 435869154,
+          "dndbeyond": {
+            "lookup": "generic",
+            "lookupName": "generic",
+            "level": null,
+            "castAtLevel": null,
+            "homebrew": false
+          },
+          "originalName": "Gaseous Form",
+          "sources": [
+            {
+              "sourceId": 1,
+              "pageNumber": null,
+              "sourceType": 2
+            },
+            {
+              "sourceId": 2,
+              "pageNumber": 244,
+              "sourceType": 1
+            }
+          ],
+          "tags": [
+            "Buff",
+            "Movement"
+          ],
+          "version": "6.4.10",
+          "is2014": true,
+          "is2024": false,
+          "addSpellEffects": true,
+          "legacy": true,
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          },
+          "effectsApplied": true
+        },
+        "midi-qol": {
+          "removeAttackDamageButtons": "default"
+        },
+        "midiProperties": {
+          "confirmTargets": "default",
+          "magicdam": true,
+          "magiceffect": true
+        },
+        "spell-class-filter-for-5e": {},
+        "tidy5e-sheet": {}
+      },
+      "img": "icons/magic/air/fog-gas-smoke-dense-green.webp",
+      "folder": "u77Kp9zFPlmGmNwK",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "lastModifiedBy": "7AqeohPEjtOT4uHz",
+        "modifiedTime": 1758606336068
+      },
+      "sort": 0,
+      "_id": "JgaX5NU4Xx6DeXfo",
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "type": "spell",
+      "system": {
+        "activities": {
+          "saveBlightIIIIII": {
+            "type": "save",
+            "_id": "saveBlightIIIIII",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false
+            },
+            "consumption": {
+              "spellSlot": true,
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              }
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": []
+            },
+            "damage": {
+              "parts": [
+                {
+                  "number": 8,
+                  "denomination": 8,
+                  "bonus": "",
+                  "types": [
+                    "necrotic"
+                  ],
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "scaling": {
+                    "mode": "whole",
+                    "number": 1,
+                    "formula": ""
+                  }
+                }
+              ],
+              "onSave": "half",
+              "critical": {
+                "allow": false
+              }
+            },
+            "save": {
+              "ability": [
+                "con"
+              ],
+              "dc": {
+                "formula": "",
+                "calculation": "spellcasting"
+              }
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "friendlySave": "default",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": 1,
+          "max": "3",
+          "recovery": [
+            {
+              "period": "day",
+              "type": "recoverAll"
+            }
+          ]
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p>A creature that you can see within range makes a [[/save con format=long]], taking 8d8 Necrotic damage on a failed save or half as much damage on a successful one. A Plant creature automatically fails the save.</p>\n<p>Alternatively, target a nonmagical plant that isn’t a creature, such as a tree or shrub. It doesn’t make a save; it simply withers and dies.</p>\n<p><strong><em>Using a Higher-Level Spell Slot.</em></strong> The damage increases by 1d8 for each spell slot level above 4.</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "blight",
+        "source": {
+          "book": "PHB 2024",
+          "page": "",
+          "license": "",
+          "custom": "",
+          "rules": "2024",
+          "revision": 1
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "0",
+          "units": "inst"
+        },
+        "level": 4,
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "properties": [
+          "vocal",
+          "somatic"
+        ],
+        "range": {
+          "value": "30",
+          "units": "ft",
+          "special": ""
+        },
+        "school": "nec",
+        "target": {
+          "affects": {
+            "count": "1",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          },
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          }
+        },
+        "sourceClass": "",
+        "ability": "",
+        "method": "atwill",
+        "prepared": 1
+      },
+      "effects": [],
+      "name": "Blight",
+      "flags": {
+        "ddbimporter": {
+          "id": 21171281,
+          "definitionId": 2618934,
+          "entityTypeId": 435869154,
+          "dndbeyond": {
+            "lookup": "generic",
+            "lookupName": "generic",
+            "level": null,
+            "castAtLevel": null,
+            "homebrew": false
+          },
+          "originalName": "Blight",
+          "sources": [
+            {
+              "sourceId": 145,
+              "pageNumber": 247,
+              "sourceType": 1
+            }
+          ],
+          "tags": [
+            "Damage"
+          ],
+          "version": "6.4.10",
+          "is2014": false,
+          "is2024": true,
+          "addSpellEffects": true,
+          "legacy": false,
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          },
+          "effectsApplied": true
+        },
+        "midi-qol": {
+          "removeAttackDamageButtons": "default"
+        },
+        "midiProperties": {
+          "confirmTargets": "default",
+          "magicdam": true,
+          "magiceffect": true
+        },
+        "spell-class-filter-for-5e": {},
+        "tidy5e-sheet": {}
+      },
+      "img": "icons/magic/nature/tree-spirit-green.webp",
+      "folder": "hSCovmMOBdXvEOX6",
+      "_stats": {
+        "compendiumSource": "Compendium.world.ddb-oota-ddb-spells.Item.QqC0heLfT1oRzev2",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "createdTime": 1758606282773,
+        "modifiedTime": 1758606311404,
+        "lastModifiedBy": "7AqeohPEjtOT4uHz"
+      },
+      "_id": "laKnvzyGO6rjNgLi",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "7AqeohPEjtOT4uHz": 3
+      }
+    },
+    {
+      "type": "spell",
+      "system": {
+        "activities": {
+          "saveAcidSplashII": {
+            "type": "save",
+            "_id": "saveAcidSplashII",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false
+            },
+            "consumption": {
+              "spellSlot": true,
+              "targets": [],
+              "scaling": {
+                "allowed": false,
+                "max": ""
+              }
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft"
+              },
+              "affects": {
+                "choice": false
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": [],
+              "max": ""
+            },
+            "damage": {
+              "parts": [
+                {
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "number": 0,
+                  "denomination": 6,
+                  "bonus": "",
+                  "types": [
+                    "acid"
+                  ],
+                  "scaling": {
+                    "mode": "whole",
+                    "number": 1,
+                    "formula": ""
+                  }
+                }
+              ],
+              "onSave": "none",
+              "critical": {
+                "allow": false
+              }
+            },
+            "save": {
+              "ability": [
+                "dex"
+              ],
+              "dc": {
+                "formula": "",
+                "calculation": "spellcasting"
+              }
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "confirmTargets": "default",
+              "automationOnly": false,
+              "identifier": "",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "otherActivityCompatible": true,
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "autoCEEffects": "default",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "otherActivityAsParentType": true,
+              "toggleEffect": false
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "none",
+            "friendlySave": "default",
+            "name": "",
+            "otherActivityAsParentType": true
+          }
+        },
+        "uses": {
+          "spent": null,
+          "max": "",
+          "recovery": []
+        },
+        "description": {
+          "value": "<div class=\"ddb\">\n<p>You hurl a bubble of acid. Choose one or two creatures you can see within range. If you choose two, they must be within 5 feet of each other. A target must succeed on a [[/save dex format=long]] or take 1d6 acid damage.</p>\n<p>This spell’s damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).</p>\n</div>",
+          "chat": ""
+        },
+        "identifier": "acid-splash",
+        "source": {
+          "book": "PHB",
+          "page": "",
+          "license": "",
+          "custom": "",
+          "rules": "2014",
+          "revision": 1
+        },
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": "0",
+          "units": "inst"
+        },
+        "level": 0,
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "properties": [
+          "vocal",
+          "somatic"
+        ],
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "school": "con",
+        "target": {
+          "affects": {
+            "count": "2",
+            "type": "creature",
+            "choice": false,
+            "special": ""
+          },
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          }
+        },
+        "method": "innate",
+        "prepared": 1
+      },
+      "effects": [],
+      "name": "Acid Splash",
+      "flags": {
+        "ddbimporter": {
+          "id": 136018,
+          "definitionId": 1989,
+          "entityTypeId": 435869154,
+          "dndbeyond": {
+            "lookup": "generic",
+            "lookupName": "generic",
+            "level": null,
+            "castAtLevel": null,
+            "homebrew": false
+          },
+          "originalName": "Acid Splash",
+          "sources": [
+            {
+              "sourceId": 1,
+              "pageNumber": null,
+              "sourceType": 2
+            },
+            {
+              "sourceId": 2,
+              "pageNumber": 211,
+              "sourceType": 1
+            }
+          ],
+          "tags": [
+            "Damage"
+          ],
+          "version": "6.4.10",
+          "is2014": true,
+          "is2024": false,
+          "addSpellEffects": true,
+          "legacy": true,
+          "defaultAdditionalActivities": {
+            "enabled": true,
+            "data": {}
+          },
+          "effectsApplied": true
+        },
+        "midi-qol": {
+          "removeAttackDamageButtons": "default"
+        },
+        "midiProperties": {
+          "confirmTargets": "default",
+          "magicdam": true,
+          "magiceffect": true
+        },
+        "spell-class-filter-for-5e": {},
+        "tidy5e-sheet": {},
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "img": "icons/creatures/slimes/slime-movement-dripping-pseudopods-green.webp",
+      "folder": "MZezcB2ycHGz5sP3",
+      "_stats": {
+        "compendiumSource": "Compendium.world.ddb-oota-ddb-spells.Item.lV5VHbcnyPdErrdB",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "createdTime": 1758606939495,
+        "modifiedTime": 1758606997653,
+        "lastModifiedBy": "7AqeohPEjtOT4uHz"
+      },
+      "_id": "m3iAVHCWgDyaSLSu",
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "7AqeohPEjtOT4uHz": 3
+      }
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "flags": {
+    "dnd5e": {},
+    "monsterMunch": {
+      "url": "https://www.dndbeyond.com/monsters/2560853-juiblex",
+      "img": "https://www.dndbeyond.com/avatars/25746/470/637880557727798992.png",
+      "tokenImg": "https://www.dndbeyond.com/avatars/25746/469/637880557726568858.jpeg",
+      "isStockImg": false,
+      "overTime": [
+        "Lair Actions",
+        "Foul"
+      ],
+      "spellList": {
+        "class": [],
+        "pact": [],
+        "atwill": [
+          "detect magic"
+        ],
+        "innate": [
+          {
+            "name": "contagion",
+            "type": "day",
+            "value": "3",
+            "innate": false
+          },
+          {
+            "name": "gaseous form",
+            "type": "day",
+            "value": "3",
+            "innate": false
+          }
+        ],
+        "edgeCases": [],
+        "material": false,
+        "innateMatch": false,
+        "concentration": true
+      }
+    },
+    "ddbimporter": {
+      "id": 2560853,
+      "entityTypeId": 779871897,
+      "creatureGroupId": null,
+      "creatureFlags": [],
+      "version": "6.4.10",
+      "isLegacy": false,
+      "sources": [
+        {
+          "sourceId": 85,
+          "pageNumber": 160,
+          "sourceType": 1
+        }
+      ],
+      "compendiumId": "ddbJuible2560853",
+      "sourceId": 85,
+      "sourceCategory": 1,
+      "flatAC": false
+    },
+    "midi-qol": {
+      "actions": {
+        "action": false
+      }
+    }
+  },
+  "_stats": {
+    "compendiumSource": "Compendium.world.ddb-oota-ddb-monsters.Actor.ddbJuible2560853",
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "dnd5e",
+    "systemVersion": "5.1.9",
+    "createdTime": 1758605834924,
+    "modifiedTime": 1759903928955,
+    "lastModifiedBy": "7AqeohPEjtOT4uHz"
+  },
+  "ownership": {
+    "default": 0,
+    "7AqeohPEjtOT4uHz": 3
+  },
+  "_id": "7LMLhauwCobOmQva",
+  "sort": 400000
+}

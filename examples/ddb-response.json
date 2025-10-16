@@ -1,0 +1,190 @@
+{
+    "success": true,
+    "message": "All available monsters successfully received.",
+    "data": [
+        {
+            "collectionUserId": 0,
+            "isReleased": true,
+            "url": "https://www.dndbeyond.com/monsters/2059690-ancient-amethyst-dragon",
+            "conditionImmunitiesHtml": "<a class=\"tooltip-hover condition-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#FrightenedCondition\" aria-haspopup=\"true\" data-tooltip-href=\"/conditions/5-tooltip\" data-tooltip-json-href=\"/conditions/5/tooltip-json\">Frightened</a>, <a class=\"tooltip-hover condition-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#ProneCondition\" aria-haspopup=\"true\" data-tooltip-href=\"/conditions/12-tooltip\" data-tooltip-json-href=\"/conditions/12/tooltip-json\">Prone</a>",
+            "sensesHtml": "<a class=\"tooltip-hover sense-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#Blindsight\" aria-haspopup=\"true\" data-tooltip-href=\"/senses/1-tooltip\" data-tooltip-json-href=\"/senses/1/tooltip-json\">Blindsight</a> 60 ft., <a class=\"tooltip-hover sense-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#Darkvision\" aria-haspopup=\"true\" data-tooltip-href=\"/senses/2-tooltip\" data-tooltip-json-href=\"/senses/2/tooltip-json\">Darkvision</a> 120 ft.",
+            "skillsHtml": "<a class=\"tooltip-hover skill-tooltip\" href=\"/sources/dnd/free-rules/playing-the-game#Skills\" aria-haspopup=\"true\" data-tooltip-href=\"/skills/5-tooltip\" data-tooltip-json-href=\"/skills/5/tooltip-json\">Stealth</a> <span data-dicenotation=\"1d20+9\" data-rolltype=\"check\" data-rollaction=\"Stealth\">+9</span>, <a class=\"tooltip-hover skill-tooltip\" href=\"/sources/dnd/free-rules/playing-the-game#Skills\" aria-haspopup=\"true\" data-tooltip-href=\"/skills/6-tooltip\" data-tooltip-json-href=\"/skills/6/tooltip-json\">Arcana</a> <span data-dicenotation=\"1d20+22\" data-rolltype=\"check\" data-rollaction=\"Arcana\">+22</span>, <a class=\"tooltip-hover skill-tooltip\" href=\"/sources/dnd/free-rules/playing-the-game#Skills\" aria-haspopup=\"true\" data-tooltip-href=\"/skills/14-tooltip\" data-tooltip-json-href=\"/skills/14/tooltip-json\">Perception</a> <span data-dicenotation=\"1d20+18\" data-rolltype=\"check\" data-rollaction=\"Perception\">+18</span>, <a class=\"tooltip-hover skill-tooltip\" href=\"/sources/dnd/free-rules/playing-the-game#Skills\" aria-haspopup=\"true\" data-tooltip-href=\"/skills/19-tooltip\" data-tooltip-json-href=\"/skills/19/tooltip-json\">Persuasion</a> <span data-dicenotation=\"1d20+13\" data-rolltype=\"check\" data-rollaction=\"Persuasion\">+13</span>",
+            "stats": [
+                {
+                    "statId": 1,
+                    "name": null,
+                    "value": 26
+                },
+                {
+                    "statId": 2,
+                    "name": null,
+                    "value": 14
+                },
+                {
+                    "statId": 3,
+                    "name": null,
+                    "value": 27
+                },
+                {
+                    "statId": 4,
+                    "name": null,
+                    "value": 26
+                },
+                {
+                    "statId": 5,
+                    "name": null,
+                    "value": 19
+                },
+                {
+                    "statId": 6,
+                    "name": null,
+                    "value": 23
+                }
+            ],
+            "senses": [
+                {
+                    "senseId": 1,
+                    "notes": "60 ft."
+                },
+                {
+                    "senseId": 2,
+                    "notes": "120 ft."
+                }
+            ],
+            "savingThrows": [
+                {
+                    "statId": 2,
+                    "bonusModifier": null
+                },
+                {
+                    "statId": 3,
+                    "bonusModifier": null
+                },
+                {
+                    "statId": 5,
+                    "bonusModifier": null
+                },
+                {
+                    "statId": 6,
+                    "bonusModifier": null
+                }
+            ],
+            "skills": [
+                {
+                    "skillId": 5,
+                    "value": 9,
+                    "additionalBonus": null
+                },
+                {
+                    "skillId": 6,
+                    "value": 22,
+                    "additionalBonus": null
+                },
+                {
+                    "skillId": 14,
+                    "value": 18,
+                    "additionalBonus": null
+                },
+                {
+                    "skillId": 19,
+                    "value": 13,
+                    "additionalBonus": null
+                }
+            ],
+            "languages": [
+                {
+                    "languageId": 1,
+                    "notes": ""
+                },
+                {
+                    "languageId": 11,
+                    "notes": ""
+                },
+                {
+                    "languageId": 18,
+                    "notes": "120 ft."
+                }
+            ],
+            "hitPointDice": {
+                "diceCount": 24,
+                "diceValue": 20,
+                "diceMultiplier": 0,
+                "fixedValue": 192,
+                "diceString": "24d20 + 192"
+            },
+            "swarm": null,
+            "movements": [
+                {
+                    "movementId": 1,
+                    "speed": 40,
+                    "notes": null
+                },
+                {
+                    "movementId": 4,
+                    "speed": 80,
+                    "notes": null
+                },
+                {
+                    "movementId": 5,
+                    "speed": 40,
+                    "notes": null
+                }
+            ],
+            "homebrewStatus": 0,
+            "initiativeBonus": null,
+            "id": 2059690,
+            "entityTypeId": 779871897,
+            "name": "Ancient Amethyst Dragon",
+            "alignmentId": 26,
+            "sizeId": 7,
+            "typeId": 6,
+            "armorClass": 20,
+            "armorClassDescription": "(natural armor)",
+            "averageHitPoints": 444,
+            "passivePerception": 28,
+            "isHomebrew": false,
+            "challengeRatingId": 27,
+            "sourceId": 81,
+            "sourcePageNumber": 160,
+            "isLegendary": true,
+            "isMythic": false,
+            "hasLair": true,
+            "avatarUrl": "https://www.dndbeyond.com/avatars/21205/121/637707682306060320.jpeg",
+            "largeAvatarUrl": "https://www.dndbeyond.com/avatars/thumbnails/21205/123/1000/1000/637707682309648056.jpeg",
+            "basicAvatarUrl": "https://www.dndbeyond.com/avatars/21205/122/637707682307620402.png",
+            "version": null,
+            "subTypes": [
+                80
+            ],
+            "environments": [],
+            "tags": [],
+            "sources": [
+                {
+                    "sourceId": 81,
+                    "pageNumber": 160,
+                    "sourceType": 1
+                }
+            ],
+            "damageAdjustments": [
+                12,
+                47
+            ],
+            "conditionImmunities": [
+                5,
+                12
+            ],
+            "specialTraitsDescription": "<p><em><strong>Amphibious.</strong></em> The dragon can breathe both air and water.</p>\n<p><em><strong>Legendary Resistance (3/Day).</strong></em> If the dragon fails a saving throw, it can choose to succeed instead.</p>",
+            "actionsDescription": "<p><em><strong>Multiattack.</strong></em> The dragon makes one Bite attack and two Claw attacks.</p>\n<p><em><strong>Bite.</strong> Melee Weapon Attack:</em> <span data-dicenotation=\"1d20+15\" data-rolltype=\"to hit\" data-rollaction=\"Bite\">+15</span> to hit, reach 15 ft., one target. <em>Hit:</em> 19 <span data-dicenotation=\"2d10+8\" data-rolltype=\"damage\" data-rollaction=\"Bite\" data-rolldamagetype=\"piercing\">(2d10+8)</span> piercing damage plus 13 <span data-dicenotation=\"3d8\" data-rolltype=\"damage\" data-rollaction=\"Bite\" data-rolldamagetype=\"force\">(3d8)</span> force damage.</p>\n<p><em><strong>Claw.</strong> Melee Weapon Attack:</em> <span data-dicenotation=\"1d20+15\" data-rolltype=\"to hit\" data-rollaction=\"Claw\">+15</span> to hit, reach 10 ft., one target. <em>Hit:</em> 15 <span data-dicenotation=\"2d6+8\" data-rolltype=\"damage\" data-rollaction=\"Claw\" data-rolldamagetype=\"slashing\">(2d6+8)</span> slashing damage.</p>\n<p><em><strong>Singularity Breath <span data-dicenotation=\"1d6\" data-rolltype=\"recharge\" data-rollaction=\"Singularity Breath\">(Recharge 5–6)</span>.</strong></em> The dragon creates a shining bead of gravitational force in its mouth, then releases the energy in a 90-foot cone. Each creature in that area must make a DC 23 Strength saving throw. On a failed save, the creature takes 63 <span data-dicenotation=\"14d8\" data-rolltype=\"damage\" data-rollaction=\"Singularity Breath\" data-rolldamagetype=\"force\">(14d8)</span> force damage, and its speed becomes 0 until the start of the dragon’s next turn. On a successful save, the creature takes half as much damage, and its speed isn’t reduced.</p>\n<p><em><strong>Spellcasting (Psionics).</strong></em> The dragon casts one of the following spells, requiring no spell components and using Intelligence as the spellcasting ability (spell save DC 23, <span data-dicenotation=\"1d20+15\" data-rolltype=\"to hit\" data-rollaction=\"Spellcasting\">+15</span> to hit with spell attacks):</p>\n<p>1/day each: <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2019-blink\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2019-tooltip\" data-tooltip-json-href=\"/spells/2019/tooltip-json\">blink</a>, <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2049-control-water\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2049-tooltip\" data-tooltip-json-href=\"/spells/2049/tooltip-json\">control water</a>, <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2072-dispel-magic\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2072-tooltip\" data-tooltip-json-href=\"/spells/2072/tooltip-json\">dispel magic</a>, <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2116-freedom-of-movement\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2116-tooltip\" data-tooltip-json-href=\"/spells/2116/tooltip-json\">freedom of movement</a>, <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2124-globe-of-invulnerability\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2124-tooltip\" data-tooltip-json-href=\"/spells/2124/tooltip-json\">globe of invulnerability</a>, <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2206-plane-shift\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2206-tooltip\" data-tooltip-json-href=\"/spells/2206/tooltip-json\">plane shift</a>, <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2221-protection-from-evil-and-good\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2221-tooltip\" data-tooltip-json-href=\"/spells/2221/tooltip-json\">protection from evil and good</a>, <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2243-sending\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2243-tooltip\" data-tooltip-json-href=\"/spells/2243/tooltip-json\">sending</a></p>",
+            "reactionsDescription": "",
+            "legendaryActionsDescription": "<p>The dragon can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The dragon regains spent legendary actions at the start of its turn.</p>\n<p><strong>Claw.</strong> The dragon makes one claw attack.</p>\n<p><strong>Psionics (Costs 2 Actions).</strong> The dragon uses Psychic Step or Spellcasting.</p>\n<p><strong>Explosive Crystal (Costs 3 Actions).</strong> The dragon spits an amethyst that that explodes at a point it can see within 60 feet of it. Each creature within a 20-foot-radius sphere centered on that point must succeed on a DC 23 Dexterity saving throw or take 18 <span data-dicenotation=\"4d8\" data-rolltype=\"damage\" data-rollaction=\"Explosive Crystal\" data-rolldamagetype=\"force\">(4d8)</span> force damage and be knocked <a class=\"tooltip-hover condition-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#ProneCondition\" aria-haspopup=\"true\" data-tooltip-href=\"/conditions/12-tooltip\" data-tooltip-json-href=\"/conditions/12/tooltip-json\">prone</a>.</p>",
+            "mythicActionsDescription": "",
+            "bonusActionsDescription": "<p><em><strong>Change Shape.</strong></em> The dragon magically transforms into any creature that is Medium or Small, while retaining its game statistics (other than its size). This transformation ends if the dragon is reduced to 0 hit points or uses a bonus action to end it.</p>\n<p><em><strong>Psychic Step.</strong></em> The dragon magically teleports to an unoccupied space it can see within 60 feet of it.</p>",
+            "characteristicsDescription": "<p>Amethyst dragons, the mightiest of the gem dragons, study and psionically manipulate the fundamental principles of the multiverse, from the force of gravity to the emanations of the Outer Planes. Their innate psionics give them a measure of control over how physical laws affect them. They defy gravity with flight that doesn’t rely solely upon their great wings, and gravitational force empowers both their devastating breath weapon and the exploding amethyst crystals they spit at their foes.</p>\n<h3>Royal Purple</h3>\n<p>When first hatched, an amethyst dragon has scales of dull, opaque purple. As the dragon grows, their scales, horns, and wing membranes become more vibrant and translucent. When the dragon is fully mature, their scales resemble rich purple amethyst crystals, refracting light to take on an inner glow. Their pupils fade with age, making the eyes of an ancient dragon resemble glowing white or pale lavender orbs. Crystalline horns reminiscent of amethyst chunks hover behind their heads, held there by telekinetic force and shifting with their moods.</p>\n<h3>Cosmological Study</h3>\n<p>Many amethyst dragons are fascinated by the existence of other worlds in the Material Plane, and especially the way individual dragons manifest unique echoes across those worlds. They also prize understanding of the cosmic forces that emanate from the Outer Planes, studying the opposing tides of good and evil, chaos and order, so they can offer counsel to those with the wisdom to accept it.</p>\n<p>Amethyst dragons pay particular attention to intrusions of the Far Realm into the Material Plane. They loathe the corruption that accompanies such intrusions into the world, making them fierce opponents of the Far Realm and any creatures warped by its touch. Strangely, though, they are intrigued by and fond of <a class=\"tooltip-hover monster-tooltip\" href=\"/monsters/17145-flumph\" aria-haspopup=\"true\" data-tooltip-href=\"/monsters/17145-tooltip\" data-tooltip-json-href=\"/monsters/17145/tooltip-json\">flumphs</a>. These Aberrations, which oppose the depredations of <a class=\"tooltip-hover monster-tooltip\" href=\"/monsters/17104-mind-flayer\" aria-haspopup=\"true\" data-tooltip-href=\"/monsters/17104-tooltip\" data-tooltip-json-href=\"/monsters/17104/tooltip-json\">mind flayers</a> and other wicked Aberrations, remind amethyst dragons that allies can be found in the strangest places.</p>\n<h3>Hoarded Arcana</h3>\n<p>In addition to material wealth, amethyst dragons delight in collecting knowledge and magic dealing with the nature of the planes of existence, cosmic forces, and distant worlds. They prize treasures drawn from different worlds of the Material Plane, especially magic items and artworks that highlight the unique nature of different worlds. Magic items that allow teleportation or travel between planes, spellbooks filled with similar magic, and treatises examining the nature of the multiverse form the centerpiece of an amethyst dragon’s hoard.</p>\n<h3 id=\"CreatinganAmethystDragon\">Creating an Amethyst Dragon</h3>\n<p>Use the Amethyst Dragon Personality Traits and Amethyst Dragon Ideals tables to inspire your portrayal of distinctive amethyst dragon characters.</p>\n<h4 id=\"AmethystDragonPersonalityTraits\">Amethyst Dragon Personality Traits</h4>\n<div>\n<table class=\"compendium-left-aligned-table\">\n<thead>\n<tr>\n<th><span data-dicenotation=\"1d8\" data-rolltype=\"roll\" data-rollaction=\"Trait\">d8</span></th>\n<th>Trait</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1</td>\n<td>I am never so content as when contemplating the beauty and wonders of the multiverse.</td>\n</tr>\n<tr>\n<td>2</td>\n<td>I am a sworn protector against the depredations of the Far Realm, and I will root out its corruption wherever it may arise.</td>\n</tr>\n<tr>\n<td>3</td>\n<td>What use is vast knowledge or insight if it is not shared with those who can appreciate it?</td>\n</tr>\n<tr>\n<td>4</td>\n<td>Although some are fascinated by words, I think numbers are the true foundations of creation.</td>\n</tr>\n<tr>\n<td>5</td>\n<td>To experience a thing is to truly understand it. Direct and personal experience is the most valuable form of knowledge.</td>\n</tr>\n<tr>\n<td>6</td>\n<td>I see a far more kaleidoscopic reality than you do … or than any of your selves do, really.</td>\n</tr>\n<tr>\n<td>7</td>\n<td>It is not my place to interfere. I merely seek to observe, learn, and understand.</td>\n</tr>\n<tr>\n<td>8</td>\n<td>With a true understanding of metaphysics, anything is possible—including the creation of a more orderly and perfect cosmos than this one.</td>\n</tr>\n</tbody>\n</table>\n</div>\n<h4 id=\"AmethystDragonIdeals\">Amethyst Dragon Ideals</h4>\n<div>\n<table class=\"compendium-left-aligned-table\">\n<thead>\n<tr>\n<th><span data-dicenotation=\"1d6\" data-rolltype=\"roll\" data-rollaction=\"Ideal\">d6</span></th>\n<th>Ideal</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1</td>\n<td><strong>Balance.</strong> Everything is a complex interaction of forces that must be kept in a delicate and carefully maintained balance. (Neutral)</td>\n</tr>\n<tr>\n<td>2</td>\n<td><strong>Knowledge.</strong> We are the whole of creation, seeking to understand itself. (Any)</td>\n</tr>\n<tr>\n<td>3</td>\n<td><strong>Self-Improvement.</strong> I am a complex gem, and I constantly polish and refine my many facets to make the whole that much more perfect. (Any)</td>\n</tr>\n<tr>\n<td>4</td>\n<td><strong>Responsibility.</strong> Having knowledge and power gives one a responsibility to those who have less of either. (Lawful)</td>\n</tr>\n<tr>\n<td>5</td>\n<td><strong>Noble Obligation.</strong> My superior experience, intellect, and insight give me a duty to mediate disputes when I can. (Good)</td>\n</tr>\n<tr>\n<td>6</td>\n<td><strong>Power.</strong> Knowledge is power, power must be used, and I use it. Your concerns are irrelevant. (Evil)</td>\n</tr>\n</tbody>\n</table>\n</div>\n<h3 id=\"AmethystDragonAdventures\">Amethyst Dragon Adventures</h3>\n<p>The Amethyst Dragon Adventure Hooks table offers suggestions for stories and adventures involving amethyst dragons.</p>\n<h4 id=\"AmethystDragonAdventureHooks\">Amethyst Dragon Adventure Hooks</h4>\n<div>\n<table class=\"compendium-left-aligned-table\">\n<thead>\n<tr>\n<th><span data-dicenotation=\"1d8\" data-rolltype=\"roll\" data-rollaction=\"Adventure Hook\">d8</span></th>\n<th>Adventure Hook</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1</td>\n<td>An amethyst dragon seeks a rare type of crystal found in the domain of a territorial stone giant clan.</td>\n</tr>\n<tr>\n<td>2</td>\n<td>A coven of hags seeks to reclaim its <em>hag eye</em>, which rests within an amethyst dragon’s hoard.</td>\n</tr>\n<tr>\n<td>3</td>\n<td>An amethyst dragon magically disables all teleportation within a thousand miles of their lair. Governments within that area seek emissaries who can negotiate an end to the restriction.</td>\n</tr>\n<tr>\n<td>4</td>\n<td>An amethyst dragon recruits a group of adventurers to psychically trade bodies with adventurers from another world, so that each can carry out certain tasks before swapping back.</td>\n</tr>\n<tr>\n<td>5</td>\n<td>A cult devoted to a Great Old One of the Far Realm seeks an alien monolith that can summon its master, but the site is guarded by an amethyst dragon.</td>\n</tr>\n<tr>\n<td>6</td>\n<td>An <a class=\"tooltip-hover monster-tooltip\" href=\"/monsters/2059688-amethyst-dragon-wyrmling\" aria-haspopup=\"true\" data-tooltip-href=\"/monsters/2059688-tooltip\" data-tooltip-json-href=\"/monsters/2059688/tooltip-json\">amethyst dragon wyrmling</a> is actually the temporally displaced form of an <a class=\"tooltip-hover monster-tooltip\" href=\"/monsters/2059690-ancient-amethyst-dragon\" aria-haspopup=\"true\" data-tooltip-href=\"/monsters/2059690-tooltip\" data-tooltip-json-href=\"/monsters/2059690/tooltip-json\">ancient amethyst dragon</a> who already exists in the same time line.</td>\n</tr>\n<tr>\n<td>7</td>\n<td>An amethyst dragon seeks the means to plant special crystals that will allow the dragon to magically coexist in multiple places at once across the world during a rare celestial alignment.</td>\n</tr>\n<tr>\n<td>8</td>\n<td>An amethyst dragon is fusing with their echoes on other worlds. They all hope to ascend to godhood, perhaps recreating or replacing Sardior.</td>\n</tr>\n</tbody>\n</table>\n</div>\n<h4 id=\"ConnectedCreatures\">Connected Creatures</h4>\n<p>Amethyst dragons are generally aloof creatures, dwelling in isolation for long periods of time and rarely cultivating connections with other creatures. When they do connect with others, it is most often for intellectual and philosophical pursuits or to fulfill some arcane purpose involving the dragons’ echoes across the worlds.</p>\n<h4 id=\"AncientAmethystDragonConnections\">Ancient Amethyst Dragon Connections</h4>\n<div>\n<table class=\"compendium-left-aligned-table\">\n<thead>\n<tr>\n<th><span data-dicenotation=\"1d4\" data-rolltype=\"roll\" data-rollaction=\"Connected Creatures\">d4</span></th>\n<th>Connected Creatures</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>1</td>\n<td>A yuan-ti cult known as the Serpents of the Dreaming City draws power from an <a class=\"tooltip-hover monster-tooltip\" href=\"/monsters/2059690-ancient-amethyst-dragon\" aria-haspopup=\"true\" data-tooltip-href=\"/monsters/2059690-tooltip\" data-tooltip-json-href=\"/monsters/2059690/tooltip-json\">ancient amethyst dragon</a>, which the cultists keep in eternal slumber with braziers of enchanted smoke.</td>\n</tr>\n<tr>\n<td>2</td>\n<td>A rogue <a class=\"tooltip-hover monster-tooltip\" href=\"/monsters/16987-purple-worm\" aria-haspopup=\"true\" data-tooltip-href=\"/monsters/16987-tooltip\" data-tooltip-json-href=\"/monsters/16987/tooltip-json\">purple worm</a> swallowed a large portion of an amethyst dragon’s hoard before burrowing back into the deep Underdark. The dragon has a magic crystal that can trace the worm’s movement.</td>\n</tr>\n<tr>\n<td>3</td>\n<td>An <a class=\"tooltip-hover monster-tooltip\" href=\"/monsters/2059690-ancient-amethyst-dragon\" aria-haspopup=\"true\" data-tooltip-href=\"/monsters/2059690-tooltip\" data-tooltip-json-href=\"/monsters/2059690/tooltip-json\">ancient amethyst dragon</a> is able to awaken psionic potential in others, and many of the greatest psi warriors in history were the dragon’s students.</td>\n</tr>\n<tr>\n<td>4</td>\n<td>After centuries guarding the world against incursions from the Far Realm, an <a class=\"tooltip-hover monster-tooltip\" href=\"/monsters/2059690-ancient-amethyst-dragon\" aria-haspopup=\"true\" data-tooltip-href=\"/monsters/2059690-tooltip\" data-tooltip-json-href=\"/monsters/2059690/tooltip-json\">ancient amethyst dragon</a> has been corrupted by aberrant influences and now leads a cult the dragon once opposed.</td>\n</tr>\n</tbody>\n</table>\n</div>\n<h3 id=\"AmethystDragonLairs\">Amethyst Dragon Lairs</h3>\n<p>Amethyst dragons prefer lairs near water, ideally mountain lakes, where they take advantage of existing caves and tunnels. A lair behind a cascading waterfall is ideal, and often part of that lair is submerged, allowing the dragon to rest in the water and cultivate the fish that are their preferred food.</p>\n<p>Amethyst dragon lairs frequently exhibit or develop large and beautiful clusters of amethyst crystals, including massive cathedral geodes split open to show their contents and clusters of crystal points more than a foot in diameter that extend six to ten feet from the interior stone surfaces of the lair. These crystals resonate with the dragon’s presence, and glow with a soft inner light. The older the dragon, the deeper the purple color of the crystals.</p>\n<h4 id=\"AmethystDragonLairFeatures\">Amethyst Dragon Lair Features</h4>\n<p>The amethyst dragon lair shown in <span class=\"link-removed\">Link Removed: https://www.dndbeyond.com/sources/ftod/draconomicon#Map51amethystdragonlair</span> is set beneath a mountain ridge between two deep tarns, with streams flowing down toward the lowlands. The lair has the following features:</p>\n<p><strong>Entrances.</strong> Two cave entrances provide access to the lair, one in the rock face just above one tarn and one below the surface of the other tarn. The dragon uses the underwater passage as a secret entrance and emergency exit.</p>\n<p><strong>Main Caves.</strong> The lair is a complex of caves and tunnels; the stone surfaces are smooth and water-worn, and the air is cool and slightly damp.</p>\n<p><strong>Glowing Crystals.</strong> Large clusters of glowing amethyst crystals grow out from the walls and ceiling, casting dim light in a 30-foot radius.</p>\n<p><strong>Chimneys.</strong> Two chimneys connect the main caves to the three chambers above. Each chimney appears to continue up through the ceiling of the upper level and down through the floor of the lower level, but the dragon’s magic warps space within the lair. Moving up past the upper level brings a creature to the lower level again, while moving down from the lower level brings a creature to the upper level. A creature or object dropped down one of the chimneys continues falling endlessly unless it or some outside force has the means to slow or stop it. This property of the lair vanishes after <span data-dicenotation=\"1d10\" data-rolltype=\"roll\" data-rollaction=\"Days\">1d10</span> days if the dragon dies.</p>\n<p><strong>Upper Caves.</strong> The dragon most often sleeps in the largest upper chamber of the lair. The dragon’s hoard is divided between that area and the chamber at the opposite end of the upper level. The magic of the lair sometimes makes it appear as though the dragon were sleeping amid both caches, creating the impression that two dragons dwell here.</p>",
+            "lairDescription": "<h3>An Amethyst Dragon’s Lair</h3>\n<p>Amethyst dragons make their lairs in caves next to or under secluded pools and lakes, preferring caverns with at least one entrance submerged underwater. They prize locations with a combination of open space, connecting tunnels, and dead ends to make the most of their natural and magical mobility, using flight and teleportation to navigate obstacles in their lairs.</p>\n<p>The challenge rating of a legendary amethyst dragon increases by 1 when it’s encountered in its lair.</p>\n<h4>Lair Actions</h4>\n<p>On initiative count 20 (losing initiative ties), the dragon can take one of the following lair actions; the dragon can’t take the same lair action two rounds in a row:</p>\n<p><strong>Beguiling Whisper.</strong> The dragon telepathically whispers to one creature within range of the dragon’s telepathy. The creature must succeed on a DC 15 Wisdom saving throw or be <a class=\"tooltip-hover condition-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#CharmedCondition\" aria-haspopup=\"true\" data-tooltip-href=\"/conditions/2-tooltip\" data-tooltip-json-href=\"/conditions/2/tooltip-json\">charmed</a> by the dragon until initiative count 20 on the next round. A creature <a class=\"tooltip-hover condition-tooltip\" href=\"/sources/dnd/free-rules/rules-glossary#CharmedCondition\" aria-haspopup=\"true\" data-tooltip-href=\"/conditions/2-tooltip\" data-tooltip-json-href=\"/conditions/2/tooltip-json\">charmed</a> in this way obeys to the best of its ability any command the dragon issues that isn’t directly harmful to the creature.</p>\n<p><strong>Imprisoning Force.</strong> The dragon casts the <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2114-forcecage\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2114-tooltip\" data-tooltip-json-href=\"/spells/2114/tooltip-json\">forcecage</a> spell, using its spell save DC and requiring no spell components. The spell ends early if the dragon uses this lair action again or dies.</p>\n<p><strong>Spatial Projection.</strong> The dragon chooses a space it can fit into within the lair. It exists in its own space and the chosen space simultaneously until initiative count 20 on the next round. Whenever it moves or takes an action, it chooses which version of itself is moving or acting. If an effect or attack can target both of the dragon’s spaces at the same time, the dragon is affected only once.</p>\n<h4>Regional Effects</h4>\n<p>The region surrounding a legendary amethyst dragon’s lair is altered by the dragon’s magic, creating one or more of the following effects:</p>\n<p><strong>Background Check.</strong> Once per day, the dragon can cast the <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2163-legend-lore\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2163-tooltip\" data-tooltip-json-href=\"/spells/2163/tooltip-json\">legend lore</a> spell, requiring no spell components, naming any person, place, or object within 1 mile of the lair as the spell’s subject.</p>\n<p><strong>Crystal Profusion.</strong> Amethyst crystals and geodes form along muddy shores and lake beds within 6 miles of the lair.</p>\n<p><strong>Thriving Wildlife.</strong> Fish and other aquatic Beasts reproduce rapidly and thrive in bodies of water within 6 miles of the lair. Foraging in these waters yields twice the usual amount of food.</p>\n<p><strong>Watery Sight.</strong> Water within 6 miles of the lair is a conduit for the dragon’s psionic presence. As an action, the dragon can cast the <a class=\"tooltip-hover spell-tooltip\" href=\"/spells/2028-clairvoyance\" aria-haspopup=\"true\" data-tooltip-href=\"/spells/2028-tooltip\" data-tooltip-json-href=\"/spells/2028/tooltip-json\">clairvoyance</a> spell, requiring no spell components and targeting any body of water in that region.</p>\n<p>If the dragon dies, the populations of aquatic life near the lair return to normal levels over the course of <span data-dicenotation=\"1d10\" data-rolltype=\"roll\" data-rollaction=\"Days\">1d10</span> days. The existing abundance of amethysts remains, but new crystals and geodes form at a normal rate.</p>",
+            "languageDescription": null,
+            "languageNote": "",
+            "hideCr": false,
+            "isLegacy": false
+        }
+    ]
+}

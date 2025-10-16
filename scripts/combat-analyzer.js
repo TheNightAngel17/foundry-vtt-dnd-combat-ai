@@ -5,10 +5,14 @@
 import { MODULE_ID, MODULE_TITLE } from './main.js';
 
 export class CombatAnalyzer {
+    constructor(actionCache) {
+        this.actionCache = actionCache;
+    }
+
     /**
      * Analyze the current combat situation for AI decision making
      */
-    analyzeCombatSituation(combat, currentCombatant) {
+    async analyzeCombatSituation(combat, currentCombatant, aiService) {
         const actor = currentCombatant.actor;
         
         const situation = {
@@ -16,7 +20,7 @@ export class CombatAnalyzer {
             round: combat.round,
             turn: combat.turn,
             initiativeOrder: this.getInitiativeOrder(combat),
-            availableActions: this.getAvailableActions(actor),
+            availableActions: await this.actionCache.getActorActions(actor, aiService),
             enemies: this.getEnemies(combat, currentCombatant),
             allies: this.getAllies(combat, currentCombatant),
             recentActions: this.getRecentActions(combat),
@@ -58,47 +62,114 @@ export class CombatAnalyzer {
     getAvailableActions(actor) {
         const actions = [];
 
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Getting available actions for ${actor.name}`);
+            console.debug(`${MODULE_TITLE} | Actor has items:`, !!actor.items);
+            console.debug(`${MODULE_TITLE} | Items type:`, actor.items?.constructor?.name);
+        }
+
         // Basic actions
         actions.push(
-            { name: 'Attack', description: 'Make a weapon or spell attack', type: 'action' },
-            { name: 'Dash', description: 'Move up to your speed', type: 'action' },
-            { name: 'Dodge', description: 'Focus on avoiding attacks', type: 'action' },
-            { name: 'Help', description: 'Give an ally advantage on their next check', type: 'action' },
-            { name: 'Hide', description: 'Make a Stealth check', type: 'action' },
-            { name: 'Ready', description: 'Prepare an action for a specific trigger', type: 'action' },
-            { name: 'Search', description: 'Look for something', type: 'action' }
+            { name: 'Attack', description: 'Make a weapon or spell attack', activationTime: 'action', itemType: 'basic' },
+            { name: 'Dash', description: 'Move up to your speed', activationTime: 'action', itemType: 'basic' },
+            { name: 'Dodge', description: 'Focus on avoiding attacks', activationTime: 'action', itemType: 'basic' },
+            { name: 'Help', description: 'Give an ally advantage on their next check', activationTime: 'action', itemType: 'basic' },
+            { name: 'Hide', description: 'Make a Stealth check', activationTime: 'action', itemType: 'basic' },
+            { name: 'Ready', description: 'Prepare an action for a specific trigger', activationTime: 'action', itemType: 'basic' },
+            { name: 'Search', description: 'Look for something', activationTime: 'action', itemType: 'basic' }
         );
 
-        // Add class features and spells if available
+        // Extract all activities from items
         if (actor.items) {
+
             actor.items.forEach(item => {
-                if (item.type === 'feat' && item.system.activation?.type) {
+
+                // Check if the item has activities (new dnd5e system structure)
+                if (item.system?.activities && typeof item.system.activities === 'object') {
+                    // Handle both Map objects and plain objects
+                    const activityEntries = item.system.activities instanceof Map 
+                        ? Array.from(item.system.activities.entries())
+                        : Object.entries(item.system.activities);
+                    
+                    // Skip items with no activities (loot, equipment, etc.)
+                    if (activityEntries.length === 0) {
+                        return;
+                    }
+                    
+                    // Collect all activation times from activities
+                    const activationTimes = activityEntries
+                        .map(([_, activity]) => activity?.activation?.type)
+                        .filter(type => type); // Remove undefined/null
+                    
+                    // Determine activation time: single value, "multiple", or default to "action"
+                    let activationTime = 'action';
+                    if (activationTimes.length === 1) {
+                        activationTime = activationTimes[0];
+                    } else if (activationTimes.length > 1) {
+                        const uniqueTimes = [...new Set(activationTimes)];
+                        activationTime = uniqueTimes.length === 1 ? uniqueTimes[0] : 'multiple';
+                    }
+
+                    const actionData = {
+                        name: item.name,
+                        description: this.extractItemDescription(item),
+                        activationTime: activationTime,
+                        itemType: item.type
+                    };
+
+                    actions.push(actionData);
+                }
+                // Fallback for legacy items without activities
+                else if (item.type === 'feat' && item.system.activation?.type) {
                     actions.push({
                         name: item.name,
-                        description: item.system.description?.value || 'Special ability',
-                        type: item.system.activation.type,
-                        uses: item.system.uses
+                        description: this.extractItemDescription(item),
+                        activationTime: item.system.activation.type,
+                        itemType: item.type
                     });
                 } else if (item.type === 'spell' && item.system.preparation?.prepared) {
                     actions.push({
                         name: item.name,
-                        description: item.system.description?.value || 'Spell',
-                        type: 'action',
-                        level: item.system.level,
-                        school: item.system.school
+                        description: this.extractItemDescription(item),
+                        activationTime: 'action',
+                        itemType: item.type
                     });
                 } else if (item.type === 'weapon') {
                     actions.push({
                         name: `Attack with ${item.name}`,
-                        description: `${item.system.damage?.parts?.[0]?.[0] || '1d6'} damage`,
-                        type: 'action',
-                        range: item.system.range
+                        description: this.extractItemDescription(item),
+                        activationTime: 'action',
+                        itemType: item.type
                     });
                 }
             });
         }
 
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Total actions found: ${actions.length}`, actions);
+        }
+
         return actions;
+    }
+
+    /**
+     * Extract a clean description from an item
+     */
+    extractItemDescription(item) {
+        // Get description from item's system only
+        let description = item.system.description?.value || '';
+        
+        // Clean HTML tags for a simpler text representation
+        if (description) {
+            // Remove HTML tags but keep the text content
+            description = description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            // Limit length for AI context
+            if (description.length > 500) {
+                description = description.substring(0, 497) + '...';
+            }
+        }
+        
+        return description || 'No description available';
     }
 
     /**
@@ -152,23 +223,91 @@ export class CombatAnalyzer {
         const token = combatant.token;
         const currentToken = currentCombatant.token;
 
-        let distance = 'Unknown';
+        let distance = null;
+        let direction = null;
         if (token && currentToken) {
             const dx = token.x - currentToken.x;
             const dy = token.y - currentToken.y;
             distance = Math.round(Math.sqrt(dx * dx + dy * dy) / canvas.grid.size) * 5; // Convert to feet
+            
+            // Calculate angle in degrees (0° = East, 90° = North, 180° = West, 270° = South)
+            // atan2 returns angle from -π to π, we convert to 0-360 degrees
+            let angleRadians = Math.atan2(-dy, dx); // Negative dy because canvas Y increases downward
+            let angleDegrees = angleRadians * (180 / Math.PI);
+            
+            // Normalize to 0-360 range
+            if (angleDegrees < 0) {
+                angleDegrees += 360;
+            }
+            
+            direction = Math.round(angleDegrees * 10) / 10; // Round to 1 decimal place
         }
+
+        // Extract damage resistances, immunities, and vulnerabilities
+        const damageResistances = this.getDamageTraits(actor, 'dr');
+        const damageImmunities = this.getDamageTraits(actor, 'di');
+        const damageVulnerabilities = this.getDamageTraits(actor, 'dv');
+        const conditionImmunities = this.getConditionImmunities(actor);
 
         return {
             name: actor.name,
             hp: `${actor.system.attributes.hp.value}/${actor.system.attributes.hp.max}`,
             hpPercentage: Math.round((actor.system.attributes.hp.value / actor.system.attributes.hp.max) * 100),
             ac: actor.system.attributes.ac.value,
-            distance: `${distance} ft`,
+            distance: distance, // Distance in feet (number or null)
+            direction: direction, // Direction in degrees (number or null)
+            damageResistances: damageResistances,
+            damageImmunities: damageImmunities,
+            damageVulnerabilities: damageVulnerabilities,
+            conditionImmunities: conditionImmunities,
             conditions: this.getActorConditions(actor),
             unconscious: actor.system.attributes.hp.value <= 0,
             position: token ? { x: token.x, y: token.y } : null
         };
+    }
+
+    /**
+     * Get damage traits (resistances, immunities, vulnerabilities)
+     */
+    getDamageTraits(actor, traitType) {
+        const traits = actor.system.traits?.[traitType];
+        if (!traits) return [];
+
+        const results = [];
+        
+        // Handle value Set (standard damage types)
+        if (traits.value && traits.value instanceof Set) {
+            results.push(...Array.from(traits.value));
+        }
+        
+        // Handle custom string
+        if (traits.custom && traits.custom.trim()) {
+            results.push(traits.custom.trim());
+        }
+
+        return results;
+    }
+
+    /**
+     * Get condition immunities
+     */
+    getConditionImmunities(actor) {
+        const conditionImmunities = actor.system.traits?.ci;
+        if (!conditionImmunities) return [];
+
+        const results = [];
+        
+        // Handle value Set (standard conditions)
+        if (conditionImmunities.value && conditionImmunities.value instanceof Set) {
+            results.push(...Array.from(conditionImmunities.value));
+        }
+        
+        // Handle custom string
+        if (conditionImmunities.custom && conditionImmunities.custom.trim()) {
+            results.push(conditionImmunities.custom.trim());
+        }
+
+        return results;
     }
 
     /**
