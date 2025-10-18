@@ -1,6 +1,6 @@
 {
   "name": "foundry-vtt-dnd-combat-ai",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "AI-powered combat assistance for NPCs in FoundryVTT D&D 5e",
   "main": "scripts/main.js",
   "scripts": {
