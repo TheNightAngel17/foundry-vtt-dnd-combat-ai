@@ -215,7 +215,7 @@ export class TurnTracker {
             ? stateChanges.join('\n')
             : '- No significant state changes detected';
 
-        const template = `## Actions Taken\n\n## Reactions Taken\n\n## Environment Changes\n\n## State Changes\n${stateChangesText}\n`;
+        const template = `### Actions Taken\n\n### Reactions Taken\n\n### Environment Changes\n\n### State Changes\n${stateChangesText}\n`;
 
         // Create dialog for GM input
         const turnDescription = await this.showDescriptionDialog(combatant, template, combat);

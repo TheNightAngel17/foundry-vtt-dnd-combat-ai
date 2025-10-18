@@ -143,14 +143,52 @@ export class CombatAIManager {
             'tpk': 'Play to win at all costs. Use meta-knowledge and perfect tactics to maximize lethality.'
         };
 
-        // Build action sections from pre-grouped actions
+        // Build action sections from pre-grouped actions with markdown formatting
         let actionSections = '';
         const availableTypes = Object.keys(actionsByType);
         
         for (const [type, actions] of Object.entries(actionsByType)) {
-            actionSections += `\n${type.toUpperCase()} Actions:\n`;
-            actionSections += actions.map(action => `- ${action.name}: ${action.description}`).join('\n');
-            actionSections += '\n';
+            const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
+            actionSections += `### ${typeLabel} Actions\n\n`;
+            actionSections += actions.map(action => `- **${action.name}**: ${action.description}`).join('\n');
+            actionSections += '\n\n';
+        }
+
+        // Build combat history section from turn tracker
+        let combatHistory = '';
+        const turnHistory = this.getTurnHistory();
+        
+        if (turnHistory.length > 0) {
+            combatHistory = '# Combat History\n\n';
+            combatHistory += '_What has happened so far in this combat_\n\n';
+            
+            turnHistory.forEach((entry, index) => {
+                combatHistory += `## Round ${entry.round}, Turn ${entry.turn + 1} - ${entry.combatantName} (Initiative ${entry.initiative})\n\n`;
+                combatHistory += `${entry.description}\n\n`;
+                
+                // Add separator between entries (but not after the last one)
+                if (index < turnHistory.length - 1) {
+                    combatHistory += '---\n\n';
+                }
+            });
+        } else {
+            combatHistory = '# Combat History\n\n_No previous turns recorded yet. This is the beginning of combat._';
+        }
+
+        // Build enemy analysis section
+        let enemyAnalysis = '';
+        if (situation.enemies.length > 0) {
+            enemyAnalysis = situation.enemies.map(combatant => this.buildCombatantMarkdown(combatant)).join('\n\n');
+        } else {
+            enemyAnalysis = '_No enemies in range or visible._';
+        }
+
+        // Build ally analysis section
+        let allyAnalysis = '';
+        if (situation.allies.length > 0) {
+            allyAnalysis = situation.allies.map(combatant => this.buildCombatantMarkdown(combatant)).join('\n\n');
+        } else {
+            allyAnalysis = '_No allies present._';
         }
 
         // Build example response format showing ONLY the action types present
@@ -163,44 +201,73 @@ export class CombatAIManager {
             }));
         });
 
-        return `You are controlling an NPC in a D&D 5e combat encounter. Your goal is to play at a "${difficulty}" difficulty level.
+        return `You are controlling an NPC in a D&D 5e combat encounter. Your goal is to play at a **"${difficulty}"** difficulty level.
 
-Difficulty Guidelines: ${difficultyDescriptions[difficulty]}
+# Difficulty Guidelines
 
-Combat Situation:
-- Current NPC: ${situation.currentNPC.name} (${situation.currentNPC.type})
-- HP: ${situation.currentNPC.hp.current}/${situation.currentNPC.hp.max}
-- AC: ${situation.currentNPC.ac}
-- Position: ${situation.currentNPC.position}
+${difficultyDescriptions[difficulty]}
 
-Available Actions by Type:
-${actionSections}
+---
 
-Combat State:
-- Round: ${situation.round}
-- Initiative Order: ${situation.initiativeOrder.map(c => `${c.name} (${c.hp})`).join(', ')}
+${combatHistory}
 
-Recent Actions:
-${situation.recentActions.map(action => `- ${action.actor}: ${action.action}`).join('\n')}
+---
 
-Enemy Analysis:
-${situation.enemies.map(combatant => this.buildCombatantMarkdown(combatant)).join('\n')}
+# Current NPC
 
-Ally Analysis:
-${situation.allies.map(combatant => this.buildCombatantMarkdown(combatant)).join('\n')}
+**Name**: ${situation.currentNPC.name} (${situation.currentNPC.type})
+- **HP**: ${situation.currentNPC.hp.current}/${situation.currentNPC.hp.max}
+- **AC**: ${situation.currentNPC.ac}
+- **Position**: ${situation.currentNPC.position}
 
-Please recommend the top ${numRecommendations} action(s) for EACH action type available to this NPC, considering:
-1. The difficulty level specified
-2. Current tactical situation
+---
+
+# Available Actions
+
+${actionSections}---
+
+# Current Combat State
+
+- **Round**: ${situation.round}
+- **Initiative Order**: ${situation.initiativeOrder.map(c => `${c.name} (${c.hp})`).join(' → ')}
+
+---
+
+# Battlefield Analysis
+
+## Enemies
+
+${enemyAnalysis}
+
+## Allies
+
+${allyAnalysis}
+
+---
+
+# Your Task
+
+Please recommend the **top ${numRecommendations} action(s)** for **EACH action type** available to this NPC.
+
+Consider:
+1. The difficulty level specified above
+2. The combat history and current tactical situation
 3. Available resources and abilities
 4. Positioning and battlefield control
 
-IMPORTANT: Keep each reasoning under 150 words.
+**IMPORTANT**: Keep each reasoning under 150 words.
+
+---
+
+# Response Format
 
 Respond with a JSON object organized by action type (${availableTypes.join(', ')}):
-${JSON.stringify(exampleResponse, null, 2)}
 
-Respond ONLY with the JSON object, no additional text.`;
+\`\`\`json
+${JSON.stringify(exampleResponse, null, 2)}
+\`\`\`
+
+**Respond ONLY with the JSON object, no additional text.**`;
     }
 
     /**
@@ -215,27 +282,27 @@ Respond ONLY with the JSON object, no additional text.`;
             ? combatant.conditions.map(c => c.name).join(', ')
             : 'None';
         
-        const statusFlags = combatant.unconscious ? ' [UNCONSCIOUS]' : '';
+        const statusFlags = combatant.unconscious ? ' **[UNCONSCIOUS]**' : '';
         
-        // Build defenses line
+        // Build defenses line with markdown formatting
         let defensesLine = `AC ${combatant.ac}`;
         if (combatant.damageResistances && combatant.damageResistances.length > 0) {
-            defensesLine += `, Resist: ${combatant.damageResistances.join(', ')}`;
+            defensesLine += `, _Resist_: ${combatant.damageResistances.join(', ')}`;
         }
         if (combatant.damageImmunities && combatant.damageImmunities.length > 0) {
-            defensesLine += `, Immune: ${combatant.damageImmunities.join(', ')}`;
+            defensesLine += `, _Immune_: ${combatant.damageImmunities.join(', ')}`;
         }
         if (combatant.damageVulnerabilities && combatant.damageVulnerabilities.length > 0) {
-            defensesLine += `, Vulnerable: ${combatant.damageVulnerabilities.join(', ')}`;
+            defensesLine += `, _Vulnerable_: ${combatant.damageVulnerabilities.join(', ')}`;
         }
         if (combatant.conditionImmunities && combatant.conditionImmunities.length > 0) {
-            defensesLine += `, Condition Immune: ${combatant.conditionImmunities.join(', ')}`;
+            defensesLine += `, _Condition Immune_: ${combatant.conditionImmunities.join(', ')}`;
         }
         
-        return `- ${combatant.name} (${combatant.hp})${statusFlags}
-   - Location: ${distanceInfo}
-   - Defenses: ${defensesLine}
-   - Conditions: ${conditionsList}`;
+        return `### ${combatant.name} (${combatant.hp})${statusFlags}
+- **Location**: ${distanceInfo}
+- **Defenses**: ${defensesLine}
+- **Conditions**: ${conditionsList}`;
     }
 
     /**
