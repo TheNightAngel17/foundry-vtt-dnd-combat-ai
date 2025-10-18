@@ -6,6 +6,7 @@
 import { CombatAIManager } from './combat-ai-manager.js';
 import { CombatAISettings } from './settings.js';
 import { CombatAIUI } from './ui.js';
+import { TurnTracker } from './turn-tracker.js';
 
 // Module constants
 const MODULE_ID = 'dnd-combat-ai';
@@ -13,6 +14,7 @@ const MODULE_TITLE = 'D&D Combat AI';
 
 // Global module reference
 let combatAIManager = null;
+let turnTracker = null;
 
 /**
  * Module initialization
@@ -26,8 +28,15 @@ Hooks.once('init', async function() {
     // Initialize the combat AI manager
     combatAIManager = new CombatAIManager();
     
-    // Make it globally accessible for UI
+    // Initialize the turn tracker
+    turnTracker = new TurnTracker();
+    
+    // Link them together
+    combatAIManager.setTurnTracker(turnTracker);
+    
+    // Make them globally accessible for UI
     window.combatAIManager = combatAIManager;
+    window.turnTracker = turnTracker;
     
     console.log(`${MODULE_TITLE} | Module initialized`);
 });
@@ -92,6 +101,16 @@ async function handleNPCTurnIfNeeded(combat, turnIndex, context) {
  */
 async function onCombatTurn(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat turn changed`);
+    
+    // Handle turn tracking FIRST - for the turn that just ended
+    // The previous turn is the one before updateData.turn
+    const previousTurn = updateData.turn > 0 ? updateData.turn - 1 : combat.turns.length - 1;
+    if (turnTracker && updateData.turn !== 0) {
+        // Only track if not the first turn of combat (turn 0)
+        await turnTracker.onTurnEnd(combat, previousTurn);
+    }
+    
+    // THEN handle NPC AI for the new turn
     await handleNPCTurnIfNeeded(combat, updateData.turn, 'turn change');
 }
 
@@ -100,7 +119,15 @@ async function onCombatTurn(combat, updateData, options) {
  */
 async function onCombatRound(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat round changed to round ${updateData.round}`);
-    // When a new round starts, get the first combatant (turn 0)
+    
+    // Handle turn tracking FIRST - for the last turn of the previous round
+    // Only if this is not the first round
+    if (turnTracker && updateData.round > 1) {
+        const lastTurn = combat.turns.length - 1;
+        await turnTracker.onTurnEnd(combat, lastTurn);
+    }
+    
+    // THEN handle NPC AI for the first combatant of the new round (turn 0)
     await handleNPCTurnIfNeeded(combat, 0, 'round change');
 }
 
@@ -109,8 +136,12 @@ async function onCombatRound(combat, updateData, options) {
  */
 async function onCombatStart(combat) {
     console.log(`${MODULE_TITLE} | Combat started`);
+    if (turnTracker) {
+        turnTracker.onCombatStart(combat);
+    }
     if (combatAIManager) {
         combatAIManager.onCombatStart(combat);
+        await handleNPCTurnIfNeeded(combat, 0, 'round change');
     }
 }
 
@@ -139,6 +170,9 @@ function onCombatEnd(combat) {
     console.log(`${MODULE_TITLE} | Combat ended`);
     if (combatAIManager) {
         combatAIManager.onCombatEnd(combat);
+    }
+    if (turnTracker) {
+        turnTracker.onCombatEnd(combat);
     }
 }
 

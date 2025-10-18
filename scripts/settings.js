@@ -154,6 +154,16 @@ export class CombatAISettings {
             default: false
         });
 
+        // Turn tracking
+        game.settings.register(MODULE_ID, 'enableTurnTracking', {
+            name: 'Enable Turn Tracking',
+            hint: 'Track what happened each turn with GM descriptions and state changes',
+            scope: 'world',
+            config: true,
+            type: Boolean,
+            default: true
+        });
+
         // ========================================
         // DDB Importer Configuration
         // ========================================
