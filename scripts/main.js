@@ -136,11 +136,12 @@ async function onCombatRound(combat, updateData, options) {
  */
 async function onCombatStart(combat) {
     console.log(`${MODULE_TITLE} | Combat started`);
-    if (combatAIManager) {
-        combatAIManager.onCombatStart(combat);
-    }
     if (turnTracker) {
         turnTracker.onCombatStart(combat);
+    }
+    if (combatAIManager) {
+        combatAIManager.onCombatStart(combat);
+        await handleNPCTurnIfNeeded(combat, 0, 'round change');
     }
 }
 
