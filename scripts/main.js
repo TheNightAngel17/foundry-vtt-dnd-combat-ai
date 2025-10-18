@@ -156,7 +156,7 @@ async function onCreateCombatant(combatant, options, userId) {
     console.log(`${MODULE_TITLE} | NPC added to combat: ${combatant.actor.name}, pre-caching actions...`);
     
     try {
-        await combatAIManager.actionCache.getActorActions(combatant.actor, combatAIManager.llmConnector);
+        await combatAIManager.actorLlmActions.getActorActions(combatant.actor, combatAIManager.llmConnector);
         console.log(`${MODULE_TITLE} | Successfully cached actions for ${combatant.actor.name}`);
     } catch (error) {
         console.error(`${MODULE_TITLE} | Failed to cache actions for ${combatant.actor.name}:`, error);

@@ -5,13 +5,13 @@
 import { MODULE_ID, MODULE_TITLE } from './main.js';
 import { LLMConnector } from './llm-connector.js';
 import { CombatAnalyzer } from './combat-analyzer.js';
-import { ActionCache } from './action-cache.js';
+import { ActorLlmActions } from './action-cache.js';
 
 export class CombatAIManager {
     constructor() {
         this.llmConnector = new LLMConnector();
-        this.actionCache = new ActionCache();
-        this.combatAnalyzer = new CombatAnalyzer(this.actionCache);
+        this.actorLlmActions = new ActorLlmActions();
+        this.combatAnalyzer = new CombatAnalyzer(this.actorLlmActions);
         this.currentCombat = null;
         this.combatHistory = [];
         this.turnTracker = null; // Will be set from main.js
@@ -38,7 +38,7 @@ export class CombatAIManager {
         
         const promises = npcCombatants.map(async (combatant) => {
             try {
-                await this.actionCache.getActorActions(combatant.actor, this.llmConnector);
+                await this.actorLlmActions.getActorActions(combatant.actor, this.llmConnector);
                 if (game.settings.get(MODULE_ID, 'debugMode')) {
                     console.debug(`${MODULE_TITLE} | Cached actions for ${combatant.actor.name}`);
                 }
@@ -862,8 +862,6 @@ ${JSON.stringify(exampleResponse, null, 2)}
      */
     onCombatEnd(combat) {
         this.currentCombat = null;
-        // Clear expired cache entries when combat ends
-        this.actionCache.clearExpiredCache();
         console.log(`${MODULE_TITLE} | Combat tracking ended`);
     }
 

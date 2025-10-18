@@ -5,8 +5,8 @@
 import { MODULE_ID, MODULE_TITLE } from './main.js';
 
 export class CombatAnalyzer {
-    constructor(actionCache) {
-        this.actionCache = actionCache;
+    constructor(actorLlmActions) {
+        this.actorLlmActions = actorLlmActions;
     }
 
     /**
@@ -20,7 +20,7 @@ export class CombatAnalyzer {
             round: combat.round,
             turn: combat.turn,
             initiativeOrder: this.getInitiativeOrder(combat),
-            availableActions: await this.actionCache.getActorActions(actor, aiService),
+            availableActions: await this.actorLlmActions.getActorActions(actor, aiService),
             enemies: this.getEnemies(combat, currentCombatant),
             allies: this.getAllies(combat, currentCombatant),
             recentActions: this.getRecentActions(combat),

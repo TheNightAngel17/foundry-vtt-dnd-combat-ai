@@ -1,14 +1,16 @@
 /**
- * Action Cache - Caches LLM-generated action descriptions for NPCs
+ * Actor LLM Actions - Manages LLM-generated action descriptions for NPCs
  */
 
 import { MODULE_ID, MODULE_TITLE } from './main.js';
 import { CombatAISettings } from './settings.js';
 
-export class ActionCache {
-    constructor() {
-        this.cache = new Map(); // actorId -> { actions: [], timestamp: number }
-        this.cacheTimeout = 3600000; // 1 hour in milliseconds
+export class ActorLlmActions {
+    /**
+     * Get flag key for storing cached actions
+     */
+    static get FLAG_KEY() {
+        return 'cachedActions';
     }
 
     /**
@@ -119,35 +121,49 @@ export class ActionCache {
      * Get cached actions for an actor, or generate them if not cached
      */
     async getActorActions(actor, aiService) {
-        const actorId = actor.id;
-        
-        // Check if we have valid cached data
-        if (this.cache.has(actorId)) {
-            const cached = this.cache.get(actorId);
-            const age = Date.now() - cached.timestamp;
-            
-            if (age < this.cacheTimeout) {
-                if (game.settings.get(MODULE_ID, 'debugMode')) {
-                    console.debug(`${MODULE_TITLE} | Using cached actions for ${actor.name}`);
-                }
-                return cached.actions;
+        // Check actor flags for cached data
+        const flagData = actor.getFlag(MODULE_ID, ActorLlmActions.FLAG_KEY);
+        if (flagData && flagData.actions) {
+            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                console.debug(`${MODULE_TITLE} | Using cached actions for ${actor.name}`);
             }
+            return flagData.actions;
         }
 
-        // No valid cache, generate new descriptions
+        // No cache found, generate new descriptions
         if (game.settings.get(MODULE_ID, 'debugMode')) {
             console.debug(`${MODULE_TITLE} | Generating action descriptions for ${actor.name}`);
         }
 
         const actions = await this.generateActionDescriptions(actor, aiService);
         
-        // Cache the results
-        this.cache.set(actorId, {
-            actions: actions,
-            timestamp: Date.now()
-        });
+        // Save to actor flags
+        await this.saveActorActions(actor, actions);
 
         return actions;
+    }
+
+    /**
+     * Save actions to actor flags
+     */
+    async saveActorActions(actor, actions) {
+        const timestamp = Date.now();
+        const cacheData = {
+            actions: actions,
+            timestamp: timestamp,
+            version: '1.0' // For future migration compatibility
+        };
+
+        // Persist to actor flags
+        try {
+            await actor.setFlag(MODULE_ID, ActorLlmActions.FLAG_KEY, cacheData);
+            
+            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                console.debug(`${MODULE_TITLE} | Saved cached actions for ${actor.name}`);
+            }
+        } catch (error) {
+            console.error(`${MODULE_TITLE} | Failed to save cached actions:`, error);
+        }
     }
 
     /**
@@ -319,7 +335,7 @@ IMPORTANT RULES:
    - If special effects are mentioned or implied, include them with as much detail as possible while keeping to the word limit.
 5. Parse HTML text and dice notation (e.g., "<span data-dicenotation="2d10+8">") to extract key information
 6. Categorize activation times correctly: action, bonus, reaction, legendary, lair, mythic
-7. ${ActionCache.FORMATTING_GUIDELINES}
+7. ${ActorLlmActions.FORMATTING_GUIDELINES}
 
 Ability Data:
 ${activeSections}
@@ -497,7 +513,7 @@ IMPORTANT RULES:
 4. Keep descriptions concise (max 200 characters) focusing on: damage, range, targets, applied conditions, and special effects
 5. Categorize activation times correctly: action, bonus, reaction, legendary, lair, mythic, special
 6. Extract all numerical values from damage formulas and modifiers
-7. ${ActionCache.FORMATTING_GUIDELINES}
+7. ${ActorLlmActions.FORMATTING_GUIDELINES}
 
 Raw ability data:
 ${actionsJson}
@@ -566,37 +582,28 @@ Respond ONLY with the JSON array, no other text.`;
     /**
      * Clear cache for specific actor or all actors
      */
-    clearCache(actorId = null) {
+    async clearCache(actorId = null) {
         if (actorId) {
-            this.cache.delete(actorId);
+            // Clear actor flag
+            const actor = game.actors.get(actorId);
+            if (actor) {
+                await actor.unsetFlag(MODULE_ID, ActorLlmActions.FLAG_KEY);
+            }
+            
             if (game.settings.get(MODULE_ID, 'debugMode')) {
                 console.debug(`${MODULE_TITLE} | Cleared cache for actor ${actorId}`);
             }
         } else {
-            this.cache.clear();
+            // Clear all actor flags
+            for (const actor of game.actors) {
+                if (actor.getFlag(MODULE_ID, ActorLlmActions.FLAG_KEY)) {
+                    await actor.unsetFlag(MODULE_ID, ActorLlmActions.FLAG_KEY);
+                }
+            }
+            
             if (game.settings.get(MODULE_ID, 'debugMode')) {
                 console.debug(`${MODULE_TITLE} | Cleared entire action cache`);
             }
-        }
-    }
-
-    /**
-     * Clear expired cache entries
-     */
-    clearExpiredCache() {
-        const now = Date.now();
-        let cleared = 0;
-        
-        for (const [actorId, cached] of this.cache.entries()) {
-            const age = now - cached.timestamp;
-            if (age >= this.cacheTimeout) {
-                this.cache.delete(actorId);
-                cleared++;
-            }
-        }
-
-        if (cleared > 0 && game.settings.get(MODULE_ID, 'debugMode')) {
-            console.debug(`${MODULE_TITLE} | Cleared ${cleared} expired cache entries`);
         }
     }
 }
