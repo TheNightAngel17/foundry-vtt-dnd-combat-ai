@@ -3,6 +3,7 @@
  */
 
 import { MODULE_ID, MODULE_TITLE } from './main.js';
+import { CombatAISettings } from './settings.js';
 
 export class LLMConnector {
     constructor() {
@@ -20,7 +21,12 @@ export class LLMConnector {
         // Get configuration for the specified type
         const prefix = configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
         const provider = game.settings.get(MODULE_ID, `${prefix}Provider`);
-        const apiKey = game.settings.get(MODULE_ID, `${prefix}ApiKey`);
+        
+        // Get API key from localStorage using CombatAISettings utility
+        const storageKey = configType === 'actionCache' 
+            ? CombatAISettings.STORAGE_KEYS.ACTION_CACHE_API_KEY 
+            : CombatAISettings.STORAGE_KEYS.COMBAT_API_KEY;
+        const apiKey = CombatAISettings.getSecureValue(storageKey);
 
         if (!apiKey && provider !== 'local') {
             throw new Error(`No API key configured for ${configType}. Please configure your LLM API key in module settings.`);

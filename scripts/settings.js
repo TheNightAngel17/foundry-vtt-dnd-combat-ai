@@ -6,6 +6,46 @@ import { MODULE_ID } from './main.js';
 
 export class CombatAISettings {
     /**
+     * LocalStorage keys for sensitive data
+     */
+    static STORAGE_KEYS = {
+        ACTION_CACHE_API_KEY: 'dnd-combat-ai.actionCacheLLM.apiKey',
+        COMBAT_API_KEY: 'dnd-combat-ai.combatLLM.apiKey'
+    };
+
+    /**
+     * Store sensitive data in localStorage
+     * @param {string} key - Storage key
+     * @param {string} value - Value to store
+     */
+    static setSecureValue(key, value) {
+        try {
+            if (value) {
+                localStorage.setItem(key, value);
+            } else {
+                localStorage.removeItem(key);
+            }
+        } catch (error) {
+            console.error(`${MODULE_ID} | Failed to store secure value:`, error);
+            throw new Error('Failed to store API key securely');
+        }
+    }
+
+    /**
+     * Retrieve sensitive data from localStorage
+     * @param {string} key - Storage key
+     * @returns {string} - Retrieved value or empty string
+     */
+    static getSecureValue(key) {
+        try {
+            return localStorage.getItem(key) || '';
+        } catch (error) {
+            console.error(`${MODULE_ID} | Failed to retrieve secure value:`, error);
+            return '';
+        }
+    }
+
+    /**
      * Register all module settings
      */
     static registerSettings() {
@@ -153,12 +193,8 @@ export class CombatAISettings {
             }
         });
 
-        game.settings.register(MODULE_ID, 'actionCacheLLMApiKey', {
-            scope: 'world',
-            config: false,
-            type: String,
-            default: ''
-        });
+        // Note: API keys are now stored in localStorage for security
+        // Use CombatAISettings.getSecureValue() to retrieve them
 
         game.settings.register(MODULE_ID, 'actionCacheLLMModel', {
             scope: 'world',
@@ -235,12 +271,8 @@ export class CombatAISettings {
             }
         });
 
-        game.settings.register(MODULE_ID, 'combatLLMApiKey', {
-            scope: 'world',
-            config: false,
-            type: String,
-            default: ''
-        });
+        // Note: API keys are now stored in localStorage for security
+        // Use CombatAISettings.getSecureValue() to retrieve them
 
         game.settings.register(MODULE_ID, 'combatLLMModel', {
             scope: 'world',
@@ -348,10 +380,13 @@ export class CombatAISettings {
      */
     static getLLMConfig(configType) {
         const prefix = configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
+        const storageKey = configType === 'actionCache' 
+            ? this.STORAGE_KEYS.ACTION_CACHE_API_KEY 
+            : this.STORAGE_KEYS.COMBAT_API_KEY;
         
         return {
             provider: game.settings.get(MODULE_ID, `${prefix}Provider`),
-            apiKey: game.settings.get(MODULE_ID, `${prefix}ApiKey`),
+            apiKey: this.getSecureValue(storageKey),
             model: game.settings.get(MODULE_ID, `${prefix}Model`),
             maxTokens: game.settings.get(MODULE_ID, `${prefix}MaxTokens`),
             reasoningEffort: game.settings.get(MODULE_ID, `${prefix}ReasoningEffort`),
@@ -465,11 +500,14 @@ class LLMConfigMenu extends FormApplication {
     getData() {
         const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
         const provider = game.settings.get(MODULE_ID, `${prefix}Provider`);
+        const storageKey = this.configType === 'actionCache' 
+            ? CombatAISettings.STORAGE_KEYS.ACTION_CACHE_API_KEY 
+            : CombatAISettings.STORAGE_KEYS.COMBAT_API_KEY;
         
         return {
             configType: this.configType,
             provider: provider,
-            apiKey: game.settings.get(MODULE_ID, `${prefix}ApiKey`),
+            apiKey: CombatAISettings.getSecureValue(storageKey),
             model: game.settings.get(MODULE_ID, `${prefix}Model`),
             maxTokens: game.settings.get(MODULE_ID, `${prefix}MaxTokens`),
             reasoningEffort: game.settings.get(MODULE_ID, `${prefix}ReasoningEffort`),
@@ -516,9 +554,13 @@ class LLMConfigMenu extends FormApplication {
 
     async _updateObject(event, formData) {
         const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
+        const storageKey = this.configType === 'actionCache' 
+            ? CombatAISettings.STORAGE_KEYS.ACTION_CACHE_API_KEY 
+            : CombatAISettings.STORAGE_KEYS.COMBAT_API_KEY;
         
         await game.settings.set(MODULE_ID, `${prefix}Provider`, formData.provider);
-        await game.settings.set(MODULE_ID, `${prefix}ApiKey`, formData.apiKey || '');
+        // Store API key in localStorage instead of game settings
+        CombatAISettings.setSecureValue(storageKey, formData.apiKey || '');
         await game.settings.set(MODULE_ID, `${prefix}Model`, formData.model || 'llama3.2');
         await game.settings.set(MODULE_ID, `${prefix}MaxTokens`, formData.maxTokens || 1000);
         await game.settings.set(MODULE_ID, `${prefix}ReasoningEffort`, formData.reasoningEffort || 'low');
