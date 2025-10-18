@@ -7,6 +7,7 @@ import { CombatAIManager } from './combat-ai-manager.js';
 import { CombatAISettings } from './settings.js';
 import { CombatAIUI } from './ui.js';
 import { TurnTracker } from './turn-tracker.js';
+import { ActorActionsDialog } from './actor-actions-dialog.js';
 
 // Module constants
 const MODULE_ID = 'dnd-combat-ai';
@@ -21,6 +22,11 @@ let turnTracker = null;
  */
 Hooks.once('init', async function() {
     console.log(`${MODULE_TITLE} | Initializing module`);
+    
+    // Register Handlebars helpers
+    Handlebars.registerHelper('eq', function(a, b) {
+        return a === b;
+    });
     
     // Register module settings
     CombatAISettings.registerSettings();
@@ -41,6 +47,11 @@ Hooks.once('init', async function() {
     console.log(`${MODULE_TITLE} | Module initialized`);
 });
 
+Hooks.once("init", () => {
+  console.log(`${MODULE_TITLE} | 🧠 D&D5e header button hook registered`);
+
+    Hooks.on("getHeaderControlsActorSheetV2", onGetActorSheetHeaderButtons);
+});
 /**
  * Setup hooks once the game is ready
  */
@@ -52,6 +63,8 @@ Hooks.once('ready', async function() {
     
     // Set up combat hooks
     setupCombatHooks();
+    
+    // Set up actor sheet hook
     
     console.log(`${MODULE_TITLE} | Module ready`);
 });
@@ -174,6 +187,73 @@ function onCombatEnd(combat) {
     if (turnTracker) {
         turnTracker.onCombatEnd(combat);
     }
+}
+
+/**
+ * Add "Manage AI Actions" button to actor sheet headers
+ */
+function onGetActorSheetHeaderButtons(app, buttons) {
+    const actor = app.actor;
+    
+    // Only add button for GMs
+    if (!game.user.isGM) {
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Skipping - user is not a GM`);
+        }
+        return;
+    }
+    
+    // Only add button if user is owner
+    if (!actor?.isOwner) {
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Skipping - user is not owner`);
+        }
+        return;
+    }
+    
+    // Only add button for NPC actors
+    if (!actor || actor.hasPlayerOwner) {
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Skipping - not an NPC`);
+        }
+        return;
+    }
+
+    // Check if it's a character or NPC sheet
+    const isCharacterSheet = app.constructor.name === "ActorSheet5eCharacter";
+    const isNpcSheet = app.constructor.name === "NPCActorSheet";
+
+    if (!isCharacterSheet && !isNpcSheet) {
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Unknown sheet type: ${app.constructor.name}`);
+        }
+    }
+
+    if (game.settings.get(MODULE_ID, 'debugMode')) {
+        console.debug(`${MODULE_TITLE} | Adding AI Actions button to ${actor.name}`);
+    }
+
+    app.options.actions["dd-ai-actions"] = () => {
+            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                console.debug(`${MODULE_TITLE} | AI Actions button clicked for ${actor.name}`);
+            }
+            if (combatAIManager) {
+                const dialog = new ActorActionsDialog(
+                    actor,
+                    combatAIManager.actorLlmActions,
+                    combatAIManager.llmConnector
+                );
+                dialog.render(true);
+            } else {
+                console.error(`${MODULE_TITLE} | combatAIManager not initialized`);
+            }
+        };
+    buttons.unshift({
+        label: "AI Actions",
+        class: "combat-ai-actions-button",
+        icon: "fas fa-brain",
+        action: "dd-ai-actions"
+    });
 }
 
 // Export module ID for use in other files

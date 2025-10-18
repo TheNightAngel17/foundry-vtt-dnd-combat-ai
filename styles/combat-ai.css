@@ -368,3 +368,248 @@
 .llm-config-form button[type="submit"] i {
     font-size: 0.9em;
 }
+
+/* Actor Actions Dialog */
+.actor-actions-dialog {
+    font-family: var(--font-primary);
+}
+
+.actor-actions-dialog .window-content {
+    padding: 15px;
+    background: #f0f0e8;
+    color: #191813;
+}
+
+.actor-actions-dialog-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+}
+
+.actor-actions-dialog .dialog-header {
+    border-bottom: 2px solid #782e22;
+    padding-bottom: 10px;
+    background: transparent;
+}
+
+.actor-actions-dialog .dialog-header h2 {
+    margin: 0 0 5px 0;
+    color: #191813;
+    font-size: 1.3em;
+}
+
+.actor-actions-dialog .last-updated {
+    margin: 0;
+    font-size: 0.9em;
+    color: #4b4a44;
+    font-style: italic;
+}
+
+.actor-actions-dialog .dialog-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.actor-actions-dialog .dialog-controls button {
+    padding: 8px 15px;
+    background: #5e0000;
+    color: #ffffff;
+    border: 1px solid #782e22;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.95em;
+    transition: background-color 0.2s;
+}
+
+.actor-actions-dialog .dialog-controls button:hover {
+    background: #782e22;
+    box-shadow: 0 0 8px #782e22;
+}
+
+.actor-actions-dialog .dialog-controls button i {
+    font-size: 0.9em;
+}
+
+.actor-actions-dialog .actions-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 5px;
+}
+
+.actor-actions-dialog .action-item {
+    background: #ffffff;
+    border: 1px solid #782e22;
+    border-radius: 5px;
+    padding: 12px;
+    transition: box-shadow 0.2s;
+}
+
+.actor-actions-dialog .action-item:hover {
+    box-shadow: 0 2px 8px rgba(120, 46, 34, 0.3);
+    border-color: #5e0000;
+}
+
+.actor-actions-dialog .action-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.actor-actions-dialog .action-name-input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #782e22;
+    border-radius: 3px;
+    background: #faf8f5;
+    color: #191813;
+    font-weight: bold;
+    font-size: 1.05em;
+}
+
+.actor-actions-dialog .delete-action {
+    padding: 6px 8px;
+    background: var(--color-button-cancel);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+    width: 48px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #d32f2f;
+}
+
+
+.actor-actions-dialog .action-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.actor-actions-dialog .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.actor-actions-dialog .form-group label {
+    font-weight: bold;
+    color: #191813;
+    font-size: 0.9em;
+}
+
+.actor-actions-dialog .action-description-input {
+    padding: 8px;
+    border: 1px solid #782e22;
+    border-radius: 3px;
+    background: #faf8f5;
+    color: #191813;
+    font-family: var(--font-primary);
+    resize: vertical;
+}
+
+.actor-actions-dialog .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.actor-actions-dialog .action-select {
+    padding: 6px;
+    border: 1px solid #782e22;
+    border-radius: 3px;
+    background: #faf8f5;
+    color: #191813;
+}
+
+.actor-actions-dialog .no-actions {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.actor-actions-dialog .no-actions p {
+    color: #4b4a44;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.actor-actions-dialog .no-actions i {
+    margin-right: 8px;
+    color: #5e0000;
+}
+
+.actor-actions-dialog .dialog-footer {
+    border-top: 2px solid #782e22;
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    background: transparent;
+}
+
+.actor-actions-dialog .save-actions {
+    padding: 10px 20px;
+    background: #5e0000;
+    color: #ffffff;
+    border: 1px solid #782e22;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.actor-actions-dialog .save-actions:hover:not(:disabled) {
+    background: #782e22;
+    box-shadow: 0 0 8px #782e22;
+}
+
+.actor-actions-dialog .save-actions:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #999;
+    border-color: #666;
+}
+
+/* Button on character sheet */
+.sheet .combat-ai-actions-button {
+    padding: 5px 10px;
+    background: var(--color-button-primary);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+    margin: 5px 0;
+}
+
+.sheet .combat-ai-actions-button:hover {
+    background: var(--color-button-primary-hover);
+}
+
+.sheet .combat-ai-actions-button i {
+    font-size: 0.85em;
+}
