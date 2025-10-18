@@ -14,6 +14,7 @@ export class CombatAIManager {
         this.combatAnalyzer = new CombatAnalyzer(this.actionCache);
         this.currentCombat = null;
         this.combatHistory = [];
+        this.turnTracker = null; // Will be set from main.js
     }
 
     /**
@@ -455,5 +456,24 @@ Respond ONLY with the JSON object, no additional text.`;
         // Clear expired cache entries when combat ends
         this.actionCache.clearExpiredCache();
         console.log(`${MODULE_TITLE} | Combat tracking ended`);
+    }
+
+    /**
+     * Get turn history from turn tracker
+     * @returns {Array} The turn history array
+     */
+    getTurnHistory() {
+        if (this.turnTracker) {
+            return this.turnTracker.getHistory();
+        }
+        return [];
+    }
+
+    /**
+     * Set turn tracker reference
+     * @param {TurnTracker} tracker - The turn tracker instance
+     */
+    setTurnTracker(tracker) {
+        this.turnTracker = tracker;
     }
 }
