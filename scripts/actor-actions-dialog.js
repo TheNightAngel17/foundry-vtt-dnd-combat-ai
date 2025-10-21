@@ -21,7 +21,7 @@ export class ActorActionsDialog extends FormApplication {
             title: 'Manage AI Action Descriptions',
             template: 'modules/dnd-combat-ai/templates/actor-actions-dialog.hbs',
             width: 700,
-            height: 600,
+            height: 768,
             resizable: true,
             closeOnSubmit: false,
             submitOnClose: false,
