@@ -484,22 +484,35 @@ export class CombatAISettings {
 /**
  * Base LLM Configuration Menu
  */
-class LLMConfigMenu extends FormApplication {
-    constructor(object, options = {}) {
-        super(object, options);
+class LLMConfigMenu extends foundry.applications.api.HandlebarsApplicationMixin(
+    foundry.applications.api.ApplicationV2
+) {
+    constructor(options = {}) {
+        super(options);
         // Subclasses will set this.configType
     }
 
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            classes: ['dnd-combat-ai', 'llm-config'],
+    static DEFAULT_OPTIONS = {
+        classes: ['dnd-combat-ai', 'llm-config'],
+        tag: 'form',
+        window: {
+            resizable: true
+        },
+        position: {
             width: 600,
-            height: 'auto',
-            closeOnSubmit: true,
-            submitOnChange: false,
-            tabs: []
-        });
-    }
+            height: 'auto'
+        },
+        form: {
+            closeOnSubmit: true
+        },
+        actions: {}
+    };
+
+    static PARTS = {
+        form: {
+            template: 'modules/dnd-combat-ai/templates/llm-config.hbs'
+        }
+    };
 
     get title() {
         return this.configType === 'actionCache' 
@@ -507,7 +520,7 @@ class LLMConfigMenu extends FormApplication {
             : 'Combat Recommendation LLM Configuration';
     }
 
-    getData() {
+    async _prepareContext(options) {
         const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
         const provider = game.settings.get(MODULE_ID, `${prefix}Provider`);
         const storageKey = this.configType === 'actionCache' 
@@ -530,53 +543,62 @@ class LLMConfigMenu extends FormApplication {
         };
     }
 
-    get template() {
-        return 'modules/dnd-combat-ai/templates/llm-config.hbs';
-    }
+    _onRender(context, options) {
+        super._onRender(context, options);
 
-    activateListeners(html) {
-        super.activateListeners(html);
-
-        html.find('[name="provider"]').on('change', event => {
+        const html = this.element;
+        const providerSelect = html.querySelector('[name="provider"]');
+        
+        providerSelect?.addEventListener('change', event => {
             const provider = event.target.value;
             const isOpenAI = provider === 'openai';
             const isAnthropic = provider === 'anthropic';
             const isLocal = provider === 'local';
             
             // Show/hide sections based on provider
-            html.find('.api-key-group').toggle(!isLocal);
-            html.find('.reasoning-group').toggle(isOpenAI);
-            html.find('.temperature-group').toggle(isOpenAI);
-            html.find('.topp-group').toggle(isOpenAI);
-            html.find('.local-group').toggle(isLocal);
+            const apiKeyGroup = html.querySelector('.api-key-group');
+            const reasoningGroup = html.querySelector('.reasoning-group');
+            const temperatureGroup = html.querySelector('.temperature-group');
+            const toppGroup = html.querySelector('.topp-group');
+            const localGroup = html.querySelector('.local-group');
+            
+            if (apiKeyGroup) apiKeyGroup.style.display = isLocal ? 'none' : '';
+            if (reasoningGroup) reasoningGroup.style.display = isOpenAI ? '' : 'none';
+            if (temperatureGroup) temperatureGroup.style.display = isOpenAI ? '' : 'none';
+            if (toppGroup) toppGroup.style.display = isOpenAI ? '' : 'none';
+            if (localGroup) localGroup.style.display = isLocal ? '' : 'none';
             
             // Update model placeholder and suggestions
-            const modelInput = html.find('[name="model"]');
-            if (isOpenAI) {
-                modelInput.attr('placeholder', 'gpt-4o-mini');
-            } else if (isAnthropic) {
-                modelInput.attr('placeholder', 'claude-3-5-haiku-20241022');
-            } else {
-                modelInput.attr('placeholder', 'llama3.2');
+            const modelInput = html.querySelector('[name="model"]');
+            if (modelInput) {
+                if (isOpenAI) {
+                    modelInput.placeholder = 'gpt-4o-mini';
+                } else if (isAnthropic) {
+                    modelInput.placeholder = 'claude-3-5-haiku-20241022';
+                } else {
+                    modelInput.placeholder = 'llama3.2';
+                }
             }
         });
     }
 
-    async _updateObject(event, formData) {
+    async _onSubmitForm(event, form, formData) {
         const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
         const storageKey = this.configType === 'actionCache' 
             ? CombatAISettings.STORAGE_KEYS.ACTION_CACHE_API_KEY 
             : CombatAISettings.STORAGE_KEYS.COMBAT_API_KEY;
         
-        await game.settings.set(MODULE_ID, `${prefix}Provider`, formData.provider);
+        const data = foundry.utils.expandObject(formData);
+        
+        await game.settings.set(MODULE_ID, `${prefix}Provider`, data.provider);
         // Store API key in localStorage instead of game settings
-        CombatAISettings.setSecureValue(storageKey, formData.apiKey || '');
-        await game.settings.set(MODULE_ID, `${prefix}Model`, formData.model || 'llama3.2');
-        await game.settings.set(MODULE_ID, `${prefix}MaxTokens`, formData.maxTokens || 1000);
-        await game.settings.set(MODULE_ID, `${prefix}ReasoningEffort`, formData.reasoningEffort || 'low');
-        await game.settings.set(MODULE_ID, `${prefix}Temperature`, formData.temperature || 0.7);
-        await game.settings.set(MODULE_ID, `${prefix}TopP`, formData.topP || 1.0);
-        await game.settings.set(MODULE_ID, `${prefix}LocalEndpoint`, formData.localEndpoint || 'http://localhost:11434');
+        CombatAISettings.setSecureValue(storageKey, data.apiKey || '');
+        await game.settings.set(MODULE_ID, `${prefix}Model`, data.model || 'llama3.2');
+        await game.settings.set(MODULE_ID, `${prefix}MaxTokens`, data.maxTokens || 1000);
+        await game.settings.set(MODULE_ID, `${prefix}ReasoningEffort`, data.reasoningEffort || 'low');
+        await game.settings.set(MODULE_ID, `${prefix}Temperature`, data.temperature || 0.7);
+        await game.settings.set(MODULE_ID, `${prefix}TopP`, data.topP || 1.0);
+        await game.settings.set(MODULE_ID, `${prefix}LocalEndpoint`, data.localEndpoint || 'http://localhost:11434');
 
         ui.notifications.info(`${this.title} saved successfully`);
     }
@@ -586,8 +608,8 @@ class LLMConfigMenu extends FormApplication {
  * Action Cache LLM Configuration Menu
  */
 class ActionCacheLLMConfigMenu extends LLMConfigMenu {
-    constructor(object, options) {
-        super(object, options);
+    constructor(options) {
+        super(options);
         this.configType = 'actionCache';
     }
 }
@@ -596,8 +618,8 @@ class ActionCacheLLMConfigMenu extends LLMConfigMenu {
  * Combat Recommendation LLM Configuration Menu
  */
 class CombatLLMConfigMenu extends LLMConfigMenu {
-    constructor(object, options) {
-        super(object, options);
+    constructor(options) {
+        super(options);
         this.configType = 'combatRecommendation';
     }
 }

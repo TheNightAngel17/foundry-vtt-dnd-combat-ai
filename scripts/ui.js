@@ -129,7 +129,7 @@ export class CombatAIUI {
      * Open settings dialog
      */
     static openSettingsDialog() {
-        new CombatAISettingsDialog().render(true);
+        CombatAISettingsDialog.show();
     }
 
     /**
@@ -159,9 +159,38 @@ export class CombatAIUI {
 /**
  * Settings dialog for Combat AI
  */
-class CombatAISettingsDialog extends Dialog {
-    constructor() {
-        const content = `
+class CombatAISettingsDialog extends foundry.applications.api.DialogV2 {
+    static async show() {
+        return this.wait({
+            window: { 
+                title: `${MODULE_TITLE} Settings`,
+                icon: 'fas fa-brain'
+            },
+            position: {
+                width: 500
+            },
+            content: this.getContent(),
+            buttons: [
+                {
+                    action: 'save',
+                    label: 'Save',
+                    icon: 'fas fa-save',
+                    default: true,
+                    callback: (event, button, dialog) => this.saveSettings(dialog)
+                },
+                {
+                    action: 'cancel',
+                    label: 'Cancel',
+                    icon: 'fas fa-times'
+                }
+            ],
+            render: (event, dialog) => this.activateListeners(dialog),
+            close: () => {}
+        });
+    }
+
+    static getContent() {
+        return `
             <div class="combat-ai-settings">
                 <div class="form-group">
                     <label>Enable AI Assistance:</label>
@@ -188,7 +217,7 @@ class CombatAISettingsDialog extends Dialog {
                 </div>
                 
                 <div class="form-group">
-                    <button id="test-connection">Test Connection</button>
+                    <button type="button" id="test-connection">Test Connection</button>
                     <span id="connection-status"></span>
                 </div>
                 
@@ -251,66 +280,59 @@ class CombatAISettingsDialog extends Dialog {
                 }
             </style>
         `;
-
-        super({
-            title: `${MODULE_TITLE} Settings`,
-            content: content,
-            buttons: {
-                save: {
-                    label: 'Save',
-                    callback: html => this.saveSettings(html)
-                },
-                cancel: {
-                    label: 'Cancel',
-                    callback: () => {}
-                }
-            },
-            default: 'save',
-            width: 500
-        });
     }
 
-    activateListeners(html) {
-        super.activateListeners(html);
+    static activateListeners(dialog) {
+        const html = dialog.element;
 
         // Test connection button
-        html.find('#test-connection').on('click', async () => {
-            const button = html.find('#test-connection');
-            const status = html.find('#connection-status');
-            
-            button.prop('disabled', true).text('Testing...');
-            status.text('');
+        const testButton = html.querySelector('#test-connection');
+        const status = html.querySelector('#connection-status');
+        
+        testButton?.addEventListener('click', async () => {
+            testButton.disabled = true;
+            testButton.textContent = 'Testing...';
+            status.textContent = '';
 
             try {
                 const connector = new LLMConnector();
                 const result = await connector.testConnection();
                 
                 if (result.success) {
-                    status.text('✓ Connected').css('color', 'green');
+                    status.textContent = '✓ Connected';
+                    status.style.color = 'green';
                 } else {
-                    status.text(`✗ Failed: ${result.error}`).css('color', 'red');
+                    status.textContent = `✗ Failed: ${result.error}`;
+                    status.style.color = 'red';
                 }
             } catch (error) {
-                status.text(`✗ Error: ${error.message}`).css('color', 'red');
+                status.textContent = `✗ Error: ${error.message}`;
+                status.style.color = 'red';
             } finally {
-                button.prop('disabled', false).text('Test Connection');
+                testButton.disabled = false;
+                testButton.textContent = 'Test Connection';
             }
         });
 
         // Difficulty buttons
-        html.find('.difficulty-btn').on('click', (event) => {
-            html.find('.difficulty-btn').removeClass('active');
-            $(event.target).addClass('active');
+        const difficultyButtons = html.querySelectorAll('.difficulty-btn');
+        difficultyButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                difficultyButtons.forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+            });
         });
     }
 
-    async saveSettings(html) {
+    static async saveSettings(dialog) {
+        const html = dialog.element;
+        
         const settings = {
-            enableAI: html.find('#enable-ai').is(':checked'),
-            llmProvider: html.find('#llm-provider').val(),
-            apiKey: html.find('#api-key').val(),
-            autoDisplay: html.find('#auto-display').is(':checked'),
-            aiDifficulty: html.find('.difficulty-btn.active').data('difficulty') || 'normal'
+            enableAI: html.querySelector('#enable-ai').checked,
+            llmProvider: html.querySelector('#llm-provider').value,
+            apiKey: html.querySelector('#api-key').value,
+            autoDisplay: html.querySelector('#auto-display').checked,
+            aiDifficulty: html.querySelector('.difficulty-btn.active')?.dataset.difficulty || 'normal'
         };
 
         for (const [key, value] of Object.entries(settings)) {
@@ -318,5 +340,8 @@ class CombatAISettingsDialog extends Dialog {
         }
 
         ui.notifications.info(`${MODULE_TITLE}: Settings saved`);
+        
+        return true;
     }
 }
+

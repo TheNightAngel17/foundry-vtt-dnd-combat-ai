@@ -4,9 +4,11 @@
 
 import { MODULE_ID, MODULE_TITLE } from './main.js';
 
-export class ActorActionsDialog extends FormApplication {
+export class ActorActionsDialog extends foundry.applications.api.HandlebarsApplicationMixin(
+    foundry.applications.api.ApplicationV2
+) {
     constructor(actor, actorLlmActions, llmConnector, options = {}) {
-        super({}, options);
+        super(options);
         this.actor = actor;
         this.actorLlmActions = actorLlmActions;
         this.llmConnector = llmConnector;
@@ -14,25 +16,39 @@ export class ActorActionsDialog extends FormApplication {
         this.hasChanges = false;
     }
 
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            id: 'actor-actions-dialog',
-            classes: ['combat-ai', 'actor-actions-dialog'],
+    static DEFAULT_OPTIONS = {
+        id: 'actor-actions-dialog',
+        classes: ['combat-ai', 'actor-actions-dialog'],
+        tag: 'form',
+        window: {
             title: 'Manage AI Action Descriptions',
-            template: 'modules/dnd-combat-ai/templates/actor-actions-dialog.hbs',
+            resizable: true
+        },
+        position: {
             width: 700,
-            height: 768,
-            resizable: true,
+            height: 768
+        },
+        form: {
             closeOnSubmit: false,
-            submitOnClose: false,
-            tabs: []
-        });
-    }
+            submitOnChange: false
+        },
+        actions: {
+            addAction: this._onAddAction,
+            deleteAction: this._onDeleteAction,
+            generateAI: this._onGenerateAI,
+            save: this._onSave
+        }
+    };
 
-    async getData() {
+    static PARTS = {
+        form: {
+            template: 'modules/dnd-combat-ai/templates/actor-actions-dialog.hbs'
+        }
+    };
+
+    async _prepareContext(options) {
         // Load current actions from actor flags
-        // const flagData = this.actor.getFlag(MODULE_ID, 'cachedActions');
-        this.actions = await this.actorLlmActions.getActorActions(this.actor, this.llmConnector)
+        this.actions = await this.actorLlmActions.getActorActions(this.actor, this.llmConnector);
 
         console.log(`${MODULE_TITLE} | Loaded ${this.actions.length} actions for ${this.actor.name} in dialog`, this.actions);
 
@@ -58,29 +74,7 @@ export class ActorActionsDialog extends FormApplication {
         };
     }
 
-    activateListeners(html) {
-        super.activateListeners(html);
-
-        // Add new action
-        html.find('.add-action').click(this._onAddAction.bind(this));
-
-        // Delete action
-        html.find('.delete-action').click(this._onDeleteAction.bind(this));
-
-        // Generate with AI
-        html.find('.generate-ai').click(this._onGenerateAI.bind(this));
-
-        // Save changes
-        html.find('.save-actions').click(this._onSave.bind(this));
-
-        // Track changes
-        html.find('input, textarea, select').change(() => {
-            this.hasChanges = true;
-            html.find('.save-actions').prop('disabled', false);
-        });
-    }
-
-    async _onAddAction(event) {
+    async _onAddAction(event, target) {
         event.preventDefault();
         
         // Add a new empty action
@@ -92,44 +86,45 @@ export class ActorActionsDialog extends FormApplication {
         });
 
         this.hasChanges = true;
-        await this.render(false);
+        await this.render();
     }
 
-    async _onDeleteAction(event) {
+    async _onDeleteAction(event, target) {
         event.preventDefault();
         
-        const index = parseInt(event.currentTarget.dataset.index);
+        const index = parseInt(target.dataset.index);
         if (index >= 0 && index < this.actions.length) {
-            const confirm = await Dialog.confirm({
-                title: 'Delete Action',
+            const confirm = await foundry.applications.api.DialogV2.confirm({
+                window: { title: 'Delete Action' },
                 content: `<p>Are you sure you want to delete "${this.actions[index].name}"?</p>`,
-                yes: () => true,
-                no: () => false
+                rejectClose: false,
+                modal: true
             });
 
             if (confirm) {
                 this.actions.splice(index, 1);
                 this.hasChanges = true;
-                await this.render(false);
+                await this.render();
             }
         }
     }
 
-    async _onGenerateAI(event) {
+    async _onGenerateAI(event, target) {
         event.preventDefault();
 
-        const confirm = await Dialog.confirm({
-            title: 'Generate Actions with AI',
+        const confirm = await foundry.applications.api.DialogV2.confirm({
+            window: { title: 'Generate Actions with AI' },
             content: `<p>This will replace all current actions with AI-generated descriptions.</p><p><strong>Are you sure?</strong></p>`,
-            yes: () => true,
-            no: () => false
+            rejectClose: false,
+            modal: true
         });
 
         if (!confirm) return;
 
         // Show loading state
-        const button = $(event.currentTarget);
-        button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Generating...');
+        const button = target;
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
 
         try {
             // Clear existing cache for this actor to force regeneration
@@ -143,20 +138,22 @@ export class ActorActionsDialog extends FormApplication {
             
             ui.notifications.info(`${MODULE_TITLE} | Generated ${newActions.length} actions for ${this.actor.name}`);
             
-            await this.render(false);
+            await this.render();
         } catch (error) {
             console.error(`${MODULE_TITLE} | Error generating actions:`, error);
             ui.notifications.error(`${MODULE_TITLE} | Failed to generate actions. Check console for details.`);
         } finally {
-            button.prop('disabled', false).html('<i class="fas fa-magic"></i> Generate with AI');
+            button.disabled = false;
+            button.innerHTML = '<i class="fas fa-magic"></i> Generate with AI';
         }
     }
 
-    async _onSave(event) {
+    async _onSave(event, target) {
         event.preventDefault();
 
         // Gather form data
-        const formData = new FormData(this.element.find('form')[0]);
+        const formElement = this.element.querySelector('form');
+        const formData = new FormData(formElement);
         const updatedActions = [];
 
         // Parse form data into actions array
@@ -182,29 +179,32 @@ export class ActorActionsDialog extends FormApplication {
             ui.notifications.info(`${MODULE_TITLE} | Saved ${updatedActions.length} actions for ${this.actor.name}`);
             
             // Refresh the dialog to show updated timestamp
-            await this.render(false);
+            await this.render();
         } catch (error) {
             console.error(`${MODULE_TITLE} | Error saving actions:`, error);
             ui.notifications.error(`${MODULE_TITLE} | Failed to save actions. Check console for details.`);
         }
     }
 
-    async _updateObject(event, formData) {
-        // This is called by FormApplication on submit, but we handle it in _onSave instead
+    async _onSubmitForm(event, form, formData) {
+        // This is called by the form handler on submit
+        // We handle saving in _onSave instead
     }
 
-    async close(options = {}) {
-        if (this.hasChanges && !options.force) {
-            const confirm = await Dialog.confirm({
-                title: 'Unsaved Changes',
+    async _onClose(options) {
+        if (this.hasChanges) {
+            const confirm = await foundry.applications.api.DialogV2.confirm({
+                window: { title: 'Unsaved Changes' },
                 content: '<p>You have unsaved changes. Are you sure you want to close?</p>',
-                yes: () => true,
-                no: () => false
+                rejectClose: false,
+                modal: true
             });
 
-            if (!confirm) return;
+            if (!confirm) {
+                return false; // Prevent closing
+            }
         }
 
-        return super.close(options);
+        return super._onClose(options);
     }
 }
