@@ -1,43 +1,32 @@
-<form class="llm-config-form">
+<form class=" standard-form">
     <div class="form-group">
         <label for="provider">LLM Provider</label>
-        <select name="provider" id="provider">
-            <option value="openai" {{#if isOpenAI}}selected{{/if}}>OpenAI</option>
-            <option value="anthropic" {{#if isAnthropic}}selected{{/if}}>Anthropic</option>
-            <option value="local" {{#if isLocal}}selected{{/if}}>Local (Ollama/LM Studio)</option>
-        </select>
-        <p class="notes">Choose which LLM provider to use for this configuration</p>
+        <div class="form-fields">
+            <select name="provider" id="provider">
+                <option value="openai" {{#if isOpenAI}}selected{{/if}}>OpenAI</option>
+                <option value="anthropic" {{#if isAnthropic}}selected{{/if}}>Anthropic</option>
+                <option value="local" {{#if isLocal}}selected{{/if}}>Local (Ollama/LM Studio)</option>
+            </select>
+        </div>
+        <p class="hint">Choose which LLM provider to use for this configuration</p>
     </div>
 
     <!-- API Key (for OpenAI and Anthropic) -->
     <div class="form-group api-key-group" style="{{#if isLocal}}display:none;{{/if}}">
         <label for="apiKey">API Key</label>
-        <input type="password" name="apiKey" value="{{apiKey}}" placeholder="{{#if isOpenAI}}sk-...{{else}}sk-ant-...{{/if}}">
-        <p class="notes">Your API key. Keep this secure!</p>
+        <div class="form-fields">
+            <input type="password" name="apiKey" value="{{apiKey}}" placeholder="{{#if isOpenAI}}sk-...{{else}}sk-ant-...{{/if}}">
+        </div>
+        <p class="hint">Your API key. Keep this secure!</p>
     </div>
 
     <!-- Model Name (universal) -->
     <div class="form-group">
         <label for="model">Model</label>
-        <input type="text" name="model" value="{{model}}" placeholder="{{#if isOpenAI}}gpt-4o-mini{{else if isAnthropic}}claude-3-5-haiku-20241022{{else}}llama3.2{{/if}}" list="model-suggestions">
-        <datalist id="model-suggestions">
-            {{#if isOpenAI}}
-                <option value="gpt-4o-mini">
-                <option value="gpt-4o">
-                <option value="o1-mini">
-                <option value="o1">
-            {{else if isAnthropic}}
-                <option value="claude-3-5-haiku-20241022">
-                <option value="claude-3-5-sonnet-20241022">
-                <option value="claude-opus-4-20250514">
-            {{else}}
-                <option value="llama3.2">
-                <option value="llama3.2:13b">
-                <option value="mistral">
-                <option value="codellama">
-            {{/if}}
-        </datalist>
-        <p class="notes">
+        <div class="form-fields">
+            <input type="text" name="model" value="{{model}}" placeholder="{{#if isOpenAI}}gpt-4o-mini{{else if isAnthropic}}claude-3-5-haiku-20241022{{else}}llama3.2{{/if}}" list="model-suggestions">
+        </div>
+        <p class="hint">
             {{#if isOpenAI}}
                 Examples: gpt-4o-mini, gpt-4o, o1-mini, o1
             {{else if isAnthropic}}
@@ -51,43 +40,61 @@
     <!-- Max Tokens -->
     <div class="form-group">
         <label for="maxTokens">Max Tokens</label>
-        <input type="number" name="maxTokens" value="{{maxTokens}}" min="100" max="16000">
-        <p class="notes">Maximum response length (tokens)</p>
+        <div class="form-fields">
+            <input type="number" name="maxTokens" value="{{maxTokens}}" min="100" max="16000">
+        </div>
+        <p class="hint">Maximum response length (tokens)</p>
     </div>
 
     <!-- Reasoning Effort (for GPT-5/O1 models) -->
     <div class="form-group reasoning-group" style="{{#unless isOpenAI}}display:none;{{/unless}}">
         <label for="reasoningEffort">Reasoning Effort (GPT-5/O1 models only)</label>
-        <select name="reasoningEffort">
-            <option value="minimal" {{#if (eq reasoningEffort 'minimal')}}selected{{/if}}>Minimal</option>
-            <option value="low" {{#if (eq reasoningEffort 'low')}}selected{{/if}}>Low</option>
-            <option value="medium" {{#if (eq reasoningEffort 'medium')}}selected{{/if}}>Medium</option>
-            <option value="high" {{#if (eq reasoningEffort 'high')}}selected{{/if}}>High</option>
-            <option value="max" {{#if (eq reasoningEffort 'max')}}selected{{/if}}>Max</option>
-        </select>
-        <p class="notes">Reasoning effort for GPT-5/O1 models (ignored for GPT-4.x models)</p>
+        <div class="form-fields">
+            <select name="reasoningEffort">
+                <option value="minimal" {{#if (eq reasoningEffort 'minimal')}}selected{{/if}}>Minimal</option>
+                <option value="low" {{#if (eq reasoningEffort 'low')}}selected{{/if}}>Low</option>
+                <option value="medium" {{#if (eq reasoningEffort 'medium')}}selected{{/if}}>Medium</option>
+                <option value="high" {{#if (eq reasoningEffort 'high')}}selected{{/if}}>High</option>
+                <option value="max" {{#if (eq reasoningEffort 'max')}}selected{{/if}}>Max</option>
+            </select>
+        </div>
+        <p class="hint">Reasoning effort for GPT-5/O1 models (ignored for GPT-4.x models)</p>
     </div>
 
     <!-- Temperature (for GPT-4.x and other models) -->
     <div class="form-group temperature-group" style="{{#unless isOpenAI}}display:none;{{/unless}}">
         <label for="temperature">Temperature</label>
-        <input type="number" name="temperature" value="{{temperature}}" min="0" max="2" step="0.1">
-        <p class="notes">Controls randomness (0 = deterministic, 2 = very random). Used for GPT-4.x models.</p>
+        <div class="form-fields">
+            <range-picker name="temperature" value="{{temperature}}" min="0" max="1" step="0.05" id="settings-config-dnd-combat-ai.temperature">
+                <input type="range" min="0" max="2" step="0.1">
+                <input type="number" min="0" max="2" step="0.1">
+            </range-picker>
+        </div>
+        <p class="hint">Controls randomness (0 = deterministic, 2 = very random). Used for GPT-4.x models.</p>
     </div>
 
     <!-- Top P (for GPT-4.x and other models) -->
     <div class="form-group topp-group" style="{{#unless isOpenAI}}display:none;{{/unless}}">
         <label for="topP">Top P</label>
-        <input type="number" name="topP" value="{{topP}}" min="0" max="1" step="0.05">
-        <p class="notes">Nucleus sampling parameter (0-1). Used for GPT-4.x models.</p>
+        <div class="form-fields">
+            <range-picker name="topP" value="{{topP}}" min="0" max="1" step="0.05" id="settings-config-dnd-combat-ai.topP">
+                <input type="range" min="0" max="1" step="0.05">
+                <input type="number" min="0" max="1" step="0.05">
+            </range-picker>
+        </div>
+        <p class="hint">Nucleus sampling parameter (0-1). Used for GPT-4.x models.</p>
     </div>
 
     <!-- Local Endpoint -->
     <div class="form-group local-group" style="{{#unless isLocal}}display:none;{{/unless}}">
         <label for="localEndpoint">Local API Endpoint</label>
-        <input type="text" name="localEndpoint" value="{{localEndpoint}}" placeholder="http://localhost:11434">
-        <p class="notes">URL for your local LLM server (Ollama, LM Studio, etc.)</p>
+        <div class="form-fields">
+            <input type="text" name="localEndpoint" value="{{localEndpoint}}" placeholder="http://localhost:11434">
+        </div>
+        <p class="hint">URL for your local LLM server (Ollama, LM Studio, etc.)</p>
     </div>
 
-    <button type="submit"><i class="fas fa-save"></i> Save Configuration</button>
+    <footer class="form-footer">
+        <button type="submit"><i class="fas fa-save"></i> Save Configuration</button>
+    </footer>
 </form>
