@@ -503,9 +503,12 @@ class LLMConfigMenu extends foundry.applications.api.HandlebarsApplicationMixin(
             height: 'auto'
         },
         form: {
-            closeOnSubmit: true
+            closeOnSubmit: false,
+            submitOnChange: false
         },
-        actions: {}
+        actions: {
+            save: LLMConfigMenu.prototype._onSave
+        }
     };
 
     static PARTS = {
@@ -582,25 +585,64 @@ class LLMConfigMenu extends foundry.applications.api.HandlebarsApplicationMixin(
         });
     }
 
-    async _onSubmitForm(event, form, formData) {
+    async _onSave(event, target) {
+        event.preventDefault();
+        
         const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
         const storageKey = this.configType === 'actionCache' 
             ? CombatAISettings.STORAGE_KEYS.ACTION_CACHE_API_KEY 
             : CombatAISettings.STORAGE_KEYS.COMBAT_API_KEY;
         
-        const data = foundry.utils.expandObject(formData);
+        // Manually gather form data from all inputs (including hidden ones)
+        const formElement = this.element.querySelector('form');
         
-        await game.settings.set(MODULE_ID, `${prefix}Provider`, data.provider);
-        // Store API key in localStorage instead of game settings
-        CombatAISettings.setSecureValue(storageKey, data.apiKey || '');
-        await game.settings.set(MODULE_ID, `${prefix}Model`, data.model || 'llama3.2');
-        await game.settings.set(MODULE_ID, `${prefix}MaxTokens`, data.maxTokens || 1000);
-        await game.settings.set(MODULE_ID, `${prefix}ReasoningEffort`, data.reasoningEffort || 'low');
-        await game.settings.set(MODULE_ID, `${prefix}Temperature`, data.temperature || 0.7);
-        await game.settings.set(MODULE_ID, `${prefix}TopP`, data.topP || 1.0);
-        await game.settings.set(MODULE_ID, `${prefix}LocalEndpoint`, data.localEndpoint || 'http://localhost:11434');
+        const data = {
+            provider: formElement.querySelector('[name="provider"]')?.value || 'local',
+            apiKey: formElement.querySelector('[name="apiKey"]')?.value || '',
+            model: formElement.querySelector('[name="model"]')?.value || 'llama3.2',
+            maxTokens: parseInt(formElement.querySelector('[name="maxTokens"]')?.value) || 1000,
+            reasoningEffort: formElement.querySelector('[name="reasoningEffort"]')?.value || 'low',
+            temperature: parseFloat(formElement.querySelector('[name="temperature"]')?.value) || 0.7,
+            topP: parseFloat(formElement.querySelector('[name="topP"]')?.value) || 1.0,
+            localEndpoint: formElement.querySelector('[name="localEndpoint"]')?.value || 'http://localhost:11434'
+        };
+        
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.log(`${MODULE_ID} | Saving LLM config for ${this.configType}:`, data);
+        }
+        
+        try {
+            // Disable button while saving
+            target.disabled = true;
+            target.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            
+            await game.settings.set(MODULE_ID, `${prefix}Provider`, data.provider);
+            CombatAISettings.setSecureValue(storageKey, data.apiKey);
+            await game.settings.set(MODULE_ID, `${prefix}Model`, data.model);
+            await game.settings.set(MODULE_ID, `${prefix}MaxTokens`, data.maxTokens);
+            await game.settings.set(MODULE_ID, `${prefix}ReasoningEffort`, data.reasoningEffort);
+            await game.settings.set(MODULE_ID, `${prefix}Temperature`, data.temperature);
+            await game.settings.set(MODULE_ID, `${prefix}TopP`, data.topP);
+            await game.settings.set(MODULE_ID, `${prefix}LocalEndpoint`, data.localEndpoint);
 
-        ui.notifications.info(`${this.title} saved successfully`);
+            ui.notifications.info(`${this.title} saved successfully`);
+            
+            // Close the dialog
+            await this.close();
+        } catch (error) {
+            console.error(`${MODULE_ID} | Error saving LLM config:`, error);
+            ui.notifications.error(`Failed to save configuration: ${error.message}`);
+            
+            // Re-enable button
+            target.disabled = false;
+            target.innerHTML = '<i class="fas fa-save"></i> Save Configuration';
+        }
+    }
+
+    async _onSubmitForm(event, form, formData) {
+        // Prevent default form submission
+        event?.preventDefault();
+        return false;
     }
 }
 

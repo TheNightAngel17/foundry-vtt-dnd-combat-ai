@@ -33,10 +33,10 @@ export class ActorActionsDialog extends foundry.applications.api.HandlebarsAppli
             submitOnChange: false
         },
         actions: {
-            addAction: this._onAddAction,
-            deleteAction: this._onDeleteAction,
-            generateAI: this._onGenerateAI,
-            save: this._onSave
+            addAction: ActorActionsDialog.prototype._onAddAction,
+            deleteAction: ActorActionsDialog.prototype._onDeleteAction,
+            generateAI: ActorActionsDialog.prototype._onGenerateAI,
+            save: ActorActionsDialog.prototype._onSave
         }
     };
 

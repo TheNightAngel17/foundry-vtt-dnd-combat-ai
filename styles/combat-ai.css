@@ -280,6 +280,9 @@
     }
 }
 
+
+
+
 /* Dark Mode Compatibility */
 .window-app.dark .combat-ai-recommendations,
 .window-app.dark .combat-ai-settings {
@@ -301,8 +304,45 @@
 }
 
 
+
+
+
+
+
+
 /* Actor Actions Dialog */
-.actor-actions-dialog {
+
+.actor-actions-dialog-form {
+    display: flex;
+    flex-direction: column;
+    /* gap: 15px; */
+    height: 100%;
+}
+
+.actor-actions-dialog-form .actions-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 5px;
+}
+
+
+.actor-actions-dialog-form .control-buttons button {
+    flex: 1;
+}
+
+.actor-actions-dialog .action-header {
+    display: flex;
+}
+
+
+
+
+
+
+/* .actor-actions-dialog {
     font-family: var(--font-primary);
 }
 
@@ -312,12 +352,6 @@
     color: #191813;
 }
 
-.actor-actions-dialog-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: 100%;
-}
 
 .actor-actions-dialog .dialog-header {
     border-bottom: 2px solid #782e22;
@@ -368,14 +402,6 @@
     font-size: 0.9em;
 }
 
-.actor-actions-dialog .actions-list {
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 5px;
-}
 
 .actor-actions-dialog .action-item {
     background: #ffffff;
@@ -390,12 +416,6 @@
     border-color: #5e0000;
 }
 
-.actor-actions-dialog .action-header {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 10px;
-}
 
 .actor-actions-dialog .action-name-input {
     flex: 1;
@@ -521,7 +541,7 @@
     cursor: not-allowed;
     background: #999;
     border-color: #666;
-}
+} */
 
 /* Button on character sheet */
 .sheet .combat-ai-actions-button {
