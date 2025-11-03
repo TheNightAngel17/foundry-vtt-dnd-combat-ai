@@ -6,7 +6,6 @@
 import { CombatAIManager } from './combat-ai-manager.js';
 import { CombatAISettings } from './settings.js';
 import { CombatAIUI } from './ui.js';
-import { TurnTracker } from './turn-tracker.js';
 import { ActorActionsDialog } from './actor-actions-dialog.js';
 import { CombatTrackerUI } from './combat-tracker-ui.js';
 
@@ -16,7 +15,6 @@ const MODULE_TITLE = 'D&D Combat AI';
 
 // Global module reference
 let combatAIManager = null;
-let turnTracker = null;
 
 /**
  * Module initialization
@@ -38,15 +36,14 @@ Hooks.once('init', async function() {
     // Initialize the combat AI manager
     combatAIManager = new CombatAIManager();
     
-    // Initialize the turn tracker
-    turnTracker = new TurnTracker();
-    
-    // Link them together
-    combatAIManager.setTurnTracker(turnTracker);
-    
     // Make them globally accessible for UI
     window.combatAIManager = combatAIManager;
-    window.turnTracker = turnTracker;
+
+    // If the new CombatTrackerUI is present, register it as the preferred history provider
+    if (window.combatTrackerUI && typeof combatAIManager.setHistoryProvider === 'function') {
+        combatAIManager.setHistoryProvider(window.combatTrackerUI);
+        console.log(`${MODULE_TITLE} | Registered CombatTrackerUI as history provider`);
+    }
     
     console.log(`${MODULE_TITLE} | Module initialized`);
 });
@@ -117,15 +114,20 @@ async function handleNPCTurnIfNeeded(combat, turnIndex, context) {
  * Handle combat turn changes
  */
 async function onCombatTurn(combat, updateData, options) {
-    console.log(`${MODULE_TITLE} | Combat turn changed`);
+    console.log(`${MODULE_TITLE} | Combat turn changed to turn ${updateData.turn}`);
     
-    // Show turn tracking dialog at the START of the turn FIRST (immediate feedback)
-    if (turnTracker) {
-        // Don't await - let it open asynchronously
-        turnTracker.onTurnStart(combat, updateData.turn);
+    // Save previous turn data in combat tracker UI
+    if (window.combatTrackerUI && window.combatTrackerUI.isEnabled) {
+        window.combatTrackerUI.saveTurnData();
     }
     
-    // THEN handle NPC AI for the new turn (may take time for LLM response)
+    // Load new turn data in combat tracker UI (pass explicit turn index and round)
+    if (window.combatTrackerUI && window.combatTrackerUI.isEnabled) {
+        const round = updateData.round !== undefined ? updateData.round : combat.round;
+        await window.combatTrackerUI.onTurnChange(combat, updateData.turn, round);
+    }
+    
+    // Handle NPC AI for the new turn
     await handleNPCTurnIfNeeded(combat, updateData.turn, 'turn change');
 }
 
@@ -135,13 +137,17 @@ async function onCombatTurn(combat, updateData, options) {
 async function onCombatRound(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat round changed to round ${updateData.round}`);
     
-    // Show turn tracking dialog at the START of the first turn FIRST (immediate feedback)
-    if (turnTracker) {
-        // Don't await - let it open asynchronously
-        turnTracker.onTurnStart(combat, 0);
+    // Save previous turn data in combat tracker UI
+    if (window.combatTrackerUI && window.combatTrackerUI.isEnabled) {
+        window.combatTrackerUI.saveTurnData();
     }
     
-    // THEN handle NPC AI for the first combatant of the new round (turn 0)
+    // Load new turn data in combat tracker UI (first turn = index 0, explicit round number)
+    if (window.combatTrackerUI && window.combatTrackerUI.isEnabled) {
+        await window.combatTrackerUI.onTurnChange(combat, 0, updateData.round);
+    }
+    
+    // Handle NPC AI for the first combatant of the new round
     await handleNPCTurnIfNeeded(combat, 0, 'round change');
 }
 
@@ -150,16 +156,16 @@ async function onCombatRound(combat, updateData, options) {
  */
 async function onCombatStart(combat) {
     console.log(`${MODULE_TITLE} | Combat started`);
-    if (turnTracker) {
-        turnTracker.onCombatStart(combat);
+    if (window.combatTrackerUI) {
+        window.combatTrackerUI.onCombatStart(combat);
     }
     if (combatAIManager) {
         combatAIManager.onCombatStart(combat);
         await handleNPCTurnIfNeeded(combat, 0, 'combat start');
     }
-    // Show turn tracking dialog for the first turn
-    if (turnTracker) {
-        await turnTracker.onTurnStart(combat, 0);
+    // Load first turn data in combat tracker UI (first turn = index 0, round 1)
+    if (window.combatTrackerUI && window.combatTrackerUI.isEnabled) {
+        await window.combatTrackerUI.onTurnChange(combat, 0, 1);
     }
 }
 
@@ -189,8 +195,8 @@ function onCombatEnd(combat) {
     if (combatAIManager) {
         combatAIManager.onCombatEnd(combat);
     }
-    if (turnTracker) {
-        turnTracker.onCombatEnd(combat);
+    if (window.combatTrackerUI) {
+        window.combatTrackerUI.onCombatEnd(combat);
     }
 }
 

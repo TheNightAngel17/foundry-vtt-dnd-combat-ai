@@ -14,7 +14,7 @@ export class CombatAIManager {
         this.combatAnalyzer = new CombatAnalyzer(this.actorLlmActions);
         this.currentCombat = null;
         this.combatHistory = [];
-        this.turnTracker = null; // Will be set from main.js
+        this.historyProvider = null; // Provider for turn history (e.g., CombatTrackerUI)
     }
 
     /**
@@ -673,22 +673,29 @@ ${JSON.stringify(exampleResponse, null, 2)}
     }
 
     /**
-     * Get turn history from turn tracker
+     * Get turn history from the registered history provider
      * @returns {Array} The turn history array
      */
     getTurnHistory() {
-        if (this.turnTracker) {
-            return this.turnTracker.getHistory();
+        // 1) Use an explicitly-registered history provider if set
+        if (this.historyProvider && typeof this.historyProvider.getTurnHistory === 'function') {
+            return this.historyProvider.getTurnHistory();
         }
+
+        // 2) Prefer the Combat Tracker UI global when available
+        if (window.combatTrackerUI && typeof window.combatTrackerUI.getTurnHistory === 'function') {
+            return window.combatTrackerUI.getTurnHistory();
+        }
+
         return [];
     }
 
     /**
-     * Set turn tracker reference
-     * @param {TurnTracker} tracker - The turn tracker instance
+     * Set an explicit history provider (e.g., CombatTrackerUI instance)
+     * @param {Object} provider - Object implementing getTurnHistory()
      */
-    setTurnTracker(tracker) {
-        this.turnTracker = tracker;
+    setHistoryProvider(provider) {
+        this.historyProvider = provider;
     }
 }
 /**
