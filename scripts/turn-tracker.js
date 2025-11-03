@@ -191,40 +191,43 @@ export class TurnTracker {
     /**
      * Prompt GM for turn description
      * @param {Combat} combat - The combat instance
-     * @param {Combatant} combatant - The combatant whose turn just ended
+     * @param {Combatant} combatant - The combatant whose turn is starting
      */
     async promptTurnDescription(combat, combatant) {
         if (!game.user.isGM) return;
 
         
-        // Take current snapshot
-        this.currentSnapshot = this.takeSnapshot(combat);
+        // Take snapshot at START of turn (before anything happens)
+        const turnStartSnapshot = this.takeSnapshot(combat);
 
         if (game.settings.get(MODULE_ID, 'debugMode')) {
-            console.log(`${MODULE_TITLE} | Comparing snapshots:`, {
+            console.log(`${MODULE_TITLE} | Turn starting for ${combatant.name || combatant.actor?.name}:`, {
                 previous: this.previousSnapshot,
-                current: this.currentSnapshot
+                current: turnStartSnapshot
             });
         }
 
-        // Compare with previous snapshot to get state changes
-        const stateChanges = this.compareSnapshots(this.previousSnapshot, this.currentSnapshot);
+        // Compare with previous snapshot to show what changed since last turn
+        const stateChanges = this.compareSnapshots(this.previousSnapshot, turnStartSnapshot);
 
-        // Build the markdown template with pre-filled state changes
+        // Build the markdown template with pre-filled state changes from previous turn
         const stateChangesText = stateChanges.length > 0 
             ? stateChanges.join('\n')
             : '- No significant state changes detected';
 
-        const template = `### Actions Taken\n\n### Reactions Taken\n\n### Environment Changes\n\n### State Changes\n${stateChangesText}\n`;
+        const template = `### Actions Taken\n\n### Reactions Taken\n\n### Environment Changes\n\n### State Changes (since last turn)\n${stateChangesText}\n`;
 
-        // Create dialog for GM input
+        // Create dialog for GM input - this will remain open during the turn
         const turnDescription = await this.showDescriptionDialog(combatant, template, combat);
 
         if (turnDescription !== null) {
+            // Take snapshot at END of turn (after dialog is closed)
+            this.currentSnapshot = this.takeSnapshot(combat);
+            
             // Store in history
             this.addToHistory(combat, combatant, turnDescription);
             
-            // Update previous snapshot
+            // Update previous snapshot for next turn
             this.previousSnapshot = this.currentSnapshot;
 
             // Debug logging
@@ -237,12 +240,15 @@ export class TurnTracker {
                 });
                 console.log(`${MODULE_TITLE} | Combat History:`, this.turnHistory);
             }
+        } else {
+            // If cancelled, still update the snapshot for next turn
+            this.previousSnapshot = turnStartSnapshot;
         }
     }
 
     /**
      * Show dialog for turn description input
-     * @param {Combatant} combatant - The combatant whose turn just ended
+     * @param {Combatant} combatant - The combatant whose turn is active
      * @param {string} template - The markdown template with pre-filled data
      * @param {Combat} combat - The combat instance
      * @returns {Promise<string|null>} The entered description or null if cancelled
@@ -250,11 +256,11 @@ export class TurnTracker {
     async showDescriptionDialog(combatant, template, combat) {
         return new Promise((resolve) => {
             const dialog = new Dialog({
-                title: `Turn Description - ${combatant.name || combatant.actor?.name || 'Unknown'} (Round ${combat.round}, Turn ${combat.turn + 1})`,
+                title: `Turn in Progress - ${combatant.name || combatant.actor?.name || 'Unknown'} (Round ${combat.round}, Turn ${combat.turn + 1})`,
                 content: `
                     <form>
                         <div class="form-group">
-                            <label for="turn-description">Describe what happened this turn:</label>
+                            <label for="turn-description">Describe what is happening this turn:</label>
                             <textarea 
                                 id="turn-description" 
                                 name="turn-description" 
@@ -263,17 +269,19 @@ export class TurnTracker {
                             >${template}</textarea>
                         </div>
                         <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
-                            Edit the description above. State changes have been pre-filled.
+                            Edit the description as the turn progresses. Click "End Turn" when ready to advance.
                         </p>
                     </form>
                 `,
                 buttons: {
-                    submit: {
-                        icon: '<i class="fas fa-check"></i>',
-                        label: "Submit",
-                        callback: (html) => {
+                    endTurn: {
+                        icon: '<i class="fas fa-step-forward"></i>',
+                        label: "End Turn",
+                        callback: async (html) => {
                             const description = html.find('#turn-description').val();
                             resolve(description);
+                            // Advance combat to next turn
+                            await combat.nextTurn();
                         }
                     },
                     cancel: {
@@ -282,7 +290,7 @@ export class TurnTracker {
                         callback: () => resolve(null)
                     }
                 },
-                default: "submit",
+                default: "endTurn",
                 close: () => resolve(null)
             }, {
                 width: 600,
@@ -346,22 +354,21 @@ export class TurnTracker {
     }
 
     /**
-     * Handle turn change - this is called at the END of a turn, before moving to next
+     * Handle turn start - this is called at the BEGINNING of a turn
      * @param {Combat} combat - The combat instance
-     * @param {number} previousTurn - The turn index that just ended
+     * @param {number} currentTurn - The turn index that is starting
      */
-    async onTurnEnd(combat, previousTurn) {
+    async onTurnStart(combat, currentTurn) {
         if (!game.user.isGM) return;
         if (!game.settings.get(MODULE_ID, 'enableTurnTracking')) return;
 
-        const previousCombatant = combat.turns[previousTurn];
+        const currentCombatant = combat.turns[currentTurn];
 
+        if (!currentCombatant) return;
 
-
-        if (!previousCombatant) return;
-
-        // Prompt for description of what happened on the turn that just ended
-        await this.promptTurnDescription(combat, previousCombatant);
+        // Prompt for description - dialog will remain open during the turn
+        // and will have "End Turn" button to save and advance
+        await this.promptTurnDescription(combat, currentCombatant);
     }
 
     /**

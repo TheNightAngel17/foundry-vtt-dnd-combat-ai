@@ -115,16 +115,13 @@ async function handleNPCTurnIfNeeded(combat, turnIndex, context) {
 async function onCombatTurn(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat turn changed`);
     
-    // Handle turn tracking FIRST - for the turn that just ended
-    // The previous turn is the one before updateData.turn
-    const previousTurn = updateData.turn > 0 ? updateData.turn - 1 : combat.turns.length - 1;
-    if (turnTracker && updateData.turn !== 0) {
-        // Only track if not the first turn of combat (turn 0)
-        await turnTracker.onTurnEnd(combat, previousTurn);
-    }
-    
-    // THEN handle NPC AI for the new turn
+    // Handle NPC AI for the new turn FIRST
     await handleNPCTurnIfNeeded(combat, updateData.turn, 'turn change');
+    
+    // THEN show turn tracking dialog at the START of the turn
+    if (turnTracker) {
+        await turnTracker.onTurnStart(combat, updateData.turn);
+    }
 }
 
 /**
@@ -133,15 +130,13 @@ async function onCombatTurn(combat, updateData, options) {
 async function onCombatRound(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat round changed to round ${updateData.round}`);
     
-    // Handle turn tracking FIRST - for the last turn of the previous round
-    // Only if this is not the first round
-    if (turnTracker && updateData.round > 1) {
-        const lastTurn = combat.turns.length - 1;
-        await turnTracker.onTurnEnd(combat, lastTurn);
-    }
-    
-    // THEN handle NPC AI for the first combatant of the new round (turn 0)
+    // Handle NPC AI for the first combatant of the new round (turn 0) FIRST
     await handleNPCTurnIfNeeded(combat, 0, 'round change');
+    
+    // THEN show turn tracking dialog at the START of the first turn
+    if (turnTracker) {
+        await turnTracker.onTurnStart(combat, 0);
+    }
 }
 
 /**
@@ -154,7 +149,11 @@ async function onCombatStart(combat) {
     }
     if (combatAIManager) {
         combatAIManager.onCombatStart(combat);
-        await handleNPCTurnIfNeeded(combat, 0, 'round change');
+        await handleNPCTurnIfNeeded(combat, 0, 'combat start');
+    }
+    // Show turn tracking dialog for the first turn
+    if (turnTracker) {
+        await turnTracker.onTurnStart(combat, 0);
     }
 }
 
