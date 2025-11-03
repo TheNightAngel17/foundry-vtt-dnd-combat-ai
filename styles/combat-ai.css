@@ -1,55 +1,5 @@
 /* Combat AI Module Styles */
 
-.combat-ai-recommendations {
-    font-family: var(--font-primary);
-    max-width: 500px;
-}
-
-.combat-ai-recommendations h3 {
-    color: var(--color-text-dark-primary);
-    border-bottom: 2px solid var(--color-border-dark-primary);
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-}
-
-.difficulty-level {
-    background: var(--color-bg-option);
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.recommendations-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.recommendations-list li {
-    background: var(--color-bg-btn);
-    border: 1px solid var(--color-border-dark-primary);
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    transition: background-color 0.2s;
-}
-
-.recommendations-list li:hover {
-    background: var(--color-bg-option);
-}
-
-.recommendations-list strong {
-    color: var(--color-text-hyperlink);
-    font-size: 1.1em;
-}
-
-.recommendations-list p {
-    margin: 5px 0 0 0;
-    color: var(--color-text-dark-secondary);
-    font-style: italic;
-}
 
 /* Combat Controls */
 .combat-ai-controls {
@@ -250,9 +200,6 @@
 
 /* Responsive Design */
 @media (max-width: 600px) {
-    .combat-ai-recommendations {
-        max-width: 100%;
-    }
     
     .button-group {
         flex-direction: column;
@@ -278,29 +225,6 @@
     .combat-ai-settings select {
         width: 100%;
     }
-}
-
-
-
-
-/* Dark Mode Compatibility */
-.window-app.dark .combat-ai-recommendations,
-.window-app.dark .combat-ai-settings {
-    background: var(--color-bg-dark);
-    color: var(--color-text-light-primary);
-}
-
-.window-app.dark .difficulty-level {
-    background: var(--color-bg-dark-secondary);
-}
-
-.window-app.dark .recommendations-list li {
-    background: var(--color-bg-dark-secondary);
-    border-color: var(--color-border-light-primary);
-}
-
-.window-app.dark .recommendations-list li:hover {
-    background: var(--color-bg-dark-tertiary);
 }
 
 
@@ -342,208 +266,13 @@
 
 
 
-/* .actor-actions-dialog {
-    font-family: var(--font-primary);
-}
-
-.actor-actions-dialog .window-content {
-    padding: 15px;
-    background: #f0f0e8;
-    color: #191813;
-}
 
 
-.actor-actions-dialog .dialog-header {
-    border-bottom: 2px solid #782e22;
-    padding-bottom: 10px;
-    background: transparent;
-}
-
-.actor-actions-dialog .dialog-header h2 {
-    margin: 0 0 5px 0;
-    color: #191813;
-    font-size: 1.3em;
-}
-
-.actor-actions-dialog .last-updated {
-    margin: 0;
-    font-size: 0.9em;
-    color: #4b4a44;
-    font-style: italic;
-}
-
-.actor-actions-dialog .dialog-controls {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.actor-actions-dialog .dialog-controls button {
-    padding: 8px 15px;
-    background: #5e0000;
-    color: #ffffff;
-    border: 1px solid #782e22;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.95em;
-    transition: background-color 0.2s;
-    width: 30%;
-}
-
-.actor-actions-dialog .dialog-controls button:hover {
-    background: #782e22;
-    box-shadow: 0 0 8px #782e22;
-}
-
-.actor-actions-dialog .dialog-controls button i {
-    font-size: 0.9em;
-}
 
 
-.actor-actions-dialog .action-item {
-    background: #ffffff;
-    border: 1px solid #782e22;
-    border-radius: 5px;
-    padding: 12px;
-    transition: box-shadow 0.2s;
-}
-
-.actor-actions-dialog .action-item:hover {
-    box-shadow: 0 2px 8px rgba(120, 46, 34, 0.3);
-    border-color: #5e0000;
-}
-
-
-.actor-actions-dialog .action-name-input {
-    flex: 1;
-    padding: 6px 10px;
-    border: 1px solid #782e22;
-    border-radius: 3px;
-    background: #faf8f5;
-    color: #191813;
-    font-weight: bold;
-    font-size: 1.05em;
-}
-
-.actor-actions-dialog .delete-action {
-    padding: 6px 8px;
-    background: var(--color-button-cancel);
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    flex-shrink: 0;
-    width: 48px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #782e22;
-}
-
-
-.actor-actions-dialog .action-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.actor-actions-dialog .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.actor-actions-dialog .form-group label {
-    font-weight: bold;
-    color: #191813;
-    font-size: 0.9em;
-}
-
-.actor-actions-dialog .action-description-input {
-    padding: 8px;
-    border: 1px solid #782e22;
-    border-radius: 3px;
-    background: #faf8f5;
-    color: #191813;
-    font-family: var(--font-primary);
-    resize: vertical;
-}
-
-.actor-actions-dialog .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.actor-actions-dialog .action-select {
-    padding: 6px;
-    border: 1px solid #782e22;
-    border-radius: 3px;
-    background: #faf8f5;
-    color: #191813;
-}
-
-.actor-actions-dialog .no-actions {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.actor-actions-dialog .no-actions p {
-    color: #4b4a44;
-    font-size: 1.1em;
-    margin: 0;
-}
-
-.actor-actions-dialog .no-actions i {
-    margin-right: 8px;
-    color: #5e0000;
-}
-
-.actor-actions-dialog .dialog-footer {
-    border-top: 2px solid #782e22;
-    padding-top: 10px;
-    display: flex;
-    justify-content: flex-end;
-    background: transparent;
-}
-
-.actor-actions-dialog .save-actions {
-    padding: 10px 20px;
-    background: #5e0000;
-    color: #ffffff;
-    border: 1px solid #782e22;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1em;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.actor-actions-dialog .save-actions:hover:not(:disabled) {
-    background: #782e22;
-    box-shadow: 0 0 8px #782e22;
-}
-
-.actor-actions-dialog .save-actions:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: #999;
-    border-color: #666;
-} */
 
 /* Button on character sheet */
+
 .sheet .combat-ai-actions-button {
     padding: 5px 10px;
     background: var(--color-button-primary);
@@ -565,4 +294,92 @@
 
 .sheet .combat-ai-actions-button i {
     font-size: 0.85em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Combat AI Recommendations Panel */
+
+.combat-ai-recommendations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.difficulty-level {
+    color: var(--color-text-secondary);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.recommendations-list {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+}
+
+.recommendations-list li {
+    border: 1px solid var(--color-text-secondary);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 12px;
+    font-size: medium;
+}
+
+.recommendations-list strong {
+    color: var(--color-text-secondary);
+}
+
+.combat-recommendations .recommendations-container {
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+
+.combat-recommendations .action-type-section {
+    margin-bottom: 15px;
+    border-left: 5px solid var(--color-text-primary);
+    padding-left: 10px;
+}
+
+.combat-recommendations .option-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 5px;
+    gap: 5px;
+    font-size: large;
+}
+
+.combat-recommendations .action-label {
+    font-size: 0.85em;
+    color: var(--color-text-subtle);
+    font-style: italic;
+}
+
+.combat-recommendations .priority-score {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+    font-size: 0.85em;
+    margin-left: 8px;
 }

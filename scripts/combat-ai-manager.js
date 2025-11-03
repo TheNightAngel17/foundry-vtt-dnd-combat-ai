@@ -635,216 +635,11 @@ ${JSON.stringify(exampleResponse, null, 2)}
             console.log(`${MODULE_TITLE} | Recommendations for ${combatant.actor.name}:`, recommendations);
         }
         
-        let sectionsHtml = '';
-        
-        // Display Turn Action Options (combinations of actions and bonus actions)
-        if (recommendations.turnActionOption && recommendations.turnActionOption.length > 0) {
-            sectionsHtml += `
-                <div class="action-type-section">
-                    <h4>Turn Action Options</h4>
-                    <ol class="recommendations-list">
-                        ${recommendations.turnActionOption.map(option => {
-                            let actionText = '';
-                            
-                            if (option.action && option.bonusAction) {
-                                // Both action and bonus action - determine order based on 'first' field
-                                let firstAction, secondAction, firstLabel, secondLabel;
-                                
-                                if (option.first === 'BonusAction' || option.first === 'Bonus Action') {
-                                    // Bonus Action comes first
-                                    firstAction = option.bonusAction;
-                                    secondAction = option.action;
-                                    firstLabel = 'Bonus Action';
-                                    secondLabel = 'Action';
-                                } else {
-                                    // Action comes first (default)
-                                    firstAction = option.action;
-                                    secondAction = option.bonusAction;
-                                    firstLabel = 'Action';
-                                    secondLabel = 'Bonus Action';
-                                }
-                                
-                                actionText = `<strong>${firstAction}</strong> <span class="action-label">(${firstLabel} first)</span> → <strong>${secondAction}</strong> <span class="action-label">(${secondLabel})</span>`;
-                            } else if (option.action) {
-                                // Only action
-                                actionText = `<strong>${option.action}</strong> <span class="action-label">(Action)</span>`;
-                            } else if (option.bonusAction) {
-                                // Only bonus action
-                                actionText = `<strong>${option.bonusAction}</strong> <span class="action-label">(Bonus Action)</span>`;
-                            }
-                            
-                            const scorePercent = (option.priorityScore * 100).toFixed(0);
-                            const scoreColor = option.priorityScore >= 0.8 ? '#2d7a2d' : 
-                                             option.priorityScore >= 0.6 ? '#7a6d2d' : '#7a2d2d';
-                            
-                            return `
-                                <li>
-                                    <div class="option-header">
-                                        ${actionText}
-                                        <span class="priority-score" style="background-color: ${scoreColor}">${scorePercent}%</span>
-                                    </div>
-                                    <p>${option.reasoning}</p>
-                                </li>
-                            `;
-                        }).join('')}
-                    </ol>
-                </div>
-            `;
-        }
-        
-        // Display Legendary Actions
-        if (recommendations.legendaryActions && recommendations.legendaryActions.length > 0) {
-            sectionsHtml += `
-                <div class="action-type-section">
-                    <h4>Legendary Actions</h4>
-                    <ol class="recommendations-list">
-                        ${recommendations.legendaryActions.map(option => {
-                            const scorePercent = (option.priorityScore * 100).toFixed(0);
-                            const scoreColor = option.priorityScore >= 0.8 ? '#2d7a2d' : 
-                                             option.priorityScore >= 0.6 ? '#7a6d2d' : '#7a2d2d';
-                            
-                            return `
-                                <li>
-                                    <div class="option-header">
-                                        <strong>${option.action}</strong>
-                                        <span class="priority-score" style="background-color: ${scoreColor}">${scorePercent}%</span>
-                                    </div>
-                                    <p>${option.reasoning}</p>
-                                </li>
-                            `;
-                        }).join('')}
-                    </ol>
-                </div>
-            `;
-        }
-        
-        // Display Reactions
-        if (recommendations.reactions && recommendations.reactions.length > 0) {
-            sectionsHtml += `
-                <div class="action-type-section">
-                    <h4>Reactions</h4>
-                    <ol class="recommendations-list">
-                        ${recommendations.reactions.map(option => {
-                            const scorePercent = (option.priorityScore * 100).toFixed(0);
-                            const scoreColor = option.priorityScore >= 0.8 ? '#2d7a2d' : 
-                                             option.priorityScore >= 0.6 ? '#7a6d2d' : '#7a2d2d';
-                            
-                            return `
-                                <li>
-                                    <div class="option-header">
-                                        <strong>${option.action}</strong>
-                                        <span class="priority-score" style="background-color: ${scoreColor}">${scorePercent}%</span>
-                                    </div>
-                                    <p>${option.reasoning}</p>
-                                </li>
-                            `;
-                        }).join('')}
-                    </ol>
-                </div>
-            `;
-        }
-        
-        // Display Lair Actions
-        if (recommendations.lairActions && recommendations.lairActions.length > 0) {
-            sectionsHtml += `
-                <div class="action-type-section">
-                    <h4>Lair Actions</h4>
-                    <ol class="recommendations-list">
-                        ${recommendations.lairActions.map(option => {
-                            const scorePercent = (option.priorityScore * 100).toFixed(0);
-                            const scoreColor = option.priorityScore >= 0.8 ? '#2d7a2d' : 
-                                             option.priorityScore >= 0.6 ? '#7a6d2d' : '#7a2d2d';
-                            
-                            return `
-                                <li>
-                                    <div class="option-header">
-                                        <strong>${option.action}</strong>
-                                        <span class="priority-score" style="background-color: ${scoreColor}">${scorePercent}%</span>
-                                    </div>
-                                    <p>${option.reasoning}</p>
-                                </li>
-                            `;
-                        }).join('')}
-                    </ol>
-                </div>
-            `;
-        }
-        
-        const content = `
-            <div class="combat-ai-recommendations">
-                <h3>AI Recommendations for ${combatant.actor.name}</h3>
-                <div class="difficulty-level">
-                    Difficulty: ${game.settings.get(MODULE_ID, 'aiDifficulty').toUpperCase()}
-                </div>
-                ${sectionsHtml}
-            </div>
-            <style>
-                .combat-ai-recommendations {
-                    font-family: "Signika", sans-serif;
-                }
-                .difficulty-level {
-                    font-weight: bold;
-                    margin-bottom: 10px;
-                    color: #4b4a44;
-                }
-                .action-type-section {
-                    margin-bottom: 15px;
-                    border-left: 3px solid #782e22;
-                    padding-left: 10px;
-                }
-                .action-type-section h4 {
-                    margin: 5px 0;
-                    color: #782e22;
-                    font-size: 1.1em;
-                }
-                .recommendations-list {
-                    margin: 5px 0;
-                    padding-left: 20px;
-                }
-                .recommendations-list li {
-                    margin-bottom: 12px;
-                }
-                .option-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 4px;
-                }
-                .option-header strong {
-                    color: #191813;
-                }
-                .action-label {
-                    font-size: 0.85em;
-                    color: #666;
-                    font-style: italic;
-                }
-                .priority-score {
-                    display: inline-block;
-                    padding: 2px 8px;
-                    border-radius: 3px;
-                    color: white;
-                    font-weight: bold;
-                    font-size: 0.85em;
-                    margin-left: 8px;
-                }
-                .recommendations-list p {
-                    margin: 3px 0 0 0;
-                    color: #4b4a44;
-                    font-size: 0.9em;
-                }
-            </style>
-        `;
-
-        new Dialog({
-            title: `Combat AI - ${combatant.actor.name}`,
-            content: content,
-            buttons: {
-                ok: {
-                    label: "Acknowledged",
-                    callback: () => {}
-                }
-            },
-            default: "ok"
+        // Create and render the ApplicationV2 dialog
+        new CombatRecommendationsDialog({
+            actorName: combatant.actor.name,
+            recommendations: recommendations,
+            difficulty: game.settings.get(MODULE_ID, 'aiDifficulty')
         }).render(true);
     }
 
@@ -882,5 +677,120 @@ ${JSON.stringify(exampleResponse, null, 2)}
      */
     setTurnTracker(tracker) {
         this.turnTracker = tracker;
+    }
+}
+/**
+ * Combat Recommendations Dialog - ApplicationV2 implementation
+ */
+class CombatRecommendationsDialog extends foundry.applications.api.HandlebarsApplicationMixin(
+    foundry.applications.api.ApplicationV2
+) {
+    constructor(options = {}) {
+        super(options);
+        this.actorName = options.actorName;
+        this.recommendations = options.recommendations;
+        this.difficulty = options.difficulty;
+    }
+
+    static DEFAULT_OPTIONS = {
+        classes: ['dnd-combat-ai', 'combat-recommendations'],
+        tag: 'div',
+        window: {
+            title: 'Combat AI Recommendations',
+            resizable: true,
+            minimizable: true
+        },
+        position: {
+            width: 500,
+            height: 'auto'
+        },
+        actions: {
+            close: CombatRecommendationsDialog.prototype._onClose
+        }
+    };
+
+    static PARTS = {
+        content: {
+            template: 'modules/dnd-combat-ai/templates/combat-recommendations.hbs'
+        }
+    };
+
+    get title() {
+        return `Combat AI - ${this.actorName}`;
+    }
+
+    async _prepareContext(options) {
+        const context = {
+            actorName: this.actorName,
+            difficulty: this.difficulty?.toUpperCase() || 'NORMAL'
+        };
+
+        // Helper function to process options with score colors
+        const processOptions = (options) => {
+            if (!options || !Array.isArray(options)) return null;
+            
+            return options.map(option => {
+                const scorePercent = (option.priorityScore * 100).toFixed(0);
+                const scoreColor = option.priorityScore >= 0.8 ? '#2d7a2d' : 
+                                 option.priorityScore >= 0.6 ? '#7a6d2d' : '#7a2d2d';
+                
+                return {
+                    ...option,
+                    scorePercent,
+                    scoreColor
+                };
+            });
+        };
+
+        // Process Turn Action Options with combined action text
+        if (this.recommendations.turnActionOption && this.recommendations.turnActionOption.length > 0) {
+            context.turnActionOptions = this.recommendations.turnActionOption.map(option => {
+                const scorePercent = (option.priorityScore * 100).toFixed(0);
+                const scoreColor = option.priorityScore >= 0.8 ? '#2d7a2d' : 
+                                 option.priorityScore >= 0.6 ? '#7a6d2d' : '#7a2d2d';
+                
+                let combinedText = '';
+                if (option.action && option.bonusAction) {
+                    // Both action and bonus action - determine order
+                    let firstAction, secondAction, firstLabel, secondLabel;
+                    
+                    if (option.first === 'BonusAction' || option.first === 'Bonus Action') {
+                        firstAction = option.bonusAction;
+                        secondAction = option.action;
+                        firstLabel = 'Bonus Action';
+                        secondLabel = 'Action';
+                    } else {
+                        firstAction = option.action;
+                        secondAction = option.bonusAction;
+                        firstLabel = 'Action';
+                        secondLabel = 'Bonus Action';
+                    }
+                    
+                    combinedText = `<strong>${firstAction}</strong> <span class="action-label">(${firstLabel} first)</span> → <strong>${secondAction}</strong> <span class="action-label">(${secondLabel})</span>`;
+                } else if (option.action) {
+                    combinedText = `<strong>${option.action}</strong> <span class="action-label">(Action)</span>`;
+                } else if (option.bonusAction) {
+                    combinedText = `<strong>${option.bonusAction}</strong> <span class="action-label">(Bonus Action)</span>`;
+                }
+                
+                return {
+                    ...option,
+                    combinedText,
+                    scorePercent,
+                    scoreColor
+                };
+            });
+        }
+
+        // Process other action types
+        context.legendaryActions = processOptions(this.recommendations.legendaryActions);
+        context.reactions = processOptions(this.recommendations.reactions);
+        context.lairActions = processOptions(this.recommendations.lairActions);
+
+        return context;
+    }
+
+    async _onClose(event, target) {
+        await this.close();
     }
 }

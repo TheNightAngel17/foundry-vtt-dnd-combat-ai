@@ -1,0 +1,81 @@
+<div class="combat-ai-recommendations">
+    <h2>AI Recommendations for {{actorName}}</h2>
+
+    <div class="recommendations-container">
+
+        {{#if turnActionOptions}}
+        <div class="action-type-section">
+            <h3>Turn Action Options</h3>
+            <ol class="recommendations-list">
+                {{#each turnActionOptions}}
+                <li>
+                    <div class="option-header">
+                        {{#if this.combinedText}}
+                            {{{this.combinedText}}}
+                        {{else if this.action}}
+                            <strong>{{this.action}}</strong> <span class="action-label">(Action)</span>
+                        {{else if this.bonusAction}}
+                            <strong>{{this.bonusAction}}</strong> <span class="action-label">(Bonus Action)</span>
+                        {{/if}}
+                        <span class="priority-score" style="background-color: {{this.scoreColor}}">{{this.scorePercent}}%</span>
+                    </div>
+                    <p>{{this.reasoning}}</p>
+                </li>
+                {{/each}}
+            </ol>
+        </div>
+        {{/if}}
+
+        {{#if legendaryActions}}
+        <div class="action-type-section">
+            <h3>Legendary Actions</h3>
+            <ol class="recommendations-list">
+                {{#each legendaryActions}}
+                <li>
+                    <div class="option-header">
+                        <strong>{{this.action}}</strong>
+                        <span class="priority-score" style="background-color: {{this.scoreColor}}">{{this.scorePercent}}%</span>
+                    </div>
+                    <p>{{this.reasoning}}</p>
+                </li>
+                {{/each}}
+            </ol>
+        </div>
+        {{/if}}
+
+        {{#if reactions}}
+        <div class="action-type-section">
+            <h3>Reactions</h3>
+            <ol class="recommendations-list">
+                {{#each reactions}}
+                <li>
+                    <div class="option-header">
+                        <strong>{{this.action}}</strong>
+                        <span class="priority-score" style="background-color: {{this.scoreColor}}">{{this.scorePercent}}%</span>
+                    </div>
+                    <p>{{this.reasoning}}</p>
+                </li>
+                {{/each}}
+            </ol>
+        </div>
+        {{/if}}
+
+        {{#if lairActions}}
+        <div class="action-type-section">
+            <h3>Lair Actions</h3>
+            <ol class="recommendations-list">
+                {{#each lairActions}}
+                <li>
+                    <div class="option-header">
+                        <strong>{{this.action}}</strong>
+                        <span class="priority-score" style="background-color: {{this.scoreColor}}">{{this.scorePercent}}%</span>
+                    </div>
+                    <p>{{this.reasoning}}</p>
+                </li>
+                {{/each}}
+            </ol>
+        </div>
+        {{/if}}
+    
+    </div>
+</div>
