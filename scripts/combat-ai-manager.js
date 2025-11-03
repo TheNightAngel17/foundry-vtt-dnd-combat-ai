@@ -55,6 +55,12 @@ export class CombatAIManager {
      * Handle NPC turn and provide AI assistance
      */
     async handleNPCTurn(combat, combatant) {
+        // Show loading notification
+        const notificationId = ui.notifications.info(
+            `<i class="fas fa-brain fa-spin"></i> ${MODULE_TITLE}: Analyzing combat for ${combatant.actor.name}...`,
+            { permanent: true }
+        );
+        
         try {
             console.log(`${MODULE_TITLE} | Processing AI turn for: ${combatant.actor.name}`);
             
@@ -72,9 +78,15 @@ export class CombatAIManager {
             // Display recommendations to GM
             this.displayRecommendations(combatant, recommendations);
             
+            // Close loading notification
+            if (notificationId) notificationId.remove();
+            
         } catch (error) {
             console.error(`${MODULE_TITLE} | Error processing NPC turn:`, error);
-            ui.notifications.error(`${MODULE_TITLE}: Failed to generate AI recommendations`);
+            
+            // Close loading notification and show error
+            if (notificationId) notificationId.remove();
+            ui.notifications.error(`${MODULE_TITLE}: Failed to generate AI recommendations for ${combatant.actor.name}`);
         }
     }
 
