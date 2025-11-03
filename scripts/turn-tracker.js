@@ -255,49 +255,7 @@ export class TurnTracker {
      */
     async showDescriptionDialog(combatant, template, combat) {
         return new Promise((resolve) => {
-            const dialog = new Dialog({
-                title: `Turn in Progress - ${combatant.name || combatant.actor?.name || 'Unknown'} (Round ${combat.round}, Turn ${combat.turn + 1})`,
-                content: `
-                    <form>
-                        <div class="form-group">
-                            <label for="turn-description">Describe what is happening this turn:</label>
-                            <textarea 
-                                id="turn-description" 
-                                name="turn-description" 
-                                rows="20" 
-                                style="width: 100%; font-family: monospace; resize: vertical;"
-                            >${template}</textarea>
-                        </div>
-                        <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
-                            Edit the description as the turn progresses. Click "End Turn" when ready to advance.
-                        </p>
-                    </form>
-                `,
-                buttons: {
-                    endTurn: {
-                        icon: '<i class="fas fa-step-forward"></i>',
-                        label: "End Turn",
-                        callback: async (html) => {
-                            const description = html.find('#turn-description').val();
-                            resolve(description);
-                            // Advance combat to next turn
-                            await combat.nextTurn();
-                        }
-                    },
-                    cancel: {
-                        icon: '<i class="fas fa-times"></i>',
-                        label: "Cancel",
-                        callback: () => resolve(null)
-                    }
-                },
-                default: "endTurn",
-                close: () => resolve(null)
-            }, {
-                width: 600,
-                height: "auto"
-            });
-
-            dialog.render(true);
+            new TurnDescriptionDialog(combatant, template, combat, resolve).render(true);
         });
     }
 
@@ -390,5 +348,96 @@ export class TurnTracker {
         if (game.settings.get(MODULE_ID, 'debugMode')) {
             console.log(`${MODULE_TITLE} | Turn history cleared`);
         }
+    }
+}
+
+/**
+ * ApplicationV2 dialog for turn description input
+ */
+class TurnDescriptionDialog extends foundry.applications.api.HandlebarsApplicationMixin(
+    foundry.applications.api.ApplicationV2
+) {
+    constructor(combatant, template, combat, resolve) {
+        super();
+        this.combatant = combatant;
+        this.template = template;
+        this.combat = combat;
+        this.resolve = resolve;
+    }
+
+    static DEFAULT_OPTIONS = {
+        id: "turn-description-dialog",
+        tag: "form",
+        window: {
+            title: "Turn in Progress",
+            icon: "fas fa-hourglass-half",
+            resizable: true
+        },
+        position: {
+            width: 600,
+            height: "auto"
+        },
+        actions: {
+            endTurn: TurnDescriptionDialog.onEndTurn,
+            cancel: TurnDescriptionDialog.onCancel
+        }
+    };
+
+    get title() {
+        return `Turn in Progress - ${this.combatant.name || this.combatant.actor?.name || 'Unknown'} (Round ${this.combat.round}, Turn ${this.combat.turn + 1})`;
+    }
+
+    static PARTS = {
+        form: {
+            template: "modules/dnd-combat-ai/templates/turn-description-dialog.hbs"
+        },
+        footer: {
+            template: "templates/generic/form-footer.hbs"
+        }
+    };
+
+    async _prepareContext(options) {
+        const context = await super._prepareContext(options);
+        return {
+            ...context,
+            description: this.template,
+            buttons: [
+                {
+                    type: "button",
+                    action: "cancel",
+                    icon: "fas fa-times",
+                    label: "Cancel"
+                },
+                {
+                    type: "submit",
+                    action: "endTurn",
+                    icon: "fas fa-step-forward",
+                    label: "End Turn"
+                }
+            ]
+        };
+    }
+
+    static async onEndTurn(event, target) {
+        const form = target.closest("form");
+        const formData = new FormDataExtended(form).object;
+        const description = formData.description || '';
+        
+        this.resolve(description);
+        await this.combat.nextTurn();
+        this.close();
+    }
+
+    static async onCancel(event, target) {
+        this.resolve(null);
+        this.close();
+    }
+
+    async close(options = {}) {
+        if (!this._resolved) {
+            this._resolved = true;
+            this.resolve(null);
+        }
+        return super.close(options);
     }
 }

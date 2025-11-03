@@ -383,3 +383,24 @@
     font-size: 0.85em;
     margin-left: 8px;
 }
+
+/* Turn Description Dialog */
+#turn-description-dialog .form-footer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#turn-description-dialog .form-footer button {
+    flex: 0 0 auto;
+    min-width: 100px;
+}
+
+.turn-description-form label {
+    font-weight: bold;
+    color: var(--color-form-label);
+    display: block;
+    margin-bottom: 5px;
+}

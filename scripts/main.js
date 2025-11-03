@@ -115,13 +115,14 @@ async function handleNPCTurnIfNeeded(combat, turnIndex, context) {
 async function onCombatTurn(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat turn changed`);
     
-    // Handle NPC AI for the new turn FIRST
-    await handleNPCTurnIfNeeded(combat, updateData.turn, 'turn change');
-    
-    // THEN show turn tracking dialog at the START of the turn
+    // Show turn tracking dialog at the START of the turn FIRST (immediate feedback)
     if (turnTracker) {
-        await turnTracker.onTurnStart(combat, updateData.turn);
+        // Don't await - let it open asynchronously
+        turnTracker.onTurnStart(combat, updateData.turn);
     }
+    
+    // THEN handle NPC AI for the new turn (may take time for LLM response)
+    await handleNPCTurnIfNeeded(combat, updateData.turn, 'turn change');
 }
 
 /**
@@ -130,13 +131,14 @@ async function onCombatTurn(combat, updateData, options) {
 async function onCombatRound(combat, updateData, options) {
     console.log(`${MODULE_TITLE} | Combat round changed to round ${updateData.round}`);
     
-    // Handle NPC AI for the first combatant of the new round (turn 0) FIRST
-    await handleNPCTurnIfNeeded(combat, 0, 'round change');
-    
-    // THEN show turn tracking dialog at the START of the first turn
+    // Show turn tracking dialog at the START of the first turn FIRST (immediate feedback)
     if (turnTracker) {
-        await turnTracker.onTurnStart(combat, 0);
+        // Don't await - let it open asynchronously
+        turnTracker.onTurnStart(combat, 0);
     }
+    
+    // THEN handle NPC AI for the first combatant of the new round (turn 0)
+    await handleNPCTurnIfNeeded(combat, 0, 'round change');
 }
 
 /**
