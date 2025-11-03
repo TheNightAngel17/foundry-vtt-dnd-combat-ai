@@ -8,6 +8,7 @@ import { CombatAISettings } from './settings.js';
 import { CombatAIUI } from './ui.js';
 import { TurnTracker } from './turn-tracker.js';
 import { ActorActionsDialog } from './actor-actions-dialog.js';
+import { CombatTrackerUI } from './combat-tracker-ui.js';
 
 // Module constants
 const MODULE_ID = 'dnd-combat-ai';
@@ -30,6 +31,9 @@ Hooks.once('init', async function() {
     
     // Register module settings
     CombatAISettings.registerSettings();
+    
+    // Initialize combat tracker UI extensions
+    CombatTrackerUI.init();
     
     // Initialize the combat AI manager
     combatAIManager = new CombatAIManager();
