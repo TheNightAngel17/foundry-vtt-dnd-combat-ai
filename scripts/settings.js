@@ -625,13 +625,17 @@ class LLMConfigMenu extends foundry.applications.api.HandlebarsApplicationMixin(
             await game.settings.set(MODULE_ID, `${prefix}TopP`, data.topP);
             await game.settings.set(MODULE_ID, `${prefix}LocalEndpoint`, data.localEndpoint);
 
-            ui.notifications.info(`${this.title} saved successfully`);
+            if (game.user.isGM) {
+                ui.notifications.info(`${this.title} saved successfully`);
+            }
             
             // Close the dialog
             await this.close();
         } catch (error) {
             console.error(`${MODULE_ID} | Error saving LLM config:`, error);
-            ui.notifications.error(`Failed to save configuration: ${error.message}`);
+            if (game.user.isGM) {
+                ui.notifications.error(`Failed to save configuration: ${error.message}`);
+            }
             
             // Re-enable button
             target.disabled = false;

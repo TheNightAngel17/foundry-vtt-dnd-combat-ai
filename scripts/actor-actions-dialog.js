@@ -136,12 +136,16 @@ export class ActorActionsDialog extends foundry.applications.api.HandlebarsAppli
             this.actions = newActions;
             this.hasChanges = true;
             
-            ui.notifications.info(`${MODULE_TITLE} | Generated ${newActions.length} actions for ${this.actor.name}`);
+            if (game.user.isGM) {
+                ui.notifications.info(`${MODULE_TITLE} | Generated ${newActions.length} actions for ${this.actor.name}`);
+            }
             
             await this.render();
         } catch (error) {
             console.error(`${MODULE_TITLE} | Error generating actions:`, error);
-            ui.notifications.error(`${MODULE_TITLE} | Failed to generate actions. Check console for details.`);
+            if (game.user.isGM) {
+                ui.notifications.error(`${MODULE_TITLE} | Failed to generate actions. Check console for details.`);
+            }
         } finally {
             button.disabled = false;
             button.innerHTML = '<i class="fas fa-magic"></i> Generate with AI';
@@ -176,13 +180,17 @@ export class ActorActionsDialog extends foundry.applications.api.HandlebarsAppli
             this.actions = updatedActions;
             this.hasChanges = false;
             
-            ui.notifications.info(`${MODULE_TITLE} | Saved ${updatedActions.length} actions for ${this.actor.name}`);
+            if (game.user.isGM) {
+                ui.notifications.info(`${MODULE_TITLE} | Saved ${updatedActions.length} actions for ${this.actor.name}`);
+            }
             
             // Refresh the dialog to show updated timestamp
             await this.render();
         } catch (error) {
             console.error(`${MODULE_TITLE} | Error saving actions:`, error);
-            ui.notifications.error(`${MODULE_TITLE} | Failed to save actions. Check console for details.`);
+            if (game.user.isGM) {
+                ui.notifications.error(`${MODULE_TITLE} | Failed to save actions. Check console for details.`);
+            }
         }
     }
 

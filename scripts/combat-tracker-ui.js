@@ -17,6 +17,11 @@ export class CombatTrackerUI {
      * Initialize combat tracker UI hooks
      */
     static init() {
+        // Only initialize for GMs
+        if (!game.user?.isGM) {
+            return;
+        }
+        
         // Create singleton instance
         if (!window.combatTrackerUI) {
             window.combatTrackerUI = new CombatTrackerUI();
@@ -32,6 +37,9 @@ export class CombatTrackerUI {
      * @param {Object} data - The render data
      */
     static _onRenderCombatTracker(app, element, data) {
+        // Only show combat tracker UI elements to GMs
+        if (!game.user.isGM) return;
+        
         const tracker = window.combatTrackerUI;
         if (!tracker) return;
 
@@ -95,7 +103,9 @@ export class CombatTrackerUI {
             if (this.isEnabled) {
                 button.addClass('toggled');
                 notesSection.slideDown(200);
-                ui.notifications.info(`${MODULE_TITLE}: Turn tracking enabled`);
+                if (game.user.isGM) {
+                    ui.notifications.info(`${MODULE_TITLE}: Turn tracking enabled`);
+                }
                 
                 // Load current turn data if in combat
                 if (game.combat) {
@@ -104,7 +114,9 @@ export class CombatTrackerUI {
             } else {
                 button.removeClass('toggled');
                 notesSection.slideUp(200);
-                ui.notifications.info(`${MODULE_TITLE}: Turn tracking disabled`);
+                if (game.user.isGM) {
+                    ui.notifications.info(`${MODULE_TITLE}: Turn tracking disabled`);
+                }
             }
             
             console.log(`${MODULE_TITLE} | Turn tracking toggled:`, this.isEnabled);

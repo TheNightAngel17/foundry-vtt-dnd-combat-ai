@@ -30,6 +30,32 @@ Hooks.once('init', async function() {
     // Register module settings
     CombatAISettings.registerSettings();
     
+    // Only initialize GM-specific features if user is GM (checked in ready hook)
+    // Combat tracker UI and manager will be initialized in ready hook
+    
+    console.log(`${MODULE_TITLE} | Module initialized`);
+});
+
+Hooks.once("init", () => {
+  console.log(`${MODULE_TITLE} | 🧠 D&D5e header button hook registered`);
+
+    // Only register actor sheet hook for GMs
+    if (game.user?.isGM) {
+        Hooks.on("getHeaderControlsActorSheetV2", onGetActorSheetHeaderButtons);
+    }
+});
+/**
+ * Setup hooks once the game is ready
+ */
+Hooks.once('ready', async function() {
+    console.log(`${MODULE_TITLE} | Game ready, setting up combat hooks`);
+    
+    // Only initialize for GMs
+    if (!game.user.isGM) {
+        console.log(`${MODULE_TITLE} | User is not a GM, skipping initialization`);
+        return;
+    }
+    
     // Initialize combat tracker UI extensions
     CombatTrackerUI.init();
     
@@ -45,27 +71,11 @@ Hooks.once('init', async function() {
         console.log(`${MODULE_TITLE} | Registered CombatTrackerUI as history provider`);
     }
     
-    console.log(`${MODULE_TITLE} | Module initialized`);
-});
-
-Hooks.once("init", () => {
-  console.log(`${MODULE_TITLE} | 🧠 D&D5e header button hook registered`);
-
-    Hooks.on("getHeaderControlsActorSheetV2", onGetActorSheetHeaderButtons);
-});
-/**
- * Setup hooks once the game is ready
- */
-Hooks.once('ready', async function() {
-    console.log(`${MODULE_TITLE} | Game ready, setting up combat hooks`);
-    
     // Initialize UI components
     CombatAIUI.initialize();
     
     // Set up combat hooks
     setupCombatHooks();
-    
-    // Set up actor sheet hook
     
     console.log(`${MODULE_TITLE} | Module ready`);
 });

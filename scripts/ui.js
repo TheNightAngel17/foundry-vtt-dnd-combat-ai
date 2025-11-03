@@ -99,6 +99,11 @@ export class CombatAIUI {
      * Request manual AI assistance
      */
     static async requestManualAI() {
+        // Only allow GMs to use this feature
+        if (!game.user.isGM) {
+            return;
+        }
+        
         if (!game.combat?.combatant) {
             ui.notifications.warn(`${MODULE_TITLE}: No active combatant`);
             return;
@@ -339,7 +344,9 @@ class CombatAISettingsDialog extends foundry.applications.api.DialogV2 {
             await game.settings.set(MODULE_ID, key, value);
         }
 
-        ui.notifications.info(`${MODULE_TITLE}: Settings saved`);
+        if (game.user.isGM) {
+            ui.notifications.info(`${MODULE_TITLE}: Settings saved`);
+        }
         
         return true;
     }

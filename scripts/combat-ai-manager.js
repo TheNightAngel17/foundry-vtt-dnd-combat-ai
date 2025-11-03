@@ -55,11 +55,14 @@ export class CombatAIManager {
      * Handle NPC turn and provide AI assistance
      */
     async handleNPCTurn(combat, combatant) {
-        // Show loading notification
-        const notificationId = ui.notifications.info(
-            `<i class="fas fa-brain fa-spin"></i> ${MODULE_TITLE}: Analyzing combat for ${combatant.actor.name}...`,
-            { permanent: true }
-        );
+        // Show loading notification (only to GMs)
+        let notificationId = null;
+        if (game.user.isGM) {
+            notificationId = ui.notifications.info(
+                `<i class="fas fa-brain fa-spin"></i> ${MODULE_TITLE}: Analyzing combat for ${combatant.actor.name}...`,
+                { permanent: true }
+            );
+        }
         
         try {
             console.log(`${MODULE_TITLE} | Processing AI turn for: ${combatant.actor.name}`);
@@ -86,7 +89,9 @@ export class CombatAIManager {
             
             // Close loading notification and show error
             if (notificationId) notificationId.remove();
-            ui.notifications.error(`${MODULE_TITLE}: Failed to generate AI recommendations for ${combatant.actor.name}`);
+            if (game.user.isGM) {
+                ui.notifications.error(`${MODULE_TITLE}: Failed to generate AI recommendations for ${combatant.actor.name}`);
+            }
         }
     }
 
@@ -642,6 +647,11 @@ ${JSON.stringify(exampleResponse, null, 2)}
      * Display recommendations to the GM
      */
     displayRecommendations(combatant, recommendations) {
+        // Only show to GMs
+        if (!game.user.isGM) {
+            return;
+        }
+        
         // Debug logging
         if (game.settings.get(MODULE_ID, 'debugMode')) {
             console.log(`${MODULE_TITLE} | Recommendations for ${combatant.actor.name}:`, recommendations);
