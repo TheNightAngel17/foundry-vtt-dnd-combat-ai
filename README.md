@@ -233,13 +233,13 @@ Combat LLM: Local (llama3.2:13b or larger)
 ### Module Structure
 ```
 /scripts/
-  ├── main.js              # Module initialization and hooks
-  ├── combat-ai-manager.js # Core AI logic and coordination
-  ├── combat-analyzer.js   # Combat situation analysis
-  ├── llm-connector.js     # LLM API integration
-  ├── settings.js          # Configuration management
-  ├── action-cache.js      # Action caching system
-  └── ui.js               # User interface components
+  ├── main.js               # Module initialization and hooks
+  ├── combat-ai-manager.js  # Core AI logic and coordination
+  ├── combat-analyzer.js    # Combat situation analysis
+  ├── llm-connector.js      # LLM API integration
+  ├── settings.js           # Configuration management
+  ├── actor-llm-actions.js  # Actor LLM actions system
+  └── ui.js                 # User interface components
 /templates/
   ├── llm-config.hbs       # LLM configuration dialog
   └── ddb-importer-config.hbs # DDB integration settings
@@ -262,27 +262,27 @@ Combat LLM: Local (llama3.2:13b or larger)
 ```javascript
 const config = CombatAISettings.getLLMConfig('combatRecommendation');
 // or
-const config = CombatAISettings.getLLMConfig('actionCache');
+const config = CombatAISettings.getLLMConfig('actorAiActions');
 ```
 
 **Generate LLM Response:**
 ```javascript
 const response = await llmConnector.generateResponse(
   prompt,
-  'combatRecommendation' // or 'actionCache'
+  'combatRecommendation' // or 'actorAiActions'
 );
 ```
 
-**Manage Action Cache:**
+**Manage Actor AI Actions:**
 ```javascript
-// Get cached actions for an actor
-const actions = await actionCache.getActorActions(actor, aiService);
+// Get AI actions for an actor
+const actions = await actorLlmActions.getActorActions(actor);
 
-// Clear cache for specific actor
-actionCache.clearCache(actorId);
+// Clear actions for specific actor
+actorLlmActions.clearActorActions(actorId);
 
-// Clear all cache
-actionCache.clearCache();
+// Clear all actor actions
+actorLlmActions.clearAllActorActions();
 ```
 
 ## License

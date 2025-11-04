@@ -7,10 +7,10 @@ import { CombatAISettings } from './settings.js';
 
 export class ActorLlmActions {
     /**
-     * Get flag key for storing cached actions
+     * Get flag key for storing llm actions
      */
     static get FLAG_KEY() {
-        return 'cachedActions';
+        return 'llmActions';
     }
 
     /**
@@ -118,26 +118,43 @@ export class ActorLlmActions {
     }
 
     /**
-     * Get cached actions for an actor, or generate them if not cached
+     * Get flagged actions for an actor
+     * Returns empty array if no actions are flagged
      */
-    async getActorActions(actor, aiService) {
-        // Check actor flags for cached data
+    async getActorActions(actor) {
+        // Check actor flags for data
         const flagData = actor.getFlag(MODULE_ID, ActorLlmActions.FLAG_KEY);
         if (flagData && flagData.actions) {
             if (game.settings.get(MODULE_ID, 'debugMode')) {
-                console.debug(`${MODULE_TITLE} | Using cached actions for ${actor.name}`);
+                console.debug(`${MODULE_TITLE} | Using flagged actions for ${actor.name}`);
             }
             return flagData.actions;
         }
 
-        // No cache found, generate new descriptions
+        // No flags found, return empty array
         if (game.settings.get(MODULE_ID, 'debugMode')) {
-            console.debug(`${MODULE_TITLE} | Generating action descriptions for ${actor.name}`);
+            console.debug(`${MODULE_TITLE} | No flagged actions found for ${actor.name}`);
+        }
+        
+        return [];
+    }
+
+    /**
+     * Reset and regenerate actor actions from LLM
+     * Clears existing flagged actions and generates new ones
+     */
+    async resetActorActionsFromLlm(actor, aiService) {
+        if (game.settings.get(MODULE_ID, 'debugMode')) {
+            console.debug(`${MODULE_TITLE} | Resetting and generating action descriptions for ${actor.name}`);
         }
 
+        // 1. Clear flagged actions for the actor
+        await this.clearFlaggedActions(actor.id);
+
+        // 2. Generate new action descriptions
         const actions = await this.generateActionDescriptions(actor, aiService);
         
-        // Save to actor flags
+        // 3. Save to actor flags
         await this.saveActorActions(actor, actions);
 
         return actions;
@@ -148,7 +165,7 @@ export class ActorLlmActions {
      */
     async saveActorActions(actor, actions) {
         const timestamp = Date.now();
-        const cacheData = {
+        const data = {
             actions: actions,
             timestamp: timestamp,
             version: '1.0' // For future migration compatibility
@@ -156,13 +173,13 @@ export class ActorLlmActions {
 
         // Persist to actor flags
         try {
-            await actor.setFlag(MODULE_ID, ActorLlmActions.FLAG_KEY, cacheData);
+            await actor.setFlag(MODULE_ID, ActorLlmActions.FLAG_KEY, data);
             
             if (game.settings.get(MODULE_ID, 'debugMode')) {
-                console.debug(`${MODULE_TITLE} | Saved cached actions for ${actor.name}`);
+                console.debug(`${MODULE_TITLE} | Saved flagged actions for ${actor.name}`);
             }
         } catch (error) {
-            console.error(`${MODULE_TITLE} | Failed to save cached actions:`, error);
+            console.error(`${MODULE_TITLE} | Failed to save flagged actions:`, error);
         }
     }
 
@@ -192,7 +209,7 @@ export class ActorLlmActions {
         const prompt = this.buildDescriptionPrompt(actor, rawActions);
         
         try {
-            const response = await aiService.generateResponse(prompt, 'actionCache');
+            const response = await aiService.generateResponse(prompt, 'actorAiActions');
             const parsedActions = this.parseActionDescriptions(response, rawActions);
             
             if (game.settings.get(MODULE_ID, 'debugMode')) {
@@ -225,14 +242,18 @@ export class ActorLlmActions {
                 // Fallback to local parsing
                 const rawActions = this.extractRawActions(actor);
                 const prompt = this.buildDescriptionPrompt(actor, rawActions);
-                const response = await aiService.generateResponse(prompt, 'actionCache');
+                const response = await aiService.generateResponse(prompt, 'actorAiActions');
                 return this.parseActionDescriptions(response, rawActions);
+            }
+            
+            if (game.settings.get(MODULE_ID, 'debugMode')) {
+                console.log(`${MODULE_TITLE} | Retrieved Monster Data from DDB`, ddbData);
             }
 
             // Build DDB-specific prompt
             const prompt = this.buildDDBDescriptionPrompt(actor, ddbData);
             
-            const response = await aiService.generateResponse(prompt, 'actionCache');
+            const response = await aiService.generateResponse(prompt, 'actorAiActions');
             const parsedActions = this.parseActionDescriptions(response, []);
             
             if (game.settings.get(MODULE_ID, 'debugMode')) {
@@ -330,12 +351,15 @@ IMPORTANT RULES:
 1. Extract EVERY distinct combat action, ability, spell, and option
 2. For Multiattack with multiple attack options, create separate entries for each attack pattern   
 3. For abilities with multiple uses (spells, legendary actions, lair actions), create separate entries for each distinct option
-4. Keep descriptions to a max 200 characters
+4. For spells, use spell details from D&D 5e SRD or official sources to ensure accuracy.
+    - If the spell doesn't exist in those sources or you do not know what it does, do not make something up
+    - Instead, use the description: '<spell-name>: spell effect'
+5. Keep descriptions to a max 200 characters
    - Ensure to gather (if necissary): damage, range, targets, applied conditions
    - If special effects are mentioned or implied, include them with as much detail as possible while keeping to the word limit.
-5. Parse HTML text and dice notation (e.g., "<span data-dicenotation="2d10+8">") to extract key information
-6. Categorize activation times correctly: action, bonus, reaction, legendary, lair, mythic
-7. ${ActorLlmActions.FORMATTING_GUIDELINES}
+6. Parse HTML text and dice notation (e.g., "<span data-dicenotation="2d10+8">") to extract key information
+7. Categorize activation times correctly: action, bonus, reaction, legendary, lair, mythic
+8. ${ActorLlmActions.FORMATTING_GUIDELINES}
 
 Ability Data:
 ${activeSections}
@@ -350,9 +374,77 @@ Respond with a JSON array where each entry has this exact structure:
 
 EXAMPLES:
 - From Multiattack with options: Create multiple entries for each attack pattern
+   - if an attack option has a recharge, ensure that it is only avalable once on multiple actions (e.g. not 2x or more of the same recharge attack)
+   - ensure that if certain actions have specific conditions, such as in specific forms, the form is indicated in the name
 - From Spellcasting list: Create separate entry for each spell
 - From Legendary Actions: Create entry for each legendary action option
-- Extract damage from HTML: "<span data-dicenotation="2d10+8">" → "2d10+8"
+- Extract damage from HTML: \`<span data-dicenotation="2d10+8">\` -> \`2d10+8\`
+
+\`\`\`json
+[
+    {
+        "name": "[Attack Form] Multiattack (3 Bite Attacks)",
+        "description": "Make three bite attacks.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "[Attack Form] Multiattack (3 Claw Attacks)",
+        "description": "Make three claw attacks.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "[Attack Form] Multiattack (2 Claw Attacks, 1 Bite Attack)",
+        "description": "Make two claw attacks and one bite attack.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "[Attack Form] Multiattack (2 Bite Attacks, 1 Claw Attack)",
+        "description": "Make two bite attacks and one claw attack.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "[Attack Form] Multiattack (2 Bite Attacks, 1 Claw Attack)",
+        "description": "Make two bite attacks and one claw attack.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "[Defense Form] Multiattack (3 Claw Attacks)",
+        "description": "Make three claw attacks.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "[Defense Form] Multiattack (2 Claw Attacks, 1 Seismic Pound)",
+        "description": "Make two claw attacks and one seismic pound.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "Bite Attack [Attack Form Only]",
+        "description": "Melee Weapon Attack: +X to hit, reach Y ft., one target. Hit: Z (damage dice) piercing damage.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "Claw Attack [Attack and Defense Form]",    
+        "description": "Melee Weapon Attack: +X to hit, reach Y ft., one target. Hit: Z (damage dice) slashing damage.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    {
+        "name": "Seismic Pound [Defense Form Only]",
+        "description": "Recharge 5-6. 10 ft radius centered on self. DC X STR save or take Y (damage dice) bludgeoning damage and be knocked prone. On save: half damage, not prone.",
+        "activationTime": "action",
+        "itemType": "weapon"
+    },
+    // ... other entries from other items
+]
+\`\`\`
 
 Respond ONLY with the JSON array, no other text.`;
     }
@@ -580,9 +672,9 @@ Respond ONLY with the JSON array, no other text.`;
     }
 
     /**
-     * Clear cache for specific actor or all actors
+     * Clear flagged data for specific actor or all actors
      */
-    async clearCache(actorId = null) {
+    async clearFlaggedActions(actorId = null) {
         if (actorId) {
             // Clear actor flag
             const actor = game.actors.get(actorId);
@@ -591,18 +683,7 @@ Respond ONLY with the JSON array, no other text.`;
             }
             
             if (game.settings.get(MODULE_ID, 'debugMode')) {
-                console.debug(`${MODULE_TITLE} | Cleared cache for actor ${actorId}`);
-            }
-        } else {
-            // Clear all actor flags
-            for (const actor of game.actors) {
-                if (actor.getFlag(MODULE_ID, ActorLlmActions.FLAG_KEY)) {
-                    await actor.unsetFlag(MODULE_ID, ActorLlmActions.FLAG_KEY);
-                }
-            }
-            
-            if (game.settings.get(MODULE_ID, 'debugMode')) {
-                console.debug(`${MODULE_TITLE} | Cleared entire action cache`);
+                console.debug(`${MODULE_TITLE} | Cleared flagged actions for actor ${actorId}`);
             }
         }
     }

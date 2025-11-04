@@ -10,7 +10,7 @@ Added a complete UI system for managing LLM-generated action descriptions direct
 2. **`templates/actor-actions-dialog.hbs`** - Handlebars template for the dialog UI
 
 ### Modified Files:
-1. **`scripts/action-cache.js`** - Renamed from `ActionCache` to `ActorLlmActions`
+1. **`scripts/actor-llm-actions.js`** - Renamed from `ActionCache` to `ActorLlmActions`
 2. **`scripts/combat-ai-manager.js`** - Updated to use `actorLlmActions` instead of `actionCache`
 3. **`scripts/combat-analyzer.js`** - Updated to use `actorLlmActions`
 4. **`scripts/main.js`** - Added imports, Handlebars helper, and character sheet hook

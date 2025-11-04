@@ -9,7 +9,7 @@ export class CombatAISettings {
      * LocalStorage keys for sensitive data
      */
     static STORAGE_KEYS = {
-        ACTION_CACHE_API_KEY: 'dnd-combat-ai.actionCacheLLM.apiKey',
+        ACTOR_AI_ACTIONS_API_KEY: 'dnd-combat-ai.actorAiActionsLLM.apiKey',
         COMBAT_API_KEY: 'dnd-combat-ai.combatLLM.apiKey'
     };
 
@@ -178,20 +178,20 @@ export class CombatAISettings {
         });
 
         // ========================================
-        // Action Cache LLM Configuration
+        // Actor AI Actions LLM Configuration
         // ========================================
         
-        game.settings.registerMenu(MODULE_ID, 'actionCacheLLMConfig', {
-            name: 'Action Cache LLM Settings',
-            label: 'Configure Action Cache LLM',
-            hint: 'Configure the LLM used for generating cached action descriptions',
+        game.settings.registerMenu(MODULE_ID, 'actorAiActionsLLMConfig', {
+            name: 'Actor AI Actions LLM Settings',
+            label: 'Configure Actor AI Actions LLM',
+            hint: 'Configure the LLM used for generating actor action descriptions',
             icon: 'fas fa-database',
-            type: ActionCacheLLMConfigMenu,
+            type: ActorAiActionsLLMConfigMenu,
             restricted: true
         });
 
-        // Action Cache LLM - Simplified settings
-        game.settings.register(MODULE_ID, 'actionCacheLLMProvider', {
+        // Actor AI Actions LLM - Simplified settings
+        game.settings.register(MODULE_ID, 'actorAiActionsLLMProvider', {
             scope: 'world',
             config: false,
             type: String,
@@ -206,21 +206,21 @@ export class CombatAISettings {
         // Note: API keys are now stored in localStorage for security
         // Use CombatAISettings.getSecureValue() to retrieve them
 
-        game.settings.register(MODULE_ID, 'actionCacheLLMModel', {
+        game.settings.register(MODULE_ID, 'actorAiActionsLLMModel', {
             scope: 'world',
             config: false,
             type: String,
             default: 'llama3.2'
         });
 
-        game.settings.register(MODULE_ID, 'actionCacheLLMMaxTokens', {
+        game.settings.register(MODULE_ID, 'actorAiActionsLLMMaxTokens', {
             scope: 'world',
             config: false,
             type: Number,
             default: 1000
         });
 
-        game.settings.register(MODULE_ID, 'actionCacheLLMReasoningEffort', {
+        game.settings.register(MODULE_ID, 'actorAiActionsLLMReasoningEffort', {
             scope: 'world',
             config: false,
             type: String,
@@ -234,21 +234,21 @@ export class CombatAISettings {
             }
         });
 
-        game.settings.register(MODULE_ID, 'actionCacheLLMTemperature', {
+        game.settings.register(MODULE_ID, 'actorAiActionsLLMTemperature', {
             scope: 'world',
             config: false,
             type: Number,
             default: 0.7
         });
 
-        game.settings.register(MODULE_ID, 'actionCacheLLMTopP', {
+        game.settings.register(MODULE_ID, 'actorAiActionsLLMTopP', {
             scope: 'world',
             config: false,
             type: Number,
             default: 1.0
         });
 
-        game.settings.register(MODULE_ID, 'actionCacheLLMLocalEndpoint', {
+        game.settings.register(MODULE_ID, 'actorAiActionsLLMLocalEndpoint', {
             scope: 'world',
             config: false,
             type: String,
@@ -361,13 +361,13 @@ export class CombatAISettings {
             return { valid: true, issues: ['AI assistance is disabled'] };
         }
 
-        // Validate Action Cache LLM config
-        const actionCacheConfig = this.getLLMConfig('actionCache');
-        if (actionCacheConfig.provider !== 'local' && !actionCacheConfig.apiKey) {
-            issues.push('Action Cache: API key is required for cloud providers');
+        // Validate Actor AI Actions LLM config
+        const actorAiActionsConfig = this.getLLMConfig('actorAiActions');
+        if (actorAiActionsConfig.provider !== 'local' && !actorAiActionsConfig.apiKey) {
+            issues.push('Actor AI Actions: API key is required for cloud providers');
         }
-        if (actionCacheConfig.provider === 'local' && !actionCacheConfig.localEndpoint) {
-            issues.push('Action Cache: Local LLM endpoint URL is required');
+        if (actorAiActionsConfig.provider === 'local' && !actorAiActionsConfig.localEndpoint) {
+            issues.push('Actor AI Actions: Local LLM endpoint URL is required');
         }
 
         // Validate Combat Recommendation LLM config
@@ -389,9 +389,9 @@ export class CombatAISettings {
      * Get LLM configuration for a specific purpose
      */
     static getLLMConfig(configType) {
-        const prefix = configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
-        const storageKey = configType === 'actionCache' 
-            ? this.STORAGE_KEYS.ACTION_CACHE_API_KEY 
+        const prefix = configType === 'actorAiActions' ? 'actorAiActionsLLM' : 'combatLLM';
+        const storageKey = configType === 'actorAiActions' 
+            ? this.STORAGE_KEYS.ACTOR_AI_ACTIONS_API_KEY 
             : this.STORAGE_KEYS.COMBAT_API_KEY;
         
         return {
@@ -518,16 +518,16 @@ class LLMConfigMenu extends foundry.applications.api.HandlebarsApplicationMixin(
     };
 
     get title() {
-        return this.configType === 'actionCache' 
-            ? 'Action Cache LLM Configuration' 
+        return this.configType === 'actorAiActions' 
+            ? 'Actor AI Actions LLM Configuration' 
             : 'Combat Recommendation LLM Configuration';
     }
 
     async _prepareContext(options) {
-        const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
+        const prefix = this.configType === 'actorAiActions' ? 'actorAiActionsLLM' : 'combatLLM';
         const provider = game.settings.get(MODULE_ID, `${prefix}Provider`);
-        const storageKey = this.configType === 'actionCache' 
-            ? CombatAISettings.STORAGE_KEYS.ACTION_CACHE_API_KEY 
+        const storageKey = this.configType === 'actorAiActions' 
+            ? CombatAISettings.STORAGE_KEYS.ACTOR_AI_ACTIONS_API_KEY 
             : CombatAISettings.STORAGE_KEYS.COMBAT_API_KEY;
         
         return {
@@ -588,9 +588,9 @@ class LLMConfigMenu extends foundry.applications.api.HandlebarsApplicationMixin(
     async _onSave(event, target) {
         event.preventDefault();
         
-        const prefix = this.configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
-        const storageKey = this.configType === 'actionCache' 
-            ? CombatAISettings.STORAGE_KEYS.ACTION_CACHE_API_KEY 
+        const prefix = this.configType === 'actorAiActions' ? 'actorAiActionsLLM' : 'combatLLM';
+        const storageKey = this.configType === 'actorAiActions' 
+            ? CombatAISettings.STORAGE_KEYS.ACTOR_AI_ACTIONS_API_KEY 
             : CombatAISettings.STORAGE_KEYS.COMBAT_API_KEY;
         
         // Manually gather form data from all inputs (including hidden ones)
@@ -651,12 +651,12 @@ class LLMConfigMenu extends foundry.applications.api.HandlebarsApplicationMixin(
 }
 
 /**
- * Action Cache LLM Configuration Menu
+ * Actor AI Actions LLM Configuration Menu
  */
-class ActionCacheLLMConfigMenu extends LLMConfigMenu {
+class ActorAiActionsLLMConfigMenu extends LLMConfigMenu {
     constructor(options) {
         super(options);
-        this.configType = 'actionCache';
+        this.configType = 'actorAiActions';
     }
 }
 

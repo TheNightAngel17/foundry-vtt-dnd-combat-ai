@@ -48,7 +48,7 @@ export class ActorActionsDialog extends foundry.applications.api.HandlebarsAppli
 
     async _prepareContext(options) {
         // Load current actions from actor flags
-        this.actions = await this.actorLlmActions.getActorActions(this.actor, this.llmConnector);
+        this.actions = await this.actorLlmActions.getActorActions(this.actor);
 
         console.log(`${MODULE_TITLE} | Loaded ${this.actions.length} actions for ${this.actor.name} in dialog`, this.actions);
 
@@ -127,11 +127,10 @@ export class ActorActionsDialog extends foundry.applications.api.HandlebarsAppli
         button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
 
         try {
-            // Clear existing cache for this actor to force regeneration
-            await this.actorLlmActions.clearCache(this.actor.id);
 
-            // Generate new actions
-            const newActions = await this.actorLlmActions.getActorActions(this.actor, this.llmConnector);
+            await this.actorLlmActions.resetActorActionsFromLlm(this.actor, this.llmConnector);
+
+            var newActions = await this.actorLlmActions.getActorActions(this.actor);
             
             this.actions = newActions;
             this.hasChanges = true;

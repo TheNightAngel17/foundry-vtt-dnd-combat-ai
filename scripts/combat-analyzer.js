@@ -12,7 +12,7 @@ export class CombatAnalyzer {
     /**
      * Analyze the current combat situation for AI decision making
      */
-    async analyzeCombatSituation(combat, currentCombatant, aiService) {
+    async analyzeCombatSituation(combat, currentCombatant) {
         const actor = currentCombatant.actor;
         
         const situation = {
@@ -20,7 +20,7 @@ export class CombatAnalyzer {
             round: combat.round,
             turn: combat.turn,
             initiativeOrder: this.getInitiativeOrder(combat),
-            availableActions: await this.actorLlmActions.getActorActions(actor, aiService),
+            availableActions: await this.actorLlmActions.getActorActions(actor),
             enemies: this.getEnemies(combat, currentCombatant),
             allies: this.getAllies(combat, currentCombatant),
             recentActions: this.getRecentActions(combat),

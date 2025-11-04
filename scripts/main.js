@@ -37,12 +37,7 @@ Hooks.once('init', async function() {
 });
 
 Hooks.once("init", () => {
-  console.log(`${MODULE_TITLE} | 🧠 D&D5e header button hook registered`);
 
-    // Only register actor sheet hook for GMs
-    if (game.user?.isGM) {
-        Hooks.on("getHeaderControlsActorSheetV2", onGetActorSheetHeaderButtons);
-    }
 });
 /**
  * Setup hooks once the game is ready
@@ -56,6 +51,8 @@ Hooks.once('ready', async function() {
         return;
     }
     
+    Hooks.on("getHeaderControlsActorSheetV2", onGetActorSheetHeaderButtons);
+        
     // Initialize combat tracker UI extensions
     CombatTrackerUI.init();
     
@@ -95,9 +92,6 @@ function setupCombatHooks() {
     
     // Hook into combat end
     Hooks.on('combatEnd', onCombatEnd);
-    
-    // Hook into combatant creation to pre-cache NPC actions
-    Hooks.on('createCombatant', onCreateCombatant);
 }
 
 /**
@@ -176,24 +170,6 @@ async function onCombatStart(combat) {
     // Load first turn data in combat tracker UI (first turn = index 0, round 1)
     if (window.combatTrackerUI && window.combatTrackerUI.isEnabled) {
         await window.combatTrackerUI.onTurnChange(combat, 0, 1);
-    }
-}
-
-/**
- * Handle combatant creation - pre-cache NPC actions
- */
-async function onCreateCombatant(combatant, options, userId) {
-    // Only proceed if AI is enabled and this is an NPC
-    if (!game.settings.get(MODULE_ID, 'enableAI')) return;
-    if (!combatant.actor || combatant.actor.hasPlayerOwner) return;
-    
-    console.log(`${MODULE_TITLE} | NPC added to combat: ${combatant.actor.name}, pre-caching actions...`);
-    
-    try {
-        await combatAIManager.actorLlmActions.getActorActions(combatant.actor, combatAIManager.llmConnector);
-        console.log(`${MODULE_TITLE} | Successfully cached actions for ${combatant.actor.name}`);
-    } catch (error) {
-        console.error(`${MODULE_TITLE} | Failed to cache actions for ${combatant.actor.name}:`, error);
     }
 }
 

@@ -15,16 +15,16 @@ export class LLMConnector {
     /**
      * Generate AI response using the configured LLM
      * @param {string} prompt - The prompt to send to the LLM
-     * @param {string} configType - Either 'actionCache' or 'combatRecommendation' (default)
+     * @param {string} configType - Either 'actorAiActions' or 'combatRecommendation' (default)
      */
     async generateResponse(prompt, configType = 'combatRecommendation') {
         // Get configuration for the specified type
-        const prefix = configType === 'actionCache' ? 'actionCacheLLM' : 'combatLLM';
+        const prefix = configType === 'actorAiActions' ? 'actorAiActionsLLM' : 'combatLLM';
         const provider = game.settings.get(MODULE_ID, `${prefix}Provider`);
         
         // Get API key from localStorage using CombatAISettings utility
-        const storageKey = configType === 'actionCache' 
-            ? CombatAISettings.STORAGE_KEYS.ACTION_CACHE_API_KEY 
+        const storageKey = configType === 'actorAiActions' 
+            ? CombatAISettings.STORAGE_KEYS.ACTOR_AI_ACTIONS_API_KEY 
             : CombatAISettings.STORAGE_KEYS.COMBAT_API_KEY;
         const apiKey = CombatAISettings.getSecureValue(storageKey);
 
@@ -46,7 +46,7 @@ export class LLMConnector {
 
     /**
      * Call OpenAI API
-     * @param {string} prefix - Settings prefix ('actionCacheLLM' or 'combatLLM')
+     * @param {string} prefix - Settings prefix ('actorAiActionsLLM' or 'combatLLM')
      */
     async callOpenAI(prompt, apiKey, prefix) {
         const model = game.settings.get(MODULE_ID, `${prefix}Model`);
@@ -111,7 +111,7 @@ export class LLMConnector {
 
     /**
      * Call Anthropic Claude API
-     * @param {string} prefix - Settings prefix ('actionCacheLLM' or 'combatLLM')
+     * @param {string} prefix - Settings prefix ('actorAiActionsLLM' or 'combatLLM')
      */
     async callAnthropic(prompt, apiKey, prefix) {
         const model = game.settings.get(MODULE_ID, `${prefix}Model`);
@@ -160,7 +160,7 @@ export class LLMConnector {
 
     /**
      * Call local LLM endpoint (e.g., Ollama, LM Studio)
-     * @param {string} prefix - Settings prefix ('actionCacheLLM' or 'combatLLM')
+     * @param {string} prefix - Settings prefix ('actorAiActionsLLM' or 'combatLLM')
      */
     async callLocalLLM(prompt, prefix) {
         const endpoint = game.settings.get(MODULE_ID, `${prefix}LocalEndpoint`);
@@ -186,7 +186,7 @@ export class LLMConnector {
                     }
                 ],
                 max_tokens: maxTokens,
-                temperature: 0.7
+                temperature: 0.3
             };
 
             if (game.settings.get(MODULE_ID, 'debugMode')) {
