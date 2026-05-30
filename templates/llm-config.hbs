@@ -65,7 +65,7 @@
     <div class="form-group temperature-group" style="{{#unless isOpenAI}}display:none;{{/unless}}">
         <label for="temperature">Temperature</label>
         <div class="form-fields">
-            <range-picker name="temperature" value="{{temperature}}" min="0" max="1" step="0.05" id="settings-config-dnd-combat-ai.temperature">
+            <range-picker name="temperature" value="{{temperature}}" min="0" max="2" step="0.1" id="settings-config-dnd-combat-ai.temperature">
                 <input type="range" min="0" max="2" step="0.1">
                 <input type="number" min="0" max="2" step="0.1">
             </range-picker>
