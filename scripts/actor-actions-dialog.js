@@ -47,8 +47,9 @@ export class ActorActionsDialog extends foundry.applications.api.HandlebarsAppli
     };
 
     async _prepareContext(options) {
-        // Load current actions from actor flags
-        this.actions = await this.actorLlmActions.getActorActions(this.actor);
+        if (!this.hasChanges) {
+            this.actions = await this.actorLlmActions.getActorActions(this.actor);
+        }
 
         console.log(`${MODULE_TITLE} | Loaded ${this.actions.length} actions for ${this.actor.name} in dialog`, this.actions);
 
